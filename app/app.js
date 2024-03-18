@@ -8,11 +8,11 @@ dotenv.config();
 
 app.use(express.json());
 // app.use(express.static(path.join(__dirname, "views")));
-app.use('/assets', express.static(path.join(__dirname, 'views', 'assets')));
-app.use('/forms', express.static(path.join(__dirname, 'views', 'forms')));
+app.use('/assets', express.static(path.join(__dirname, 'src/views', 'assets')));
+app.use('/forms', express.static(path.join(__dirname, 'src/views', 'forms')));
 
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views/ejs-file"));
+app.set("views", path.join(__dirname, "src/views/ejs-file"));
 
 app.get("/", (req, res)=>{
   res.render("index");

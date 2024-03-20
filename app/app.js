@@ -26,7 +26,8 @@ app.use(
 );
 app.use('/assets', express.static(path.join(__dirname, 'src/views', 'assets')));
 app.use('/forms', express.static(path.join(__dirname, 'src/views', 'forms')));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //라우팅 미들웨어
 app.use(indexRoutes);

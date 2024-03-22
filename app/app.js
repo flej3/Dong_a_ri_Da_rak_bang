@@ -17,6 +17,7 @@ const faqRoutes = require('./src/routes/pages-faq.route');
 const loginRoutes = require('./src/routes/pages-login.route');
 const registerRoutes = require('./src/routes/pages-register.route');
 const usersProfileRoutes = require('./src/routes/users-profile.route');
+const writePostRoutes = require('./src/routes/write-post.route');
 
 //미들웨어
 app.use(express.json());
@@ -40,6 +41,7 @@ app.use(faqRoutes);
 app.use(loginRoutes);
 app.use(registerRoutes);
 app.use(usersProfileRoutes);
+app.use(writePostRoutes);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src/views/ejs-file"));

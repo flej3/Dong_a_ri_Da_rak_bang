@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { getUser } = require("./login.ctrl");
+const { getUser } = require("../login.ctrl");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -27,7 +27,7 @@ async function refreshTokenMiddleware(req, res, next) {
             },
             process.env.ACCESS_SECRET,
             {
-                expiresIn: "1m", // 예시로 1분 설정, 필요에 따라 조절
+                expiresIn: "30m", // 예시로 30분 설정, 필요에 따라 조절
                 issuer: "Dong_A_Ri_developer",
                 algorithm: "HS512",
             }
@@ -60,6 +60,18 @@ async function refreshTokenMiddleware(req, res, next) {
     }
 }
 
+const getTokenDecode = async (req, res) => {
+    try {
+        const token = req.cookies.accessToken;
+        const data = jwt.verify(token, process.env.ACCESS_SECRET);
+
+        return data;
+    } catch (error) {
+        return res.status(401).json(err);
+    }
+}
+
 module.exports = {
     refreshTokenMiddleware,
+    getTokenDecode,
 };

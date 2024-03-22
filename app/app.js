@@ -5,7 +5,8 @@ const dotenv = require("dotenv");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
-const { refreshTokenMiddleware } = require('./src/controllers/token.ctrl');
+const { refreshTokenMiddleware } = require('./src/controllers/tokenControllers/token.ctrl');
+const { getUserDataFromToken } = require('./src/controllers/index.ctrl');
 
 const app = express();
 
@@ -18,6 +19,7 @@ const loginRoutes = require('./src/routes/pages-login.route');
 const registerRoutes = require('./src/routes/pages-register.route');
 const usersProfileRoutes = require('./src/routes/users-profile.route');
 const writePostRoutes = require('./src/routes/write-post.route');
+const clubAdminRoutes = require('./src/routes/pages-clubAdmin.route');
 
 //미들웨어
 app.use(express.json());
@@ -34,6 +36,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/' , refreshTokenMiddleware);
+app.use(getUserDataFromToken);
 
 //라우팅 미들웨어
 app.use(indexRoutes);
@@ -42,6 +45,7 @@ app.use(loginRoutes);
 app.use(registerRoutes);
 app.use(usersProfileRoutes);
 app.use(writePostRoutes);
+app.use(clubAdminRoutes);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src/views/ejs-file"));

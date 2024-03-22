@@ -57,7 +57,7 @@ const checkUserAvailability = async (req, res, next) => {
                 },
                 process.env.ACCESS_SECRET,
                 {
-                    expiresIn: "1m",
+                    expiresIn: "30m",
                     issuer: "Dong_A_Ri_developer",
                     algorithm: "HS512",
                 }
@@ -133,7 +133,7 @@ const refreshToken = async (req, res) => {
             },
             process.env.ACCESS_SECRET,
             {
-                expiresIn: "1m",
+                expiresIn: "30m",
                 issuer: "Dong_A_Ri_developer",
                 algorithm: "HS512",
             }
@@ -155,7 +155,8 @@ const logout = (req, res) => {
     try {
         res.cookie('accessToken', '');
         res.cookie('refreshToken', '');
-        res.status(200).json("Logout Success");
+        // res.status(200).json("Logout Success");
+        res.redirect("/");
     } catch (err) {
         res.status(500).json(err);
     }
@@ -172,4 +173,5 @@ module.exports = {
     logout,
     loginSuccess,
     getUser,
+    handleDBError,
 };

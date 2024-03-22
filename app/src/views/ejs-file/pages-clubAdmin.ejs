@@ -1,0 +1,316 @@
+<!-- 헤더 include -->
+<%- include ('partials/header.ejs') %>
+
+<!-- ======= Sidebar ======= -->
+<%- include ('partials/sidebar.ejs') %>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>동아리 관리</h1>
+    </div>
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-4">
+
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                        <img src="assets/img/hs-logo.jpg" alt="Profile" class="rounded-circle">
+                        <h2>동아리명 : <%= club.club_name%> </h2>
+                        <!--소속은 고정이 아님. 동아리장이 컴공이라고해서 
+                        해당 동아리가 컴공 소속이지 않다는 뜻!-->
+                        <h3>소속 : 컴퓨터 공학부</h3>
+                        <div class="social-links mt-2">
+                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xl-8">
+
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">인원 현황 및 관리</button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">모집 공고</button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">가입 신청 현황</button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">공지 사항</button>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content pt-2">
+
+                            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                                <div class="col-md-4" style="width: 100%;">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">이름</th>
+                                            <th scope="col">학과</th>
+                                            <th scope="col">학번</th>
+                                            <th scope="col">전화번호</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <% let count = 1; %>
+                                        <% members.forEach(member => { %>
+                                            <tr>
+                                                <th scope="row"><%= count %></th>
+                                                <td><%= member.member_name %></td>
+                                                <td><%= member.member_studemt_id %></td>
+                                                <td><%= member.member_department %></td>
+                                                <td><%= member.member_ph_number%></td>
+                                            </tr>
+                                            <% count++; %>
+                                        <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                                <div style="text-align: right;">
+                                    <button type="submit" class="btn btn-primary" style="margin-bottom: 15px;">작성하기</button>
+                                </div>
+
+                                <div class="card mb-3" >
+                                    <div class="row g-0">
+                                        <div class="col-md-3">
+                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">게시글 제목</h5>
+                                                <p class="card-text">동아리 설명</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-3" >
+                                    <div class="row g-0">
+                                        <div class="col-md-3">
+                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">게시글 제목</h5>
+                                                <p class="card-text">동아리 설명</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-3" >
+                                    <div class="row g-0">
+                                        <div class="col-md-3">
+                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">게시글 제목</h5>
+                                                <p class="card-text">동아리 설명</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-3" >
+                                    <div class="row g-0">
+                                        <div class="col-md-3">
+                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">게시글 제목</h5>
+                                                <p class="card-text">동아리 설명</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-settings">
+
+                                <!-- Settings Form -->
+                                <div style="text-align: right;">
+                                    <button type="submit" class="btn btn-primary" style="margin-bottom: 15px;">작성하기</button>
+                                </div>
+
+                                <div class="card mb-3" >
+                                    <div class="row g-0">
+                                        <div class="col-md-3">
+                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">게시글 제목</h5>
+                                                <p class="card-text">동아리 설명</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-3" >
+                                    <div class="row g-0">
+                                        <div class="col-md-3">
+                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">게시글 제목</h5>
+                                                <p class="card-text">동아리 설명</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-3" >
+                                    <div class="row g-0">
+                                        <div class="col-md-3">
+                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">게시글 제목</h5>
+                                                <p class="card-text">동아리 설명</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-3" >
+                                    <div class="row g-0">
+                                        <div class="col-md-3">
+                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">게시글 제목</h5>
+                                                <p class="card-text">동아리 설명</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-change-password">
+                                <!-- Change Password Form -->
+                                <div style="text-align: right;">
+                                    <button type="submit" class="btn btn-primary" style="margin-bottom: 15px;">작성하기</button>
+                                </div>
+
+                                <div class="card mb-3" >
+                                    <div class="row g-0">
+                                        <div class="col-md-3">
+                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">게시글 제목</h5>
+                                                <p class="card-text">동아리 설명</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-3" >
+                                    <div class="row g-0">
+                                        <div class="col-md-3">
+                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">게시글 제목</h5>
+                                                <p class="card-text">동아리 설명</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-3" >
+                                    <div class="row g-0">
+                                        <div class="col-md-3">
+                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">게시글 제목</h5>
+                                                <p class="card-text">동아리 설명</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mb-3" >
+                                    <div class="row g-0">
+                                        <div class="col-md-3">
+                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title">게시글 제목</h5>
+                                                <p class="card-text">동아리 설명</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div><!-- End Bordered Tabs -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<%- include ('partials/footer.ejs') %>
+<!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/chart.js/chart.umd.js"></script>
+<script src="assets/vendor/echarts/echarts.min.js"></script>
+<script src="assets/vendor/quill/quill.min.js"></script>
+<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+
+</body>
+
+</ejs>

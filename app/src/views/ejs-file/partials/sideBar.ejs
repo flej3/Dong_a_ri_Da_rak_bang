@@ -26,12 +26,30 @@
       </a>
     </li><!-- End F.A.Q Page Nav -->
 
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="pages-login">
-        <i class="bi bi-box-arrow-in-right"></i>
-        <span>Login</span>
-      </a>
-    </li><!-- End Login Page Nav -->
+    <% if (userData.clubData && userData.clubData.isOwner===true) { %>
+      <li>
+        <a class="nav-link collapsed" href="/Page-clubAdmin">
+          <i class="bi bi-house-door"></i>
+          <span>동아리 관리</span>
+        </a>
+      </li>
+      <% } %>
+
+        <% if (userData.isAvailable) { %>
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="/api/users/logout">
+              <i class="bi bi-box-arrow-in-right"></i>
+              <span>로그아웃</span>
+            </a>
+          </li><!-- End Logout Page Nav -->
+          <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="pages-login">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>로그인</span>
+              </a>
+            </li><!-- End Login Page Nav -->
+            <% } %>
 
   </ul>
 

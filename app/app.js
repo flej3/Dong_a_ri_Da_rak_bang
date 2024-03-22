@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
 const { refreshTokenMiddleware } = require('./src/controllers/token.ctrl');
+const { getUserDataFromToken } = require('./src/controllers/index.ctrl');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/' , refreshTokenMiddleware);
+app.use(getUserDataFromToken);
 
 //라우팅 미들웨어
 app.use(indexRoutes);

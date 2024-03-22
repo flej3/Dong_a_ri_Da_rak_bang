@@ -155,7 +155,8 @@ const logout = (req, res) => {
     try {
         res.cookie('accessToken', '');
         res.cookie('refreshToken', '');
-        res.status(200).json("Logout Success");
+        // res.status(200).json("Logout Success");
+        res.redirect("/");
     } catch (err) {
         res.status(500).json(err);
     }

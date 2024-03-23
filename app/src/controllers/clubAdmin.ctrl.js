@@ -7,7 +7,7 @@ const getClubCategory = async (req, res) => {
     try {
         const decodedData = await getTokenDecode(req, res);
         return new Promise((resolve, reject) => {
-            executeQuery('SELECT category FROM club WHERE club_oner = ?',
+            executeQuery('SELECT category FROM club WHERE club_owner = ?',
                 [decodedData.id],
                 (err, clubCategory) => {
                     if (err) {

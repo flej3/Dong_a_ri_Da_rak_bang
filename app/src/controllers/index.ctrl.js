@@ -13,7 +13,7 @@ function isClubOwner(userId) {
                 return reject(err);
             }
 
-            conn.query("SELECT * FROM club WHERE club_oner = ?",
+            conn.query("SELECT * FROM club WHERE club_owner = ?",
                 [userId],
                 (err, result)=>{
                     if(err){

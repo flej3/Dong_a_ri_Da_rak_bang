@@ -53,6 +53,7 @@ const checkUserAvailability = async (req, res, next) => {
                     id: result.user_id,
                     name: result.user_name,
                     studentId: result.user_student_id,
+                    department: result.user_department,
                     phoneNumber: result.user_ph_number,
                 },
                 process.env.ACCESS_SECRET,
@@ -69,6 +70,7 @@ const checkUserAvailability = async (req, res, next) => {
                     id: result.user_id,
                     name: result.user_name,
                     studentId: result.user_student_id,
+                    department: result.user_department,
                     phoneNumber: result.user_ph_number,
                 },
                 process.env.REFRESH_SECRET,
@@ -126,10 +128,11 @@ const refreshToken = async (req, res) => {
         //access Token 재발급
         const accessToken = jwt.sign(
             {
-                id: userData.user_id,
-                name: userData.user_name,
-                studentId: userData.user_student_id,
-                phoneNumber: userData.user_ph_number,
+                id: result.user_id,
+                name: result.user_name,
+                studentId: result.user_student_id,
+                department: result.user_department,
+                phoneNumber: result.user_ph_number,
             },
             process.env.ACCESS_SECRET,
             {

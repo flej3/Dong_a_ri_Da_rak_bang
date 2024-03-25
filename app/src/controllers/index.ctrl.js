@@ -40,6 +40,9 @@ const getUserDataFromToken = async (req, res, next) => {
         userData.isAvailable = true;
         userData.user_id = tokenUserData.id;
         userData.user_name = tokenUserData.name;
+        userData.user_studentId = tokenUserData.studentId;
+        userData.user_department = tokenUserData.department;
+        userData.user_phoneNumber = tokenUserData.phoneNumber;
 
         const clubData = await isClubOwner(userData.user_id);
         userData.clubData = clubData;

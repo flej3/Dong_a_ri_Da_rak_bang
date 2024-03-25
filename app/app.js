@@ -35,7 +35,9 @@ app.use('/forms', express.static(path.join(__dirname, 'src/views', 'forms')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use('/' , refreshTokenMiddleware);
+app.use('/' , refreshTokenMiddleware); // "/"경로 이하로 접근 할때마다 AccessToken 재발급
+
+//userData객체를 담아서 프론트로 던지고 시작. 그래서 userData 객체에 접근 가능한거임.
 app.use(getUserDataFromToken);
 
 //라우팅 미들웨어

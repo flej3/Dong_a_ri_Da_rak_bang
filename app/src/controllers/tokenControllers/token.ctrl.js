@@ -23,6 +23,7 @@ async function refreshTokenMiddleware(req, res, next) {
                 id: userData.user_id,
                 name: userData.user_name,
                 studentId: userData.user_student_id,
+                department: userData.user_department,
                 phoneNumber: userData.user_ph_number,
             },
             process.env.ACCESS_SECRET,
@@ -43,6 +44,7 @@ async function refreshTokenMiddleware(req, res, next) {
             id: userData.user_id,
             name: userData.user_name,
             studentId: userData.user_student_id,
+            department: userData.user_department,
             phoneNumber: userData.user_ph_number,
         };
         next();
@@ -60,6 +62,7 @@ async function refreshTokenMiddleware(req, res, next) {
     }
 }
 
+//발급되어있는 AccessToken을 가져와서 디코딩한 결과.
 const getTokenDecode = async (req, res) => {
     try {
         const token = req.cookies.accessToken;

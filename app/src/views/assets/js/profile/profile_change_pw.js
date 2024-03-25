@@ -51,10 +51,13 @@ function validatePassword() {
 }
 
 function setChangePassword(){
-    if (!canChangePw()) {
+    const password = getInputValue('newPassword');
+    const confirmPassword = getInputValue('renewPassword');
+    if (!canChangePw() || password !== confirmPassword) {
         alert('비밀번호를 다시 확인해주세요.');
         return;
     }
+    validatePassword();
 
     const userPw = {};
     userPw.currentPassword = getInputValue('currentPassword');
@@ -75,12 +78,11 @@ function setChangePassword(){
         return res.json();
     })
     .then(data => {
-        if (!data.success) {
-            alert(data.message);
-            return;
+        if(!data.success){
+            return alert(data.message);
         }
         alert(data.message);
-        window.location.href = "pages-login";
+        window.location.href = "/";
     })
     .catch(err => {
         console.error('비밀번호 변경중 오류가 발생했습니다.', err);

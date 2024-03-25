@@ -28,9 +28,9 @@
                 <h2><%= userData.user_name %></h2>
                 <h3><%= userData.user_department %></h3>
                 <div class="social-links mt-2">
-                  <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                  <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                  <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                  <a href="" class="twitter"><i class="bi bi-twitter"></i></a>
+                  <a href="" class="facebook"><i class="bi bi-facebook"></i></a>
+                  <a href="" class="instagram"><i class="bi bi-instagram"></i></a>
                   <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="프로필 편집에서 링크를 등록하면 해당 페이지로 이동합니다.">
                     <i class="bi bi-question-circle"></i>
                   </span>
@@ -71,7 +71,7 @@
 
                   <div class="tab-pane fade show active profile-overview" id="profile-overview">
                     <h5 class="card-title">프로필 메세지</h5>
-                    <p class="small fst-italic"></p>
+                    <p id="viewAbout" class="small fst-italic"></p>
 
                     <h5 class="card-title">내 프로필</h5>
 
@@ -133,7 +133,7 @@
 
                     <div class="row">
                       <div class="col-lg-3 col-md-4 label">가입중인 동아리</div>
-                      <div class="col-lg-9 col-md-8">다락방</div>
+                      <div id="joinedClubs" class="col-lg-9 col-md-8"></div>
                     </div>
 
                   </div>

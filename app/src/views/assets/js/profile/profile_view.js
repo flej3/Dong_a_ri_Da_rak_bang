@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(data => {
         if (data.success) {
             const userProfile = data.userProfile;
-            console.log(data);
             document.getElementById('viewAbout').innerText = userProfile.about;
             document.getElementById('joinedClubs').innerText = convertToNewLines(userProfile.joined_clubs);
             

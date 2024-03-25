@@ -25,13 +25,18 @@
               <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
                 <img src="./../assets/img/default-profile-img.png" alt="Profile" class="rounded-circle">
-                <h2><%= userData.user_name %></h2>
-                <h3><%= userData.user_department %></h3>
+                <h2>
+                  <%= userData.user_name %>
+                </h2>
+                <h3>
+                  <%= userData.user_department %>
+                </h3>
                 <div class="social-links mt-2">
                   <a href="" class="twitter"><i class="bi bi-twitter"></i></a>
                   <a href="" class="facebook"><i class="bi bi-facebook"></i></a>
                   <a href="" class="instagram"><i class="bi bi-instagram"></i></a>
-                  <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="프로필 편집에서 링크를 등록하면 해당 페이지로 이동합니다.">
+                  <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="프로필 편집에서 링크를 등록하면 해당 페이지로 이동합니다.">
                     <i class="bi bi-question-circle"></i>
                   </span>
                 </div>
@@ -53,7 +58,8 @@
                   </li>
 
                   <li class="nav-item">
-                    <button id="profile_edit" class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">프로필 편집</button>
+                    <button id="profile_edit" class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">프로필
+                      편집</button>
                   </li>
 
                   <!--나중에 프로필 비공개 이런거 할때 하게되면 사용하자.-->
@@ -88,7 +94,9 @@
                           <i class="bi bi-question-circle"></i>
                         </span>
                       </div>
-                      <div class="col-lg-9 col-md-8"><%= userData.user_name %></div>
+                      <div class="col-lg-9 col-md-8">
+                        <%= userData.user_name %>
+                      </div>
                     </div>
 
                     <div class="row">
@@ -98,7 +106,9 @@
                           <i class="bi bi-question-circle"></i>
                         </span>
                       </div>
-                      <div class="col-lg-9 col-md-8"><%= userData.user_department %></div>
+                      <div class="col-lg-9 col-md-8">
+                        <%= userData.user_department %>
+                      </div>
                     </div>
 
                     <div class="row">
@@ -108,7 +118,9 @@
                           <i class="bi bi-question-circle"></i>
                         </span>
                       </div>
-                      <div class="col-lg-9 col-md-8"><%= userData.user_studentId %></div>
+                      <div class="col-lg-9 col-md-8">
+                        <%= userData.user_studentId %>
+                      </div>
                     </div>
 
                     <!-- <div class="row">
@@ -128,7 +140,9 @@
                           <i class="bi bi-question-circle"></i>
                         </span>
                       </div>
-                      <div class="col-lg-9 col-md-8"><%= userData.user_id %></div>
+                      <div class="col-lg-9 col-md-8">
+                        <%= userData.user_id %>
+                      </div>
                     </div>
 
                     <div class="row">
@@ -296,32 +310,33 @@
 
                   <div class="tab-pane fade pt-3" id="profile-change-password">
                     <!-- Change Password Form -->
-                    <form>
+                    <form method="post">
 
                       <div class="row mb-3">
-                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">현재 비밀번호</label>
                         <div class="col-md-8 col-lg-9">
-                          <input name="password" type="password" class="form-control" id="currentPassword">
+                          <input name="password" type="password" class="form-control" id="currentPassword" oninput="trackPasswordInput()">
                         </div>
                       </div>
 
                       <div class="row mb-3">
-                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호</label>
                         <div class="col-md-8 col-lg-9">
                           <input name="newpassword" type="password" class="form-control" id="newPassword">
                         </div>
                       </div>
 
                       <div class="row mb-3">
-                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New
-                          Password</label>
+                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">비밀번호 재확인</label>
                         <div class="col-md-8 col-lg-9">
-                          <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                          <input name="renewpassword" type="password" class="form-control" id="renewPassword"
+                            oninput="validatePassword()">
+                          <div id="passwordMismatch" class="invalid-feedback">비밀번호가 일치하지 않습니다!</div>
                         </div>
                       </div>
 
                       <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Change Password</button>
+                        <button id="changePwBtn" type="button" class="btn btn-primary" disabled>비밀번호 변경</button>
                       </div>
                     </form><!-- End Change Password Form -->
 
@@ -361,6 +376,7 @@
       <!--Client JS File-->
       <script defer src="../assets/js/profile/profile_view.js"></script>
       <script defer src="../assets/js/profile/profile_edit.js"></script>
+      <script defer src="../assets/js/profile/profile_change_pw.js"></script>
 
       </body>
 

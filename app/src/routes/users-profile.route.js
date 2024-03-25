@@ -13,4 +13,6 @@ router.post("/update-user-profile", updateUserProfile);
 
 router.get("/check-profile-existence", checkAndFetchUserProfile);
 
+router.post("/setChangePassword");
+
 module.exports = router;

@@ -43,7 +43,7 @@ function collectClubNames() {
 // 새로운 클럽 입력 필드 추가하는 함수
 function addClubInput(clubName) {
     const newInputGroup = document.createElement('div');
-    newInputGroup.classList.add('input-group', 'mb-3');
+    newInputGroup.classList.add('input-group', 'mb-3', 'input-group-added');
     newInputGroup.innerHTML = `
         <input type="text" class="form-control" name="clubs[]" value="${clubName}" placeholder="동아리명">
         <button class="btn btn-outline-secondary remove-club-btn" type="button">-</button>
@@ -56,6 +56,12 @@ function createProfileElements(profileData) {
     document.getElementById('Twitter').value = profileData.twitter_link || '';
     document.getElementById('Facebook').value = profileData.facebook_link || '';
     document.getElementById('Instagram').value = profileData.instagram_link || '';
+
+    // 기존에 추가된 입력 필드만 제거
+    const existingInputs = container.querySelectorAll('.input-group-added');
+    existingInputs.forEach(inputGroup => {
+        inputGroup.remove();
+    });
 
     const joinedClubs = profileData.joined_clubs ? profileData.joined_clubs.split(',') : [];
     joinedClubs.forEach(clubName => {

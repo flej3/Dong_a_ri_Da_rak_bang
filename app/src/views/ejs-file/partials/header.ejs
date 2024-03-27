@@ -56,8 +56,8 @@
     </div><!-- End Logo -->
 
     <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+      <form id="searchForm" class="search-form d-flex align-items-center" method="get">
+        <input type="text" id="searchQuery" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -65,8 +65,9 @@
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
+        <!-- <li class="nav-item d-block d-lg-none"> -->
+        <li class="nav-item">
+          <a class="nav-link nav-icon search-bar-toggle " href="#" title="검색창이 보이지 않으면 눌러주세요">
             <i class="bi bi-search"></i>
           </a>
         </li><!-- End Search Icon-->
@@ -338,5 +339,5 @@
 
       </ul>
     </nav><!-- End Icons Navigation -->
-
+    <script defer src="../../assets/js/search/header_search.js"></script>
   </header><!-- End Header -->

@@ -224,6 +224,15 @@ h6 {
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
 }
 
+.team-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.team-card:hover .card-body {
+  background-color: #f8f9fa;
+}
+
 .card-header,
 .card-footer {
   border-color: #ebeef4;

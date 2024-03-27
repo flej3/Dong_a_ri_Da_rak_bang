@@ -25,7 +25,7 @@ function createCard(user) {
     cardContainer.appendChild(cardCol);
 }
 
-function createNoResultMessage() {
+function createNoResultMessage(msg) {
     const main = document.getElementById('main');
 
     const messageContainer = document.createElement('div');
@@ -35,7 +35,7 @@ function createNoResultMessage() {
     icon.classList.add('bi', 'bi-exclamation-triangle', 'me-2');
 
     const messageText = document.createElement('span');
-    messageText.innerText = '검색 결과가 없습니다. 확인후 다시 검색해주세요.';
+    messageText.innerText = msg;
 
     messageContainer.appendChild(icon);
     messageContainer.appendChild(messageText);
@@ -62,8 +62,7 @@ function searchUserResult() {
         })
         .then(data => {
             if(!data.success){
-                //검색결과가 없습니다.
-                createNoResultMessage();
+                return createNoResultMessage('검색 결과가 없습니다. 확인후 다시 검색해주세요.');
             }
             const users = data.result;
             users.forEach(user => {

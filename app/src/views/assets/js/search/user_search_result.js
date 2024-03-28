@@ -47,6 +47,7 @@ function createNoResultMessage(msg) {
 function searchUserResult() {
     const urlParams = new URLSearchParams(window.location.search);
     const searchQuery = urlParams.get('query');
+    document.getElementById('searchQueryResult').innerText = `검색 결과: ${searchQuery}`;
     fetch(`/search-user?query=${searchQuery}`, {
         method: 'GET',
         headers: {
@@ -62,7 +63,7 @@ function searchUserResult() {
             return res.json();
         })
         .then(data => {
-            if(!data.success){
+            if (!data.success) {
                 return createNoResultMessage('검색 결과가 없습니다. 확인후 다시 검색해주세요.');
             }
             const users = data.result;

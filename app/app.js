@@ -20,6 +20,7 @@ const registerRoutes = require('./src/routes/pages-register.route');
 const usersProfileRoutes = require('./src/routes/users-profile.route');
 const writePostRoutes = require('./src/routes/write-post.route');
 const clubAdminRoutes = require('./src/routes/pages-clubAdmin.route');
+const searchRoutes = require('./src/routes/search/search.route');
 
 //미들웨어
 app.use(express.json());
@@ -48,6 +49,7 @@ app.use(registerRoutes);
 app.use(usersProfileRoutes);
 app.use(writePostRoutes);
 app.use(clubAdminRoutes);
+app.use(searchRoutes);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src/views/ejs-file"));

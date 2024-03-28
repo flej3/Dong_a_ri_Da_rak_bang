@@ -1,11 +1,12 @@
-//유저 카드 생성 함수.
-function createCard(user) {
+// 유저 카드 생성 함수.
+function createCard(user, cardIndex) {
     const cardContainer = document.querySelector('.row');
     const cardCol = document.createElement('div');
     cardCol.classList.add('col-lg-4', 'mb-4');
+    cardCol.setAttribute('id', `card-${cardIndex}`); // 고유한 ID 할당
     cardCol.innerHTML = `
         <div class="card team-card">
-            <a href="#" class="card-link">
+            <a href="search-user-profile?query=${user.user_id}" class="card-link">
                 <div class="row g-0">
                     <div class="col-md-4 d-flex align-items-center justify-content-center">
                         <img src="./../../assets/img/default-profile-img.png" class="img-fluid rounded-start">
@@ -65,8 +66,8 @@ function searchUserResult() {
                 return createNoResultMessage('검색 결과가 없습니다. 확인후 다시 검색해주세요.');
             }
             const users = data.result;
-            users.forEach(user => {
-                createCard(user);
+            users.forEach((user, index) => {
+                createCard(user, index);
             });
         })
         .catch(error => {

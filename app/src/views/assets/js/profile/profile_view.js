@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (twitterLink) {
                 twitterElement.href = twitterLink;
             } else {
-                twitterElement.style.visibility = 'hidden'; // 링크가 없을 경우 숨김 처리
+                twitterElement.style.display = 'none'; // 링크가 없을 경우 숨김 처리
             }
 
             // Facebook 링크 설정
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (facebookLink) {
                 facebookElement.href = facebookLink;
             } else {
-                facebookElement.style.visibility = 'hidden'; // 링크가 없을 경우 숨김 처리
+                facebookElement.style.display = 'none'; // 링크가 없을 경우 숨김 처리
             }
 
             // Instagram 링크 설정
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (instagramLink) {
                 instagramElement.href = instagramLink;
             } else {
-                instagramElement.style.visibility = 'hidden'; // 링크가 없을 경우 숨김 처리
+                instagramElement.style.display = 'none'; // 링크가 없을 경우 숨김 처리
             }
         } else {
         }

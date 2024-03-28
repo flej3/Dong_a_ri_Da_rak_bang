@@ -10,12 +10,31 @@ async function searchMember(searchQuery) {
             [`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`]
         );
 
-        if (result && result.length === 0) {
+        if (result.length === 0) {
             return { success: false };
         } else {
             return { success: true, result };
         }
     } catch (err) {
+        handleDBError(err);
+        return { success: false };
+    }
+}
+
+async function getUserFromMember(userId) {
+    try {
+        const result = await executeQueryPromise(
+            `SELECT user_id, user_name, user_student_id, user_department, category FROM member WHERE
+            user_id = ?`,
+            [userId]
+        );
+        if (result.length === 0) {
+            return { success: false };
+        }
+        else {
+            return { success: true, result };
+        }
+    } catch (error) {
         handleDBError(err);
         return { success: false };
     }
@@ -28,22 +47,19 @@ async function checkUserProfileExists(searchMemberResult) {
         userProfileData.success = false;
         return userProfileData;
     }
+    const user_id = searchMemberResult.result[0].user_id;
+    
+    try {
+        const profileResult = await executeQueryPromise("SELECT * FROM user_profile WHERE user_id = ?", [user_id]);
 
-    for (let idx = 0; idx < searchMemberResult.result.length; idx++) {
-        const user_id = searchMemberResult.result[idx].user_id;
-
-        try {
-            const profileResult = await executeQueryPromise("SELECT * FROM user_profile WHERE user_id = ?", [user_id]);
-
-            if (profileResult.length === 0) {
-                userProfileData.userData.push({ hasProfile: false, profile: searchMemberResult.result[idx] });
-            } else {
-                userProfileData.userData.push({ hasProfile: true, profile: profileResult[0] });
-            }
-        } catch (err) {
-            handleDBError(err);
-            userProfileData.success = false;
+        if (profileResult.length === 0) {
+            userProfileData.userData.push({ hasProfile: false, userData: searchMemberResult.result[0] });
+        } else {
+            userProfileData.userData.push({ hasProfile: true, userData: searchMemberResult.result[0], profile: profileResult[0] });
         }
+    } catch (err) {
+        handleDBError(err);
+        userProfileData.success = false;
     }
 
     return userProfileData;
@@ -51,9 +67,9 @@ async function checkUserProfileExists(searchMemberResult) {
 
 const searchProfileResult = async (req, res) => {
     try {
-        const searchQuery = req.query.query;
-        const searchMemberResult = await searchMember(searchQuery);
-        const userProfileData = await checkUserProfileExists(searchMemberResult);
+        const searchQueryUserId = req.query.query;
+        const userFromMember = await getUserFromMember(searchQueryUserId);
+        const userProfileData = await checkUserProfileExists(userFromMember);
         res.json(userProfileData);
     } catch (err) {
         res.status(500).json({ success: false, error: err.message });
@@ -64,7 +80,7 @@ const searchResult = async (req, res) => {
     try {
         const searchQuery = req.query.query;
         if (searchQuery === "") {
-            return res.json({ success: false});
+            return res.json({ success: false });
         }
         const searchMemberResult = await searchMember(searchQuery);
         res.json(searchMemberResult);

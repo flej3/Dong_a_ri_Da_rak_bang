@@ -62,10 +62,11 @@
                       편집</button>
                   </li>
 
-                  <!--나중에 프로필 비공개 이런거 할때 하게되면 사용하자.-->
-                  <!-- <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">설정</button>
-                </li> -->
+                  <!--사이트에서 직접 소속에 등록된 동아리 목록-->
+                  <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-joined-clubs">자신의 동아리
+                      관리</button>
+                  </li>
 
                   <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">비밀번호
@@ -80,11 +81,6 @@
                     <p id="viewAbout" class="small fst-italic"></p>
 
                     <h5 class="card-title">내 프로필</h5>
-
-                    <!-- <div class="row">
-                      <div class="col-lg-3 col-md-4 label ">이름</div>
-                      <div class="col-lg-9 col-md-8">김한신</div>
-                    </div> -->
 
                     <div class="row">
                       <div class="col-lg-3 col-md-4 label">
@@ -123,16 +119,6 @@
                       </div>
                     </div>
 
-                    <!-- <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Phone</div>
-                    <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
-                  </div> -->
-
                     <div class="row">
                       <div class="col-lg-3 col-md-4 label">Email
                         <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
@@ -146,7 +132,8 @@
                     </div>
 
                     <div class="row">
-                      <div class="col-lg-3 col-md-4 label">가입중인 동아리</div>
+                      <div class="col-lg-3 col-md-4 label">가입중인 동아리
+                      </div>
                       <div id="joinedClubs" class="col-lg-9 col-md-8"></div>
                     </div>
 
@@ -228,7 +215,12 @@
 
                       <div id="clubInputContainer">
                         <!-- 동아리 입력 필드가 동적으로 추가될 부분 -->
-                        <label for="clubName" class="col-md-4 col-lg-3 col-form-label">가입중인 동아리</label>
+                        <label for="clubName" class="col-md-4 col-lg-3 col-form-label">가입중인 동아리
+                          <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="사이트에 등록안된 동아리를 포함해서 직접 프로필에 적어주세요!">
+                            <i class="bi bi-question-circle"></i>
+                          </span>
+                        </label>
                         <div class="input-group mb-3">
                           <input type="text" class="form-control" id="clubName" name="clubs[]" placeholder="동아리명">
                           <button id="addClubBtn" class="btn btn-outline-secondary add-club-btn"
@@ -266,88 +258,89 @@
 
                   </div>
 
-                  <!-- <div class="tab-pane fade pt-3" id="profile-settings"> -->
+                  <div class="tab-pane fade pt-3" id="profile-joined-clubs">
 
-                  <!-- Settings Form -->
-                  <!-- <form>
+                    <!-- Joined Clubs Cards -->
+                    <div class="row mt-4">
+                      <div class="col-md-4">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">Club Name 1</h5>
+                            <p class="card-text">Description of the club. This club focuses on XYZ activities.</p>
+                            <p class="card-text">Meeting Time: Mondays, 7:00 PM</p>
+                            <a href="#" class="btn btn-primary">Go to Club Page</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">Club Name 2</h5>
+                            <p class="card-text">Description of the club. Engage in ABC projects with us!</p>
+                            <p class="card-text">Meeting Time: Wednesdays, 5:00 PM</p>
+                            <a href="#" class="btn btn-primary">Go to Club Page</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">Club Name 3</h5>
+                            <p class="card-text">Description of the club. Join us for fun and learning.</p>
+                            <p class="card-text">Meeting Time: Fridays, 6:00 PM</p>
+                            <a href="#" class="btn btn-primary">Go to Club Page</a>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Add more club cards as needed -->
+                    </div><!-- End Joined Clubs Cards -->
+
+                  </div>
+
+
+                </div>
+
+                <div class="tab-pane fade pt-3" id="profile-change-password">
+                  <!-- Change Password Form -->
+                  <form method="post">
 
                     <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
+                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">현재 비밀번호</label>
                       <div class="col-md-8 col-lg-9">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                          <label class="form-check-label" for="changesMade">
-                            Changes made to your account
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                          <label class="form-check-label" for="newProducts">
-                            Information on new products and services
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="proOffers">
-                          <label class="form-check-label" for="proOffers">
-                            Marketing and promo offers
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                          <label class="form-check-label" for="securityNotify">
-                            Security alerts
-                          </label>
-                        </div>
+                        <input name="password" type="password" class="form-control" id="currentPassword"
+                          oninput="trackPasswordInput()">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">비밀번호 재확인</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="renewpassword" type="password" class="form-control" id="renewPassword"
+                          oninput="validatePassword()">
+                        <div id="passwordMismatch" class="invalid-feedback">비밀번호가 일치하지 않습니다!</div>
                       </div>
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                      <button id="changePwBtn" type="button" class="btn btn-primary" disabled>비밀번호 변경</button>
                     </div>
-                  </form>End settings Form
+                  </form><!-- End Change Password Form -->
 
-                  </div> -->
+                </div>
 
-                  <div class="tab-pane fade pt-3" id="profile-change-password">
-                    <!-- Change Password Form -->
-                    <form method="post">
+              </div><!-- End Bordered Tabs -->
 
-                      <div class="row mb-3">
-                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">현재 비밀번호</label>
-                        <div class="col-md-8 col-lg-9">
-                          <input name="password" type="password" class="form-control" id="currentPassword" oninput="trackPasswordInput()">
-                        </div>
-                      </div>
-
-                      <div class="row mb-3">
-                        <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호</label>
-                        <div class="col-md-8 col-lg-9">
-                          <input name="newpassword" type="password" class="form-control" id="newPassword">
-                        </div>
-                      </div>
-
-                      <div class="row mb-3">
-                        <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">비밀번호 재확인</label>
-                        <div class="col-md-8 col-lg-9">
-                          <input name="renewpassword" type="password" class="form-control" id="renewPassword"
-                            oninput="validatePassword()">
-                          <div id="passwordMismatch" class="invalid-feedback">비밀번호가 일치하지 않습니다!</div>
-                        </div>
-                      </div>
-
-                      <div class="text-center">
-                        <button id="changePwBtn" type="button" class="btn btn-primary" disabled>비밀번호 변경</button>
-                      </div>
-                    </form><!-- End Change Password Form -->
-
-                  </div>
-
-                </div><!-- End Bordered Tabs -->
-
-              </div>
             </div>
-
           </div>
+
+        </div>
         </div>
       </section>
 

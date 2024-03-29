@@ -4,7 +4,7 @@ const { executeQueryPromise } = require("../../config/database.func");
 async function searchMember(searchQuery) {
     try {
         const result = await executeQueryPromise(
-            `SELECT user_id, user_name, user_student_id, user_department, category FROM member WHERE 
+            `SELECT user_id, user_name, user_student_id, user_department, club_join FROM member WHERE 
             user_id LIKE ? OR user_name LIKE ? 
             OR user_department LIKE ? OR user_student_id LIKE ?`,
             [`%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`, `%${searchQuery}%`]
@@ -24,7 +24,7 @@ async function searchMember(searchQuery) {
 async function getUserFromMember(userId) {
     try {
         const result = await executeQueryPromise(
-            `SELECT user_id, user_name, user_student_id, user_department, category FROM member WHERE
+            `SELECT user_id, user_name, user_student_id, user_department, club_join FROM member WHERE
             user_id = ?`,
             [userId]
         );

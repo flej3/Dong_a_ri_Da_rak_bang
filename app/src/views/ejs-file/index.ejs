@@ -19,9 +19,21 @@
         <div class="row">
           <div class="container">
             <div class="row">
-              <!-- 게시글 작성 버튼 -->
+              <!-- <div class="text-end mb-3">
+                <% if(userData.isAvailable) { %>
+                  <button type="button" class="btn btn-outline-primary" id="writePostBtn" onclick="isAuthorizedUser()">
+                    <i class="ri-ball-pen-line"></i> 게시글 작성
+                  </button>
+                  <% } else { %>
+                    <a href="pages-login">
+                      <button type="button" class="btn btn-outline-primary">
+                        <i class="ri-ball-pen-line"></i> 게시글 작성
+                      </button>
+                    </a>
+                    <% } %>
+              </div> -->
               <div class="text-end mb-3">
-                <a href="<%= userData.isAvailable ? 'write-post' : 'pages-login' %>">
+                <a href="/write-post">
                   <button type="button" class="btn btn-outline-primary" id="writePostBtn">
                     <i class="ri-ball-pen-line"></i> 게시글 작성
                   </button>

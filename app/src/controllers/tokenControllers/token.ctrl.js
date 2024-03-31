@@ -70,11 +70,33 @@ const getTokenDecode = async (req, res) => {
 
         return data;
     } catch (error) {
-        return res.status(401).json(err);
+        return res.status(401).json(error);
     }
 }
+
+//로그인 검증
+const verifyToken = (req, res, next) => {
+    // 클라이언트로부터 JWT를 받음
+    const token = req.cookies.accessToken;
+    // JWT가 없는 경우
+    if (!token) {
+        // return res.status(401).json({ message: '인증 토큰이 없습니다.' });
+        return res.redirect('/pages-login');
+    }
+    try {
+        // JWT를 검증하여 페이로드(사용자 정보)를 추출
+        const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
+        req.user = decoded; // 추출한 사용자 정보를 요청 객체에 저장
+        next(); // 다음 미들웨어로 이동
+    } catch (err) {
+        // return res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
+        return res.redirect('/pages-login');
+    }
+};
+
 
 module.exports = {
     refreshTokenMiddleware,
     getTokenDecode,
+    verifyToken,
 };

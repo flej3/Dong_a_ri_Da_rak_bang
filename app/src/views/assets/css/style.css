@@ -1240,3 +1240,9 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+.custom-heading {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: bold;
+  color: #333;
+}

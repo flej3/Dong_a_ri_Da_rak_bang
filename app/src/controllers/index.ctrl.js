@@ -58,4 +58,5 @@ const getUserDataFromToken = async (req, res, next) => {
 
 module.exports = {
     getUserDataFromToken,
+    isClubOwner,
 }

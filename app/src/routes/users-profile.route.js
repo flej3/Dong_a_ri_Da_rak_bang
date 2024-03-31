@@ -3,8 +3,9 @@ const router = express.Router();
 const { checkAndFetchUserProfile, updateUserProfile } = require("../controllers/profileCtrollers/profileEdit.ctrl");
 const { getUserProfile } = require("../controllers/profileCtrollers/profileView.ctrl");
 const { setChangePassword } = require("../controllers/profileCtrollers/profileChangePw.ctrl");
+const { verifyToken } = require('../controllers/tokenControllers/token.ctrl');
 
-router.get("/users-profile", (req, res) => {
+router.get("/users-profile", verifyToken, (req, res) => {
   res.render("users-profile");
 });
 

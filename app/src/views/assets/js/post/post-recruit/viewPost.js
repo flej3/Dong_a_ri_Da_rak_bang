@@ -14,12 +14,17 @@ function setViewPostingInfo(postData) {
     const deadDay = new Date(postData.dead_day).toLocaleDateString();
     document.getElementById('post_created_at').innerText = `${createDay}`;
     document.getElementById('post_deadline').innerText = `${deadDay}`;
+
+    // Quill Delta를 HTML로 변환하여 설정
+    let htmlContent = quillGetHTML(postData.content);
+    document.getElementById('post_club_content').innerHTML = htmlContent;
 }
 
 function quillGetHTML(inputDelta) {
     let tempCont = document.createElement("div");
-    (new Quill(tempCont)).setContents(inputDelta);
-    return tempCont.getElementsByClassName("ql-editor")[0].innerHTML;
+    let editor = tempCont.appendChild(document.createElement("div"));
+    (new Quill(editor)).setContents(inputDelta);
+    return tempCont.innerHTML;
 }
 
 //게시글을 작성하고 바로 작성자가 지금 작성된 게시글을 확인한다.

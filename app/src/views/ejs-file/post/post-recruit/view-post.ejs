@@ -1,0 +1,115 @@
+<!-- 헤더 include -->
+<%- include ('../../partials/header.ejs') %>
+    <%- include ('../../partials/sidebar.ejs') %>
+
+        <main id="main" class="main">
+            <div class="pagetitle">
+                <h1>작성된 게시글</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active">게시글 페이지</li>
+                    </ol>
+                </nav>
+            </div><!-- End Page Title -->
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <section id="post-details" class="mb-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <!-- <div id="post_club_name_title" class="text-uppercase custom-heading" style="font-size: 1.5rem;"></div> -->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div id="post_club_info" class="custom-heading" style="font-size: 1.5rem;">
+                                                <span id="post_club_name" class="d-block mb-2"
+                                                    style="color: #007bff; font-weight: bold;"></span>
+                                                <span id="post_title" class="d-block"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <p class="card-text"><strong>모집 인원:</strong> <span
+                                                            id="post_recruitment_count"></span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <p class="card-text"><strong>게시글 작성일:</strong> <span
+                                                            id="post_created_at"></span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <p class="card-text"><strong>모집 마감일:</strong> <span
+                                                            id="post_deadline"></span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div id="post_club_content" class="card-text">
+                                        <!-- 게시글 내용 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+
+                        <section id="comments" class="mb-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h2 class="mb-4">댓글</h2>
+                                    <form>
+                                        <!-- 댓글 작성 폼 -->
+                                    </form>
+                                    <div class="comments-list">
+                                        <!-- 댓글 목록 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+        <!-- ======= Footer ======= -->
+        <%- include ('../../partials/footer.ejs') %>
+            <!-- End Footer -->
+
+            <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+                    class="bi bi-arrow-up-short"></i></a>
+
+            <!-- Vendor JS Files -->
+            <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+            <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <script src="assets/vendor/chart.js/chart.umd.js"></script>
+            <script src="assets/vendor/echarts/echarts.min.js"></script>
+            <script src="assets/vendor/quill/quill.min.js"></script>
+            <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+            <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+            <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+            <script src="assets/vendor/php-email-form/validate.js"></script>
+
+            <!-- Template Main JS File -->
+            <script src="../assets/js/main.js"></script>
+
+            <!-- Client JS File -->
+            <script defer src="../../../assets/js/post/post-recruit/viewPost.js"></script>
+
+            </body>
+
+            </ejs>

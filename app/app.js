@@ -22,6 +22,7 @@ const writePostRoutes = require('./src/routes/post/postRecruit/write-post.route'
 const clubAdminRoutes = require('./src/routes/pages-clubAdmin.route');
 const searchRoutes = require('./src/routes/search/search.route');
 const postRotes = require('./src/routes/post/postRecruit/view-post.route');
+const indexPostDashboard = require('./src/routes/post/index.postDashboard.route');
 
 //미들웨어
 app.use(express.json());
@@ -36,6 +37,7 @@ app.use('/assets', express.static(path.join(__dirname, 'src/views', 'assets')));
 app.use('/forms', express.static(path.join(__dirname, 'src/views', 'forms')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/' , refreshTokenMiddleware); // "/"경로 이하로 접근 할때마다 AccessToken 재발급
 
@@ -52,6 +54,7 @@ app.use(writePostRoutes);
 app.use(clubAdminRoutes);
 app.use(searchRoutes);
 app.use(postRotes);
+app.use(indexPostDashboard);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src/views/ejs-file"));

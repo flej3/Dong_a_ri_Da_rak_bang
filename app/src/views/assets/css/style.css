@@ -20,13 +20,12 @@ body {
 }
 
 a {
-  color: #4154f1;
-  text-decoration: none;
+  color: #000; /* 원하는 색상으로 변경 */
+  text-decoration: none; /* 링크에 밑줄 제거 */
 }
 
 a:hover {
-  color: #717ff5;
-  text-decoration: none;
+  color: #555; /* 링크에 마우스를 올렸을 때 색상 변경 */
 }
 
 h1,
@@ -229,7 +228,11 @@ h6 {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.team-card:hover .card-body {
+/* .team-card:hover .card-body {
+  background-color: #f8f9fa;
+} */
+
+.team-card:hover {
   background-color: #f8f9fa;
 }
 

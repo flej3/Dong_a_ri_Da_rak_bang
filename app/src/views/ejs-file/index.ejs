@@ -19,110 +19,120 @@
         <div class="row">
           <div class="container">
             <div class="row">
-              <!-- <div class="text-end mb-3">
-                <% if(userData.isAvailable) { %>
-                  <button type="button" class="btn btn-outline-primary" id="writePostBtn" onclick="isAuthorizedUser()">
-                    <i class="ri-ball-pen-line"></i> 게시글 작성
-                  </button>
-                  <% } else { %>
-                    <a href="pages-login">
-                      <button type="button" class="btn btn-outline-primary">
-                        <i class="ri-ball-pen-line"></i> 게시글 작성
-                      </button>
-                    </a>
-                    <% } %>
-              </div> -->
               <div class="text-end mb-3">
                 <a href="/write-post">
                   <button type="button" class="btn btn-outline-primary" id="writePostBtn">
                     <i class="ri-ball-pen-line"></i> 게시글 작성
                   </button>
                 </a>
-              </div>
-              <div class="col-md-8">
-                <div class="card mb-3">
-                  <div class="row g-0">
-                    <div class="col-md-3">
-                      <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                </div>
+                
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                  <div class="col">
+                    <div class="card clickable-card team-card" style="max-width: 540px;" onclick="redirectToClubDetails('동아리 이름')">
+                      <div class="row g-0">
+                        <div class="col-md-4">
+                          <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h5 class="card-title mb-3">동아리 이름</h5>
+                            <h6 class="card-subtitle mb-3 text-muted">제목</h6>
+                            <p class="card-text mb-2"><strong>모집인원:</strong> 10명</p>
+                            <p class="card-text mb-2"><strong>게시일:</strong> 2024-03-31</p>
+                            <p class="card-text mb-2"><strong>모집 종료일:</strong> 2024-04-05</p>
+                            <p class="card-text text-truncate"><strong>간단한 내용:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor orci at tellus vulputate, eget dictum risus scelerisque.</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="col-md-9">
-                      <div class="card-body">
-                        <h5 class="card-title">동아리 이름</h5>
-                        <p class="card-text">동아리 설명, 모집중</p>
+                  </div>
+
+                  <div class="col">
+                    <div class="card clickable-card team-card" style="max-width: 540px;" onclick="redirectToClubDetails('동아리 이름')">
+                      <div class="row g-0">
+                        <div class="col-md-4">
+                          <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h5 class="card-title mb-3">동아리 이름</h5>
+                            <h6 class="card-subtitle mb-3 text-muted">제목</h6>
+                            <p class="card-text mb-2"><strong>모집인원:</strong> 10명</p>
+                            <p class="card-text mb-2"><strong>게시일:</strong> 2024-03-31</p>
+                            <p class="card-text mb-2"><strong>모집 종료일:</strong> 2024-04-05</p>
+                            <p class="card-text text-truncate"><strong>간단한 내용:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor orci at tellus vulputate, eget dictum risus scelerisque.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="card clickable-card team-card" style="max-width: 540px;" onclick="redirectToClubDetails('동아리 이름')">
+                      <div class="row g-0">
+                        <div class="col-md-4">
+                          <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h5 class="card-title mb-3">동아리 이름</h5>
+                            <h6 class="card-subtitle mb-3 text-muted">제목</h6>
+                            <p class="card-text mb-2"><strong>모집인원:</strong> 10명</p>
+                            <p class="card-text mb-2"><strong>게시일:</strong> 2024-03-31</p>
+                            <p class="card-text mb-2"><strong>모집 종료일:</strong> 2024-04-05</p>
+                            <p class="card-text text-truncate"><strong>간단한 내용:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor orci at tellus vulputate, eget dictum risus scelerisque.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="card clickable-card team-card" style="max-width: 540px;" onclick="redirectToClubDetails('동아리 이름')">
+                      <div class="row g-0">
+                        <div class="col-md-4">
+                          <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h5 class="card-title mb-3">동아리 이름</h5>
+                            <h6 class="card-subtitle mb-3 text-muted">제목</h6>
+                            <p class="card-text mb-2"><strong>모집인원:</strong> 10명</p>
+                            <p class="card-text mb-2"><strong>게시일:</strong> 2024-03-31</p>
+                            <p class="card-text mb-2"><strong>모집 종료일:</strong> 2024-04-05</p>
+                            <p class="card-text text-truncate"><strong>간단한 내용:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor orci at tellus vulputate, eget dictum risus scelerisque.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col">
+                    <div class="card clickable-card team-card" style="max-width: 540px;" onclick="redirectToClubDetails('동아리 이름')">
+                      <div class="row g-0">
+                        <div class="col-md-4">
+                          <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h5 class="card-title mb-3">동아리 이름</h5>
+                            <h6 class="card-subtitle mb-3 text-muted">제목</h6>
+                            <p class="card-text mb-2"><strong>모집인원:</strong> 10명</p>
+                            <p class="card-text mb-2"><strong>게시일:</strong> 2024-03-31</p>
+                            <p class="card-text mb-2"><strong>모집 종료일:</strong> 2024-04-05</p>
+                            <p class="card-text text-truncate"><strong>간단한 내용:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor orci at tellus vulputate, eget dictum risus scelerisque.</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="card mb-3">
-                  <div class="row g-0">
-                    <div class="col-md-3">
-                      <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-9">
-                      <div class="card-body">
-                        <h5 class="card-title">동아리 이름</h5>
-                        <p class="card-text">동아리 설명</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card mb-3">
-                  <div class="row g-0">
-                    <div class="col-md-3">
-                      <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-9">
-                      <div class="card-body">
-                        <h5 class="card-title">동아리 이름</h5>
-                        <p class="card-text">동아리 설명</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card mb-3">
-                  <div class="row g-0">
-                    <div class="col-md-3">
-                      <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-9">
-                      <div class="card-body">
-                        <h5 class="card-title">동아리 이름</h5>
-                        <p class="card-text">동아리 설명</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card mb-3">
-                  <div class="row g-0">
-                    <div class="col-md-3">
-                      <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-9">
-                      <div class="card-body">
-                        <h5 class="card-title">동아리 이름</h5>
-                        <p class="card-text">동아리 설명</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="card mb-3">
-                  <div class="row g-0">
-                    <div class="col-md-3">
-                      <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                    </div>
-                    <div class="col-md-9">
-                      <div class="card-body">
-                        <h5 class="card-title">동아리 이름</h5>
-                        <p class="card-text">동아리 설명</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- 테이블 -->
-              <div class="col-md-4">
-                <table class="table">
-                  <thead>
+
+                <!-- 테이블 -->
+                <div class="col-md-4">
+                  <table class="table">
+                    <thead>
                     <tr>
                       <th scope="col"></th>
                       <th scope="col">동아리 이름</th>

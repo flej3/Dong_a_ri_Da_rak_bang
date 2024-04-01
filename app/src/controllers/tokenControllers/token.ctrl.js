@@ -24,7 +24,6 @@ async function refreshTokenMiddleware(req, res, next) {
                 name: userData.user_name,
                 studentId: userData.user_student_id,
                 department: userData.user_department,
-                phoneNumber: userData.user_ph_number,
             },
             process.env.ACCESS_SECRET,
             {
@@ -45,7 +44,6 @@ async function refreshTokenMiddleware(req, res, next) {
             name: userData.user_name,
             studentId: userData.user_student_id,
             department: userData.user_department,
-            phoneNumber: userData.user_ph_number,
         };
         next();
 

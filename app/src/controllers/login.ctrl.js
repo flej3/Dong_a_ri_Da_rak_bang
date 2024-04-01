@@ -54,7 +54,6 @@ const checkUserAvailability = async (req, res, next) => {
                     name: result.user_name,
                     studentId: result.user_student_id,
                     department: result.user_department,
-                    phoneNumber: result.user_ph_number,
                 },
                 process.env.ACCESS_SECRET,
                 {
@@ -71,7 +70,6 @@ const checkUserAvailability = async (req, res, next) => {
                     name: result.user_name,
                     studentId: result.user_student_id,
                     department: result.user_department,
-                    phoneNumber: result.user_ph_number,
                 },
                 process.env.REFRESH_SECRET,
                 {
@@ -132,7 +130,6 @@ const refreshToken = async (req, res) => {
                 name: result.user_name,
                 studentId: result.user_student_id,
                 department: result.user_department,
-                phoneNumber: result.user_ph_number,
             },
             process.env.ACCESS_SECRET,
             {

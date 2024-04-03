@@ -6,6 +6,12 @@
 
 <main id="main" class="main">
 
+    <!-- jQuery 및 jQuery UI 스크립트를 포함 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <!-- jQuery UI CSS를 포함 -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <div class="pagetitle">
         <h1>동아리 관리</h1>
     </div>
@@ -13,15 +19,13 @@
     <section class="section profile">
         <div class="row">
             <div class="col-xl-4">
-
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
                         <img src="assets/img/hs-logo.png" alt="Profile" class="rounded-circle">
                         <h2>동아리명 : <%= club.club_name%> </h2>
                         <!--소속은 고정이 아님. 동아리장이 컴공이라고해서 
                         해당 동아리가 컴공 소속이지 않다는 뜻!-->
-                        <h3>소속 : 컴퓨터 공학부</h3>
+                        <h3>소속 : <%= club.affilition%></h3>
                         <div class="social-links mt-2">
                             <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                             <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -30,11 +34,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <div class="col-xl-8">
-
                 <div class="card">
                     <div class="card-body pt-3">
                         <!-- Bordered Tabs -->
@@ -61,7 +63,7 @@
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <div class="col-md-4" style="width: 100%;">
-                                    <table class="table">
+                                    <table class="table" id="member-table" style="width: 100%; ">
                                         <thead>
                                         <tr>
                                             <th scope="col"></th>
@@ -69,17 +71,33 @@
                                             <th scope="col">학번</th>
                                             <th scope="col">학과</th>
                                             <th scope="col">전화번호</th>
+                                            <th scope="col">직위</th>
+                                            <th scope="col">관리 권한</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="member-table">
                                         <% let count = 1; %>
                                         <% members.forEach(member => { %>
                                             <tr>
                                                 <th scope="row"><%= count %></th>
-                                                <td><%= member.member_name %></td>
+                                                <td><% if (member.user_id) { %>
+                                                        <i class="bi bi-circle" id="judgment-user" style="font-size: 6px;
+                                                border-radius: 50%; margin-right: 8px; background-color: aquamarine;"></i>
+                                                    <% } else { %>
+                                                        <i class="bi bi-circle" id="judgment-user" style="font-size: 6px;
+                                                border-radius: 50%; margin-right: 8px; background-color:slategrey;"></i>
+                                                    <% } %><%= member.member_name %></td>
                                                 <td><%= member.member_student_id %></td>
                                                 <td><%= member.member_department %></td>
                                                 <td><%= member.member_ph_number%></td>
+                                                <td>
+                                                    <span id="position_text_<%= count %>"><%= member.position %></span>
+                                                    <input type="text" id="position_input_<%= count %>" style="display: none; width: 60px;" placeholder="<%= member.position %>">
+                                                </td>
+                                                <td contenteditable="false">
+                                                    <input type="checkbox" id="adminCheckbox_<%= count %>" <% if (member.admin_ac) { %>checked="checked"<% } %> disabled="disabled">
+                                                    <button class="btn btn-primary" id="hidden-btn" style="display: none; margin-left: 30px;">x</button>
+                                                </td>
                                             </tr>
                                             <% count++; %>
                                         <% }); %>
@@ -87,14 +105,27 @@
                                     </table>
                                 </div>
 
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div id="button-container" style="display: flex;">
+                                    <!-- 추가 버튼 -->
+                                    <button id="add-button" class="btn btn-primary" style="margin-bottom: 15px; display: none;">+</button>
+                                    <!-- 삭제 버튼 -->
+                                    <button id="delete-button" class="btn btn-primary" style="margin-bottom: 15px; margin-left: 5px; display: none;">-</button>
+                                    </div>
+                                    <!-- 편집 버튼 -->
+                                    <button id="edit-button" class="btn btn-primary" style="margin-bottom: 15px;">편집</button>
+                                    <!-- 저장 버튼 -->
+                                    <button id="save-button" type="submit" class="btn btn-primary" style="margin-bottom: 15px; display: none;">저장</button>
+                                </div>
                             </div>
 
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                                 <div style="text-align: right;">
-                                    <button type="submit" class="btn btn-primary" style="margin-bottom: 15px;">작성하기</button>
+                                    <button id="write-post" class="btn btn-primary" style="margin-bottom: 15px;">작성하기</button>
                                 </div>
 
+                                <% recruits.forEach(recruits => { %>
                                 <div class="card mb-3" >
                                     <div class="row g-0">
                                         <div class="col-md-3">
@@ -102,55 +133,13 @@
                                         </div>
                                         <div class="col-md-9">
                                             <div class="card-body">
-                                                <h5 class="card-title">게시글 제목</h5>
-                                                <p class="card-text">동아리 설명</p>
+                                                <h5 class="card-title"><%=recruits.club_name%></h5>
+                                                <p class="card-text"><%=recruits.content%></p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="card mb-3" >
-                                    <div class="row g-0">
-                                        <div class="col-md-3">
-                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="card-body">
-                                                <h5 class="card-title">게시글 제목</h5>
-                                                <p class="card-text">동아리 설명</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card mb-3" >
-                                    <div class="row g-0">
-                                        <div class="col-md-3">
-                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="card-body">
-                                                <h5 class="card-title">게시글 제목</h5>
-                                                <p class="card-text">동아리 설명</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card mb-3" >
-                                    <div class="row g-0">
-                                        <div class="col-md-3">
-                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="card-body">
-                                                <h5 class="card-title">게시글 제목</h5>
-                                                <p class="card-text">동아리 설명</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                                <% }); %>
                             </div>
 
                             <div class="tab-pane fade pt-3" id="profile-settings">
@@ -220,7 +209,7 @@
                             <div class="tab-pane fade pt-3" id="profile-change-password">
                                 <!-- Change Password Form -->
                                 <div style="text-align: right;">
-                                    <button type="submit" class="btn btn-primary" style="margin-bottom: 15px;">작성하기</button>
+                                    <button type="submit" id="notice-write" class="btn btn-primary" style="margin-bottom: 15px;">작성하기</button>
                                 </div>
 
                                 <div class="card mb-3" >
@@ -278,16 +267,13 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div><!-- End Bordered Tabs -->
-
                     </div>
                 </div>
-
             </div>
         </div>
+
     </section>
 
 </main><!-- End #main -->
@@ -311,6 +297,28 @@
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
 
+<script>
+    document.getElementById('write-post').addEventListener('click', function() {
+        window.location.href = '/write-post';
+    });
+</script>
+
+<script defer src="../assets/js/pagesAdmin/admin_edit.js"></script>
+
 </body>
+
+<style>
+    td {
+        padding:5px;
+    }
+
+    #button-container .btn .btn-primary{
+        float: left;
+    }
+
+    .hidden-btn {
+        display: none;
+    }
+</style>
 
 </ejs>

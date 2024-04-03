@@ -8,34 +8,36 @@ function createCard(data) {
     const cardContainer = document.getElementById("card-container");
 
     const cardCol = document.createElement("div");
-    cardCol.classList.add("col");
-    cardCol.setAttribute('id', `post_number-${data.post_number}`); // 고유한 ID 할당
+    cardCol.classList.add("col", "mb-4");
+    cardCol.setAttribute('id', `post_number-${data.post_number}`);
 
     const card = document.createElement("div");
-    card.classList.add("card", "clickable-card", "team-card");
+    card.classList.add("card", "clickable-card", "team-card", "shadow-sm");
     card.style.maxWidth = "540px";
 
-    // 작성일과 마감일 표시
     const createDay = new Date(data.create_day).toLocaleDateString();
     const deadDay = new Date(data.dead_day).toLocaleDateString();
 
+    const writer = `<span class="badge bg-secondary">작성자: ${data.writer}</span>`;
+
     const cardContent = `
         <div class="row g-0">
-        <a href="/view-current-recruit-post?query=${data.post_number}">
-            <div class="col-md-4">
-                <img src="assets/img/card.jpg" class="img-fluid rounded-start">
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title mb-3">${data.club_name}</h5>
-                    <h6 class="card-subtitle mb-3 text-muted">${data.title}</h6>
-                    <p class="card-text mb-2"><strong>모집인원:</strong> ${data.recruit_num}명</p>
-                    <p class="card-text mb-2"><strong>게시일:</strong> ${createDay}</p>
-                    <p class="card-text mb-2"><strong>모집 종료일:</strong> ${deadDay}</p>
-                    <p class="card-text text-truncate">${textContent}</p>
-                    <span class="badge bg-secondary position-absolute top-0 end-0">게시글 번호: ${data.post_number}</span>
+            <a href="/view-recruit-post?query=${data.post_number}" class="text-decoration-none">
+                <div class="col-md-4">
+                    <img src="assets/img/card.jpg" class="img-fluid rounded-start">
                 </div>
-            </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title text-dark mb-2">${data.club_name}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">${data.title}</h6>
+                        <div class="mb-2">${writer}</div>
+                        <p class="card-text mb-1"><strong>모집인원:</strong> ${data.recruit_num}명</p>
+                        <p class="card-text mb-1"><strong>게시일:</strong> ${createDay}</p>
+                        <p class="card-text mb-1"><strong>모집 종료일:</strong> ${deadDay}</p>
+                        <p class="card-text mb-3 text-truncate">${textContent}</p>
+                        <span class="badge bg-info position-absolute top-0 end-0 m-2">번호: ${data.post_number}</span>
+                    </div>
+                </div>
             </a>
         </div>
     `;

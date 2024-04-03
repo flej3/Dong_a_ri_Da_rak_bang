@@ -43,6 +43,26 @@ function verifyClubAdmin(user_id, club_name) {
     });
 }
 
+//해당 아이디의 유저가 카테고리 동아리의 Admin_ac를 체크.
+function verifyClubMemberAdminAc(category, studentId){
+    return new Promise((resolve, reject) => {
+        executeQuery('SELECT admin_ac FROM club_member WHERE category = ? AND member_student_id = ?;',
+        [category, studentId],
+        (err, result) => {
+            if (err) {
+                handleDBError(err);
+                reject(err);
+            } else {
+                if (result.length === 0 || !result[0].admin_ac) {
+                    resolve(false); // 해당 동아리에 admin_ac 권한이 없음.
+                } else {
+                    resolve(true); // 해당 동아리에 admin_ac 권한이 있음.
+                }
+            }
+        });
+    })
+}
+
 const createPost = async (req, res) => {
     const postData = req.body;
     const resData = {};
@@ -75,6 +95,7 @@ const createPost = async (req, res) => {
                     return res.json(resData);
                 }
                 resData.success = true;
+                resData.postNum = result.insertId;
                 res.json(resData);
             })
     } catch (err) {
@@ -105,4 +126,6 @@ module.exports = {
     createPost,
     getClubCategory,
     checkClubOwner,
+    verifyClubAdmin,
+    verifyClubMemberAdminAc,
 };

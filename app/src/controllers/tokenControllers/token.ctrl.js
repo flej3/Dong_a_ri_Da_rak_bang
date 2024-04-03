@@ -92,9 +92,27 @@ const verifyToken = (req, res, next) => {
     }
 };
 
+//로그인 검증, 클라이언트 측에서 지금 로그인된건지 확인하는 미들웨어.
+const isLogin = (req, res, next) => {
+    const token = req.cookies.accessToken;
+    // JWT가 없는 경우
+    if (!token) {
+        return res.json({ isLogin: false });
+    }
+    try {
+        // JWT를 검증하여 페이로드(사용자 정보)를 추출
+        const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
+        req.user = decoded; // 추출한 사용자 정보를 요청 객체에 저장
+        res.json({ isLogin: true });
+        next(); // 다음 미들웨어로 이동
+    } catch (err) {
+        res.json({ isLogin: false });
+    }
+};
 
 module.exports = {
     refreshTokenMiddleware,
     getTokenDecode,
     verifyToken,
+    isLogin,
 };

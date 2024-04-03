@@ -5,6 +5,10 @@ function setViewPostingInfo(postData) {
     document.getElementById('post_club_name').innerText = `[${clubName}]`;
     document.getElementById('post_title').innerText = title;
 
+    //가장 마지막에 수정한 작성자 표시
+    const writer = postData.writer;
+    document.getElementById('post_writer').innerText = `작성자: ${writer}`;
+
     // 모집 인원 표시
     const recruitNum = postData.recruit_num;
     document.getElementById('post_recruitment_count').innerText = `${recruitNum}명`;
@@ -23,35 +27,13 @@ function setViewPostingInfo(postData) {
 function quillGetHTML(inputDelta) {
     let tempCont = document.createElement("div");
     let editor = tempCont.appendChild(document.createElement("div"));
-    (new Quill(editor)).setContents(inputDelta);
+    // Quill 에디터를 읽기 전용으로 초기화
+    let quill = new Quill(editor, {
+        readOnly: true, // 편집 비활성화
+        theme: 'bubble' // 필요에 따라 테마 설정 가능
+    });
+    quill.setContents(inputDelta);
     return tempCont.innerHTML;
-}
-
-//게시글을 작성하고 바로 작성자가 지금 작성된 게시글을 확인한다.
-function getCurrentRecruitPost() {
-    fetch('/userPosts', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-        .then(res => {
-            if (!res.ok) {
-                throw new Error('네트워크 응답이 올바르지 않습니다.');
-            }
-            return res.json();
-        })
-        .then(data => {
-            if (!data.success) {
-                alert("최근에 작성한 홍보 게시글이 없습니다.");
-                window.location.href = "/";
-            }
-            //와 이게 되네;;
-            setViewPostingInfo(data.postData); // Assuming postData contains club_name and content
-            // Getting HTML content from Quill and setting it to post_club_content
-            let htmlContent = quillGetHTML(data.postData.content);
-            document.getElementById('post_club_content').innerHTML = htmlContent;
-        })
 }
 
 //post_number를 기준으로 홍보게시판을 보여준다.
@@ -73,23 +55,116 @@ function getViewRecruitPostFromNum() {
         .then(data => {
             if (!data.success) {
                 alert("현재 존재하지 않는 게시글 입니다.");
-                // window.location.href = "/";
+                window.location.href = "/";
                 return;
             }
-            //와 이게 되네;;
             setViewPostingInfo(data.postData);
-            let htmlContent = quillGetHTML(data.postData.content);
-            document.getElementById('post_club_content').innerHTML = htmlContent;
+        })
+        .catch(err => {
+            alert("에러가 발생했습니다.");
+            console.error(err);
+            window.location.href = "/";
         })
 }
 
-// 페이지가 로드될 때 getUserPosts 함수를 실행
-document.addEventListener('DOMContentLoaded', function () {
+//해당 게시글의 편집버튼 및 삭제버튼을 보여줄때, 
+//접속자가 해당 게시글의 권한자(owner || admin_ac)인지 확인
+function verifyEditAccess() {
     const urlParams = new URLSearchParams(window.location.search);
     const postNum = urlParams.get('query');
-    if(postNum){
-        getViewRecruitPostFromNum();
-        return;
+
+    fetch(`/verifyEditAccess?query=${postNum}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('네트워크 응답이 올바르지 않습니다.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.isAccess) {
+                document.getElementById('edit_post_button').style.display = 'inline-block';
+                document.getElementById('delete_post_button').style.display = 'inline-block';
+            } else {
+                document.getElementById('edit_post_button').style.display = 'none';
+                document.getElementById('delete_post_button').style.display = 'none';
+            }
+        })
+        .catch(err => {
+            alert("에러가 발생했습니다.");
+            console.error(err);
+            window.location.href = "/";
+        })
+}
+
+async function checkLogin() {
+    try {
+        const response = await fetch('/isLogin', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('네트워크 응답이 올바르지 않습니다.');
+        }
+        const data = await response.json();
+        return data.isLogin;
+    } catch (err) {
+        alert("에러가 발생했습니다.");
+        console.error(err);
+        window.location.href = "/";
     }
-    getCurrentRecruitPost();
+}
+
+function deletePost(postNum) {
+    fetch(`/post-delete`, {
+        method: 'POST',
+        body: JSON.stringify({ postNum: postNum }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('네트워크 응답이 올바르지 않습니다.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!data.success) {
+                alert('게시글 삭제에 실패하였습니다.');
+                return;
+            }
+            alert('게시글이 삭제되었습니다!');
+            window.location.href = "/";
+        })
+        .catch(err => {
+            alert(`에러발생: ${err}`);
+            window.location.href = "/";
+        })
+}
+
+document.addEventListener('DOMContentLoaded', async function () {
+    const isUserLoggedIn = await checkLogin();
+    if (isUserLoggedIn) {
+        verifyEditAccess();
+    }
+    getViewRecruitPostFromNum();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const postNum = urlParams.get('query');
+
+    document.getElementById('edit_post_button').addEventListener('click', () => {
+        window.location.href = `/edit-post?query=${postNum}`;
+    });
+
+    const deletePostBtn = document.getElementById('realDeleteBtn');
+    deletePostBtn.addEventListener('click', () => {
+        deletePost(postNum);
+    });
 });

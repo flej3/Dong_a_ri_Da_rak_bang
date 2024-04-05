@@ -5,11 +5,11 @@
         <main id="main" class="main">
 
             <div class="pagetitle">
-                <h1>동아리 모집 게시글 작성</h1>
+                <h1>동아리 모집 게시글 수정</h1>
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item active">동아리 모집 게시글 작성</li>
+                        <li class="breadcrumb-item active">동아리 모집 게시글 수정</li>
                     </ol>
                 </nav>
             </div><!-- End Page Title -->
@@ -19,7 +19,7 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <div class="pt-1 pb-2">
-                                <h5 class="card-title text-center pb-0 fs-4">동아리 모집 게시글 작성</h5>
+                                <h5 class="card-title text-center pb-0 fs-4">동아리 모집 게시글 수정</h5>
                                 <form method="POST" class="row g-3 needs-validation" novalidate>
                                     <div class="col-12">
                                         <label for="postTitle" class="form-label">제목</label>
@@ -71,18 +71,39 @@
 
                                     <div class="col-12 mt-3">
                                         <div class="d-flex justify-content-end">
-                                            <button id="completePostBtn" type="submit"
-                                                class="btn btn-primary btn-block">게시물 작성</button>
+                                            <button id="save_post_button" type="button"
+                                                class="btn btn-outline-primary me-2">저장</button>
+                                            <button id="cancel_post_button" type="button"
+                                                class="btn btn-outline-secondary me-2">취소</button>
+                                            <button type="button" class="btn btn-outline-danger me-2"
+                                                data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
                                         </div>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-
+            </div>
+            <!-- 삭제 확인 모달 -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">게시글 삭제 확인</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            정말로 이 게시글을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                            <button id = "realDeleteBtn" type="button" class="btn btn-danger">삭제</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main><!-- End #main -->
 
@@ -108,7 +129,7 @@
             <!-- <script src="../../../assets/js/image-resize.min.js"></script> -->
 
             <!-- Client JS File -->
-            <script defer src="../../../assets/js/post/post-recruit/writePost.js"></script>
+            <script defer src="../../../assets/js/post/post-recruit/editPost.js"></script>
             </body>
 
             </html>

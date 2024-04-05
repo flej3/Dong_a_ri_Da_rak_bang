@@ -73,7 +73,7 @@ function submitPostData(event) {
                 return;
             }
             alert('게시글 등록에 성공하였습니다.');
-            window.location.href = "/view-current-recruit-post";
+            window.location.href = `/view-recruit-post?query=${data.postNum}`;
         })
         .catch(error => {
             console.error('오류 발생:', error.message);

@@ -65,6 +65,10 @@ function setRecruitPostDashboard() {
                 return createNoResultMessage(`작성된 게시글이 없습니다.`);
             }
             data.postData.reverse().forEach(createCard);
+        })
+        .catch(err => {
+            alert('게시글을 불러오던 중 에러가 발생했습니다.');
+            console.error(`에러발생 ${err}`);
         });
 }
 

@@ -14,12 +14,12 @@ router.post("/pages-register", (req, res) => {
   }
 });
 
-router.post("/create-account", userController.createUser, (req, res) => {
-  
-});
+router.post("/create-account", userController.createUser);
 
 router.post("/userId-check", userController.userIdCheck, (req, res) => {
   res.json({ isAvailable: req.isAvailable });
 });
+
+router.post("/userStudentId-check", userController.userStudentIdCheck);
 
 module.exports = router;

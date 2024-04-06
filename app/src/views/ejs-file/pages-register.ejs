@@ -58,79 +58,82 @@
                             <div class="card mb-3">
                                 <div class="card-body">
                                     <div class="pt-4 pb-2">
-                                        <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
-                                        <p class="text-center small">Enter your personal details to create account</p>
+                                        <h5 class="card-title text-center pb-0 fs-4">회원가입</h5>
+                                        <p class="text-center small">회원이 되어주셔서 감사합니다!</p>
                                     </div>
 
-                                    <form method="POST" class="row g-3 needs-validation" novalidate>
+                                    <form id="signupForm" class="row g-3 needs-validation">
                                         <div class="col-12">
-                                            <label for="userId" class="form-label">User Email</label>
+                                            <label for="userId" class="form-label">Email</label>
                                             <div class="input-group">
                                                 <input type="text" name="user_id" class="form-control" id="userId"
-                                                    required>
+                                                    required maxlength="200">
                                                 <button class="btn btn-outline-secondary" type="button"
                                                     id="userIdCheckButton">중복 확인</button>
                                             </div>
-                                            <div class="invalid-feedback">Please, enter your user ID!</div>
+                                            <div class="invalid-feedback" id="invalid_user_id">사용자 ID를 입력해주세요!</div>
                                         </div>
 
                                         <div class="col-12">
                                             <label for="userPw" class="form-label">Password</label>
-                                            <input type="password" name="user_pw" class="form-control" id="userPw" oninput="validatePassword()"
-                                                required>
-                                            <div class="invalid-feedback">Please enter your password!</div>
+                                            <input type="password" name="user_pw" class="form-control" id="userPw"
+                                                oninput="validatePassword()" required maxlength="200">
+                                            <div class="invalid-feedback">비밀번호를 입력해주세요!</div>
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="confirmUserPw" class="form-label">Confirm Password</label>
-                                            <input type="password" class="form-control" id="confirmUserPw" oninput="validatePassword()" required>
-                                            <div class="invalid-feedback">Please confirm your password!</div>
+                                            <label for="confirmUserPw" class="form-label">Password 확인</label>
+                                            <input type="password" class="form-control" id="confirmUserPw"
+                                                oninput="validatePassword()" required maxlength="200">
+                                            <div class="invalid-feedback">비밀번호를 다시 한 번 확인해주세요!</div>
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="userName" class="form-label">Name</label>
+                                            <label for="userName" class="form-label">이름</label>
                                             <input type="text" name="user_name" class="form-control" id="userName"
-                                                required>
-                                            <div class="invalid-feedback">Please enter your name.</div>
+                                                required maxlength="200">
+                                            <div class="invalid-feedback">이름을 입력해주세요!</div>
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="userStudentId" class="form-label">Student ID</label>
-                                            <input type="text" name="user_student_id" class="form-control"
-                                                id="userStudentId" required>
-                                            <div class="invalid-feedback">Please enter your student ID!</div>
+                                            <label for="userStudentId" class="form-label">학번</label>
+                                            <div class="input-group">
+                                                <input type="text" name="user_student_id" class="form-control"
+                                                    id="userStudentId" required maxlength="9">
+                                                <button class="btn btn-outline-secondary" type="button"
+                                                    id="studentIdCheckButton">중복 확인</button>
+                                            </div>
+                                            <div class="invalid-feedback" id="userStudentIdFeedback">학번을 입력해주세요!</div>
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="userDepartment" class="form-label">Department</label>
+                                            <label for="userDepartment" class="form-label">학과</label>
                                             <input type="text" name="user_department" class="form-control"
-                                                id="userDepartment" required>
-                                            <div class="invalid-feedback">Please enter your department!</div>
+                                                id="userDepartment" required maxlength="15">
+                                            <div class="invalid-feedback">학과를 입력해주세요!</div>
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="userPhNumber" class="form-label">Phone Number</label>
-                                            <input type="text" name="user_ph_number" class="form-control"
-                                                id="userPhNumber" required>
-                                            <div class="invalid-feedback">Please enter your phone number!</div>
-                                        </div>
+                                            <label for="userPhNumber" class="form-label">핸드폰 번호</label>
+                                            <input type="text" name="user_ph_number" class="form-control" id="userPhNumber" required maxlength="15">
+                                            <div class="invalid-feedback">전화번호를 입력해주세요!</div>
+                                        </div>                                        
 
                                         <div class="col-12">
                                             <div class="form-check">
                                                 <input class="form-check-input" name="terms" type="checkbox" value=""
                                                     id="acceptTerms" required>
-                                                <label class="form-check-label" for="acceptTerms">I agree and accept the
-                                                    <a href="#">terms and
-                                                        conditions</a></label>
-                                                <div class="invalid-feedback">You must agree before submitting.</div>
+                                                <label class="form-check-label" for="acceptTerms">동의
+                                                    <a href="#">이용약관</a></label>
+                                                <div class="invalid-feedback">제출하기 전에 동의해야 합니다.</div>
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit" id="createAccountButton">Create Account</button>
+                                            <button class="btn btn-primary w-100" type="submit"
+                                                id="createAccountButton">Create Account</button>
                                         </div>
                                         <div class="col-12">
-                                            <p class="small mb-0">Already have an account? <a href="pages-login">Log
-                                                    in</a></p>
+                                            <p class="small mb-0">이미 계정이 있으신가요? <a href="pages-login">로그인하러 가기.</a></p>
                                         </div>
                                     </form>
 
@@ -152,6 +155,22 @@
             </section>
 
         </div>
+        <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="errorModalLabel">오류 메시지</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="error-modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </main><!-- End #main -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i

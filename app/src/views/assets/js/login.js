@@ -3,11 +3,20 @@ function getInputValue(id) {
     return document.getElementById(id).value;
 }
 
-// 피드백 표시 함수
 function showInvalidFeedback(message) {
-    let invalidFeedback = document.querySelector('.invalid-feedback');
+    let invalidFeedback = document.querySelector('.invalid-feedback-login');
     invalidFeedback.textContent = message;
     invalidFeedback.style.display = 'block';
+
+    // 애니메이션을 재활성화하기 위해 요소의 offsetWidth에 접근
+    // 이는 브라우저에게 요소를 다시 렌더링하도록 강제함
+    void invalidFeedback.offsetWidth;
+
+    // 애니메이션을 다시 적용
+    invalidFeedback.style.animation = 'none';
+    setTimeout(() => {
+        invalidFeedback.style.animation = '';
+    }, 10); // 약간의 지연을 두어 애니메이션을 재시작
 }
 
 function authenticateUser(event) {

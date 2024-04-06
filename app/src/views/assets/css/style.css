@@ -1249,3 +1249,22 @@ h6 {
   font-weight: bold;
   color: #333;
 }
+
+/* 로그인창 CSS 경고문구 액션 */
+@keyframes colorChange {
+  0% {
+      color: green;
+  }
+  50% {
+      color: red;
+  }
+  100% {
+      color: green;
+  }
+}
+
+.invalid-feedback-login {
+  display: none; /* 기본적으로는 표시하지 않음 */
+  animation: colorChange 2s linear 0s 1; /* 2초 동안 애니메이션 실행, 선형 속도, 0초 지연, 1회 반복 */
+}
+/* 로그인창 CSS 끝*/

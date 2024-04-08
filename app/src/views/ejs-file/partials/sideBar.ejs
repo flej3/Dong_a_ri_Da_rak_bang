@@ -20,20 +20,18 @@
     </li><!-- End Profile Page Nav -->
 
     <li class="nav-item">
+      <a id="club-link" class="nav-link collapsed" href="<%= userData.isAvailable ? 'club-profile' : 'pages-login' %>">
+        <i class="bi bi-people"></i> <!-- 동아리 아이콘을 사용하거나 필요에 따라 변경하세요 -->
+        <span>Club</span> <!-- 탭 이름을 "Club"으로 변경했습니다. -->
+      </a>
+    </li><!-- End Club Page Nav -->
+
+    <li class="nav-item">
       <a class="nav-link collapsed" href="pages-faq">
         <i class="bi bi-question-circle"></i>
         <span>F.A.Q</span>
       </a>
     </li><!-- End F.A.Q Page Nav -->
-
-    <% if (userData.clubData && userData.clubData.isOwner===true) { %>
-      <li>
-        <a class="nav-link collapsed" href="/Page-clubAdmin">
-          <i class="bi bi-house-door"></i>
-          <span>동아리 관리</span>
-        </a>
-      </li>
-      <% } %>
 
         <% if (userData.isAvailable) { %>
           <li class="nav-item">

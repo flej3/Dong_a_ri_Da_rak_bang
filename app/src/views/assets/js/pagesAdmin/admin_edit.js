@@ -58,9 +58,11 @@ const addButton = document.getElementById('add-button');
 
 const saveButton = document.getElementById('save-button');
 saveButton.addEventListener('click', async function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('query');
 
     if(clickCount === 0 && updateDetect()) {  //기존 회원에 대한 변경만 있는 경우
-        fetch('/update-member', {
+        fetch(`/update-member?query=${category}`, {
             method: 'POST',
             body: JSON.stringify(updateTarget),
             headers: {
@@ -110,6 +112,8 @@ saveButton.addEventListener('click', async function() {
                     addButton.style.display = 'none'; // add 버튼 숨기기
                     document.getElementById('edit-button').style.display = 'inline-block'; // 편집 버튼 보이기
                 } else {
+                    alert('동일한 학번은 추가할 수 없습니다.');
+                    window.location.reload();
                     console.error('회원 추가 요청 실패:', response.status);
                 }
             });
@@ -154,6 +158,8 @@ saveButton.addEventListener('click', async function() {
                 alert('회원 추가와 정보 변경에 성공하였습니다.');
                 window.location.reload();
             } else {
+                alert('동일한 학번은 추가할 수 없습니다.');
+                window.location.reload();
                 throw new Error('회원 추가 또는 정보 변경 중 오류 발생');
             }
         } catch (error) {
@@ -246,15 +252,20 @@ function showButtonOnHover() {
     });
 }
 
-window.addEventListener('load', showButtonOnHover);
+document.addEventListener('DOMContentLoaded', () => {
+    showButtonOnHover();
+    pageSplit();
+})
 
 document.querySelectorAll('#hidden-btn').forEach(btn => {
     btn.addEventListener('click', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('query');
         if (confirm('정말로 이 회원을 삭제하시겠습니까?')) {
             const row = this.closest('tr');
             const getStudentId = row.querySelectorAll('td')[1];
             const deleteId = getStudentId.textContent;
-            fetch('/delete-member', {
+            fetch(`/delete-member?query=${category}`, {
                 method: 'POST',
                 body: JSON.stringify({id: deleteId}),
                 headers: {
@@ -273,3 +284,72 @@ document.querySelectorAll('#hidden-btn').forEach(btn => {
         }
     });
 });
+
+function pageSplit() {
+    let checkValue;
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('query');
+    fetch(`/check-member?query=${category}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(res => {
+            if (!res.ok) {
+                alert('에러가 발생했습니다.');
+                window.location.href = "/";
+                throw new Error('네트워크 응답이 올바르지 않습니다.');
+            }
+            return res.json();
+        })
+        .then(data => {
+            if (!data.success) {
+                console.log('error');
+            } else {
+                checkValue = data.result[0].admin_ac;
+                if (checkValue === 0) {
+                    const recruitList = document.getElementById('recruit-list');
+                    recruitList.style.display = 'none';
+
+                    const writePosts = document.querySelectorAll('#write-post');
+                    writePosts.forEach(element => {
+                        element.style.display = 'none';
+                    });
+
+                    const stId = document.getElementById('student-id');
+                    stId.style.display = 'none';
+
+                    const phNumber = document.getElementById('ph-number');
+                    phNumber.style.display = 'none';
+
+                    const stList = document.querySelectorAll('#student-id-list');
+                    stList.forEach(element => {
+                        element.style.display = 'none';
+                    });
+
+                    const phList = document.querySelectorAll('#ph-number-list');
+                    phList.forEach(element => {
+                        element.style.display = 'none';
+                    });
+
+                    const stName = document.querySelectorAll('#student-name');
+                    stName.forEach(element => {
+                        element.style.width = '180px';
+                    });
+
+                    const stDepartment = document.querySelectorAll('#student-department');
+                    stDepartment.forEach(element => {
+                        element.style.width = '220px';
+                    });
+
+                    const editBtn = document.getElementById('edit-button');
+                    editBtn.style.display = 'none';
+                }
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+}
+

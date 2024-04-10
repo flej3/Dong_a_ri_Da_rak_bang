@@ -86,15 +86,17 @@
                         <section id="comments" class="mb-5">
                             <div class="card">
                                 <div class="card-body">
-                                    <h2 class="mb-4">댓글</h2>
+                                    <h2 class="mb-4 mt-3">Comment</h2>
                                     <form id="comment_form">
                                         <div class="mb-3">
                                             <textarea class="form-control" id="comment_input" rows="3"
-                                                placeholder="댓글을 입력하세요..." style="resize: none;"></textarea>
+                                                placeholder="댓글을 입력하세요..." style="resize: none;" required
+                                                oninput="contentNotNull()"></textarea>
                                         </div>
-                                        <button class="btn btn-primary">댓글 달기</button>
+                                        <button type="button" id="commentSubmitBtn" class="btn btn-primary" disabled>댓글
+                                            달기</button>
                                     </form>
-                                    <div class="comments-list">
+                                    <div class="comments-list mt-3">
                                         <!-- 댓글 목록 -->
                                     </div>
                                 </div>
@@ -104,7 +106,7 @@
                 </div>
             </div>
 
-            <!-- 삭제 확인 모달 -->
+            <!-- 게시글 삭제 확인 모달 -->
             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
@@ -123,6 +125,47 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 댓글 편집 모달 -->
+            <div class="modal fade" id="commentEditModal" tabindex="-1" aria-labelledby="commentEditModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="commentEditModalLabel">댓글 편집</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <textarea id="commentEditTextarea" class="form-control" rows="4"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            <button type="button" class="btn btn-primary" id="commentEditSaveBtn">저장</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 댓글 삭제 확인 모달 -->
+            <div class="modal fade" id="commentDeleteModal" tabindex="-1" aria-labelledby="commentDeleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="commentDeleteModalLabel">댓글 삭제 확인</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            정말로 이 댓글을 삭제하시겠습니까?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                            <button id="commentConfirmDeleteBtn" type="button" class="btn btn-danger"
+                                data-bs-dismiss="modal">삭제 확인</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
 
         <!-- ======= Footer ======= -->
@@ -147,5 +190,7 @@
 
             <!-- Client JS File -->
             <script defer src="../../../assets/js/post/post-recruit/viewPost.js"></script>
+            <script defer src="../../../assets/js/comments/recruit_comments/recruit_comment.js"></script>
+
             </body>
             </ejs>

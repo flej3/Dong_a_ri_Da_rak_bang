@@ -113,7 +113,7 @@ async function checkLogin() {
             throw new Error('네트워크 응답이 올바르지 않습니다.');
         }
         const data = await response.json();
-        return data.isLogin;
+        return data;
     } catch (err) {
         alert("에러가 발생했습니다.");
         console.error(err);
@@ -151,7 +151,7 @@ function deletePost(postNum) {
 
 document.addEventListener('DOMContentLoaded', async function () {
     const isUserLoggedIn = await checkLogin();
-    if (isUserLoggedIn) {
+    if (isUserLoggedIn.isLogin) {
         verifyEditAccess();
     }
     getViewRecruitPostFromNum();

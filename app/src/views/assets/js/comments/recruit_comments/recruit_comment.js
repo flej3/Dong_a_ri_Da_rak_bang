@@ -5,6 +5,30 @@ function getPostNumber() {
     return postNum;
 }
 
+async function isClubOwner() {
+    const postNum = getPostNumber();
+    try {
+        const response = await fetch(`/api/clubOwnerId/get?query=${postNum}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('네트워크 응답이 올바르지 않습니다.');
+        }
+        const data = await response.json();
+        if (!data.success) {
+            throw new Error('클럽 대표를 조회중 에러가 발생했습니다..');
+        }
+        return data.clubOwnerId;
+    } catch (err) {
+        alert("해당 게시글의 클럽 대표를 조회중 에러발생.");
+        console.error(`에러발생 ${err}`);
+        window.location.href = "/";
+    }
+}
+
 //content의 값이 없으면 "댓글달기" 버튼 비활성화.
 function contentNotNull() {
     const contentText = document.getElementById('comment_input').value;
@@ -81,7 +105,9 @@ document.getElementById('commentSubmitBtn').addEventListener('click', async (eve
     addCommentNew();
 });
 
-function displayComments(commentData, currentUserId) {
+async function displayComments(commentData, currentUserId) {
+    const clubOwnerId = await isClubOwner();
+
     const commentsList = document.querySelector('.comments-list');
     // 기존 댓글 목록 초기화
     commentsList.innerHTML = '';
@@ -105,13 +131,27 @@ function displayComments(commentData, currentUserId) {
         if (!comment.parent_comment_id) {
             buttonsHTML += `<button class="btn btn-sm btn-outline-secondary reply-btn" data-comment-id="${comment.comment_id}">대댓글 달기</button>`;
         }
+
+        // 해당 동아리 게시글 대표인 경우 댓글에 왕관 추가.
+        let titleHTML = `<h6 class="card-title d-flex row align-items-center">
+                    <div class="col">${comment.user_id}</div>
+                    <div class="col-auto"><small class="text-muted">${new Date(comment.created_at).toLocaleString()}</small></div>
+                </h6>`;
+        if (comment.user_id === clubOwnerId) {
+            titleHTML = `<h6 class="card-title d-flex row align-items-center" style="color: #B8860B;">
+                    <div class="col-auto"><img src='/assets/img/club-owner-icon.png' style='width: 30px;'/></div>
+                    <div class="col">${comment.user_id}</div>
+                    <div class="col-auto"><small class="text-muted">${new Date(comment.created_at).toLocaleString()}</small></div>
+                </h6>`;
+        }
+
         let commentHTML = `
             <div class="card-body">
-                <h6 class="card-title">${comment.user_id}<small class="ms-3 text-muted">${new Date(comment.created_at).toLocaleString()}</small></h6>
-                <p class="card-text" id="comment-content-${comment.comment_id}">${comment.content}</p>
+            ${titleHTML}
+            <p class="card-text" id="comment-content-${comment.comment_id}">${comment.content}</p>
                 ${buttonsHTML}
             </div>
-        `;
+            `;
 
         if (comment.is_deleted === 1) {
             // 댓글이 삭제된 경우
@@ -288,7 +328,7 @@ function addReply(parentId) {
             return res.json();
         })
         .then(data => {
-            if(!data.success){
+            if (!data.success) {
                 alert('대댓글을 작성중에 에러가 발생했습니다.');
                 window.location.reload();
                 return;
@@ -392,10 +432,16 @@ function getCommentData(userData) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const userData = await checkLogin();
-    if (!userData.isLogin) {
-        getCommentData("");
-    } else {
-        getCommentData(userData.decoded.id);
+    try {
+        const userData = await checkLogin();
+        if (!userData.isLogin) {
+            getCommentData("");
+        } else {
+            getCommentData(userData.decoded.id);
+        }
+    } catch (error) {
+        console.error(`에러발생 ${error}`);
+        alert("클럽 대표 조회 중 에러 발생");
+        window.location.href = "/";
     }
-})
+});

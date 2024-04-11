@@ -22,6 +22,20 @@ function setViewPostingInfo(postData) {
     // Quill Delta를 HTML로 변환하여 설정
     let htmlContent = quillGetHTML(postData.content);
     document.getElementById('post_club_content').innerHTML = htmlContent;
+
+    // deadline이 지났는지 확인하고 알림 표시
+    const now = new Date();
+    const deadline = new Date(postData.dead_day);
+    if (now > deadline) {
+        const alertDiv = document.createElement('div');
+        alertDiv.classList.add('alert', 'alert-danger', 'bg-danger', 'text-light', 'border-0', 'alert-dismissible', 'fade', 'show');
+        alertDiv.setAttribute('role', 'alert');
+        alertDiv.innerHTML = '해당 동아리 게시글은 마감되었습니다.';
+        document.getElementById('post_deadline_alert').appendChild(alertDiv);
+        
+        const joinClubBtn = document.getElementById('joinClubBtn');
+        joinClubBtn.disabled = true;
+    }
 }
 
 function quillGetHTML(inputDelta) {

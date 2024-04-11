@@ -85,7 +85,7 @@ const updateComment = async (req, res) => {
             [commentData.originalContent, commentData.commentId],
             (err, result) => {
                 if (err) {
-                    handleDBError(`댓글을 삭제 처리할때 에러 발생: ${err}`);
+                    handleDBError(`댓글을 업데이트 할때 에러 발생: ${err}`);
                     resData.success = false;
                     return res.json(resData);
                 }
@@ -179,4 +179,5 @@ module.exports = {
     updateComment,
     addReplyComment,
     getClubOwnerId,
+    getCategoryQuery,
 }

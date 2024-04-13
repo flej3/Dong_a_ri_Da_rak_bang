@@ -1268,3 +1268,33 @@ h6 {
   animation: colorChange 2s linear 0s 1; /* 2초 동안 애니메이션 실행, 선형 속도, 0초 지연, 1회 반복 */
 }
 /* 로그인창 CSS 끝*/
+
+/*--------------------------------------------------------------
+# Modal(이용 약관)
+--------------------------------------------------------------*/
+.modal {
+  font-family: Arial, sans-serif;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.modal-body {
+  font-size: 16px;
+}
+
+.modal-body h5 {
+  font-size: 18px; 
+  font-weight: bold;
+}
+
+.modal-body p {
+  margin-bottom: 10px; /* 문단 간격 조정 */
+}
+
+/* 확인 버튼 스타일 조정 */
+.modal-footer .btn-primary {
+  font-size: 18px;
+}

@@ -115,22 +115,91 @@
 
                                         <div class="col-12">
                                             <label for="userPhNumber" class="form-label">핸드폰 번호</label>
-                                            <input type="text" name="user_ph_number" class="form-control" id="userPhNumber" required maxlength="15">
+                                            <input type="text" name="user_ph_number" class="form-control"
+                                                id="userPhNumber" required maxlength="15">
                                             <div class="invalid-feedback">전화번호를 입력해주세요!</div>
-                                        </div>                                        
+                                        </div>
 
-                                        <div class="col-12">
-                                            <div class="form-check">
+                                        <!-- 약관동의 -->
+                                        <div id="termsModal" class="modal"
+                                            style="display: none; position: absolute; z-index: 1050;">
+                                            <div class="modal-dialog" style="position: relative; top: -20px;">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">서비스 이용약관</h5>
+                                                        <button type="button" class="btn-close" onclick="closeModal()"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <h5>제1조 (목적)</h5>
+                                                        <p>본 약관은 한신 대학교 동아리 관리 시스템 서비스(이하 "서비스"라 함)의 이용조건 및 절차, 회원과 관리자
+                                                            간의 권리, 의무 및 책임사항 등을 규정하는 것을 목적으로 합니다.</p>
+                                                        <h5>제2조 (정의)</h5>
+                                                        <p>
+                                                            본 약관에서 사용하는 용어의 정의는 다음과 같습니다.
+                                                            <br> 1. 서비스: 한신 대학교 동아리 관리 시스템에서 제공하는 모든 서비스를 의미합니다.
+                                                            <br> 2. 회원: 본 약관에 동의하고 회원가입을 한 자를 말합니다.
+                                                            <br> 3. 관리자: 동아리 관리 시스템을 운영하는 한신 대학교 관리자를 말합니다.
+                                                        </p>
+                                                        <h5>제3조 (약관의 효력과 변경)</h5>
+                                                        <p>
+                                                            1. 본 약관은 회원이 동의함으로써 효력을 발생합니다.
+                                                            <br> 2. 한신 대학교 동아리 관리 시스템 운영팀은 관련 법령에 따라 본 약관을 개정할 수 있습니다. 약관이 변경되는 경우, 변경 사항을
+                                                            회원에게
+                                                            통지합니다. 통지 후 일정 기간 이내에 이의를 제기하지 않으면 변경 사항에 동의한 것으로 간주됩니다.
+                                                        </p>
+                                                        <h5>제4조 (회원의 의무)</h5>
+                                                        <p>
+                                                            1. 회원은 서비스를 이용함에 있어 다음 각 호의 행위를 해서는 안 됩니다.
+                                                            <br> 1) 타인의 개인정보를 도용하거나 부정한 목적으로 사용하는 행위
+                                                            <br> 2) 서비스의 운영을 방해하는 행위
+                                                            <br> 3) 기타 불법적이거나 부당한 행위
+                                                            <br> 2. 회원은 서비스를 이용함에 있어 관련 법령, 약관, 공지사항 등을 준수하여야 합니다.
+                                                        </p>
+                                                        <!-- 회원가입, 탈퇴에 관한 내용 추가 -->
+                                                        <h5>제5조 (회원가입 및 탈퇴)</h5>
+                                                        <p>
+                                                            1. 회원가입은 본 서비스의 이용을 희망하는 자가 본 약관에 동의하고, 한신 대학교 동아리 관리 시스템 운영팀이 요청하는 필수 정보를
+                                                            제공하여야
+                                                            합니다.
+                                                            <br> 2. 탈퇴를 원하는 회원은 한신 대학교 동아리 관리 시스템 운영팀이 제공하는 탈퇴 절차를 따라야 합니다. 탈퇴 후에도 한신 대학교 동아리 관리 시스템 운영팀이 관련
+                                                            법령 및
+                                                            정부기관의 요청에 따라 일정 기간 동안 회원의 개인정보를 보관할 수 있습니다.
+                                                        </p>
+                                                        <!-- "동의합니다" 체크박스 추가 -->
+                                                        <div class="form-check mt-3">
+                                                            <input class="form-check-input" type="checkbox" value=""
+                                                                id="agreementCheckbox">
+                                                            <label class="form-check-label" for="agreementCheckbox">
+                                                                동의합니다
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <!-- 확인 버튼 -->
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary"
+                                                            onclick="confirmAgreement()">확인</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 회원가입 폼 -->
+                                        <div class="col-12" style="margin-bottom: 20px;">
+                                            <div class="form-check" style="position: relative;">
                                                 <input class="form-check-input" name="terms" type="checkbox" value=""
                                                     id="acceptTerms" required>
-                                                <label class="form-check-label" for="acceptTerms">동의
-                                                    <a href="#">이용약관</a></label>
+                                                <label class="form-check-label" for="acceptTerms"
+                                                    onclick="toggleTermsModal()">
+                                                    약관동의(보기)
+                                                </label>
                                                 <div class="invalid-feedback">제출하기 전에 동의해야 합니다.</div>
                                             </div>
                                         </div>
+
+
                                         <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit"
-                                                id="createAccountButton">Create Account</button>
+                                            <button class="btn btn-primary w-100" type="submit" id="createAccountButton"
+                                                onclick="checkAgreement()">Create Account</button>
                                         </div>
                                         <div class="col-12">
                                             <p class="small mb-0">이미 계정이 있으신가요? <a href="pages-login">로그인하러 가기.</a></p>
@@ -170,7 +239,7 @@
                 </div>
             </div>
         </div>
-        
+
     </main><!-- End #main -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
@@ -191,6 +260,7 @@
 
     <!--Client JS File-->
     <script defer src="../assets/js/register.js"></script>
+    <script defer src="../assets/js/toggleTermsAgreement.js"></script>
 
 </body>
 

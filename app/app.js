@@ -29,6 +29,7 @@ const editPostRoutes = require('./src/routes/post/postRecruit/edit-post.route');
 const recruitCommentRoutes = require('./src/routes/comments/recruit_comments/recruit_comment.route');
 const recruitPostJoinClubRoutes = require('./src/routes/post/postRecruit/join-club/join_club.route');
 const indexClubJoinDashboardRoutes = require('./src/routes/post/postRecruit/join-club/index.clubJoinDashboard.route');
+const createClubRoutes = require('./src/routes/pages-create-club.route');
 
 //미들웨어
 app.use(express.json());
@@ -67,6 +68,7 @@ app.use(pageError);
 app.use(recruitCommentRoutes);
 app.use(recruitPostJoinClubRoutes);
 app.use(indexClubJoinDashboardRoutes);
+app.use(createClubRoutes);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src/views/ejs-file"));

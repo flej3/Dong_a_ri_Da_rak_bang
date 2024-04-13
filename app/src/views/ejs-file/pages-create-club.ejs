@@ -1,0 +1,194 @@
+<!-- 헤더 include -->
+<%- include ('partials/header.ejs') %>
+
+  <!-- ======= Sidebar ======= -->
+  <%- include ('partials/sidebar.ejs') %>
+
+    <main id="main" class="main">
+
+      <div class="pagetitle">
+        <h1>동아리 생성 | 등록</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">동아리 생성 | 등록</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+
+      <section class="section contact">
+
+        <div class="row gy-4">
+          <div class="col-xl-6">
+            <div class="row">
+              <!-- 안내 카드 -->
+              <div class="col-lg-6">
+                <div class="info-box card" style="height: 220px;">
+                  <i class="bi bi-exclamation-triangle-fill" style="color: #ffcc00;"></i>
+                  <h3>안내</h3>
+                  <p>악의적 목적으로 생성된 동아리는 사전 통보 없이 삭제될 예정입니다.</p>
+                </div>
+              </div>
+              <!-- 심사 과정 카드 -->
+              <div class="col-lg-6">
+                <div class="info-box card" style="height: 220px;">
+                  <i class="bi bi-check-circle-fill" style="color: #4CAF50;"></i>
+                  <h3>심사 과정</h3>
+                  <p>동아리 심사 후, 제공하신 연락처로 결과를 알려드립니다.</p>
+                </div>
+              </div>
+              <!-- 정보 입력 카드 -->
+              <div class="col-lg-6">
+                <div class="info-box card" style="height: 220px;">
+                  <i class="bi bi-info-circle-fill" style="color: #2196F3;"></i>
+                  <h3>정보 입력</h3>
+                  <p>정확한 동아리 정보를 입력해 주세요. 부정확한 정보는 승인 거절로 이어질 수 있습니다.</p>
+                </div>
+              </div>
+              <!-- 문의하기 카드 -->
+              <div class="col-lg-6">
+                <div class="info-box card" style="height: 220px; cursor: pointer;"
+                  onclick="window.open('https://open.kakao.com/o/shAShUlg', '_blank')">
+                  <i class="bi bi-envelope-fill" style="color: #f44336;"></i>
+                  <h3>문의하기</h3>
+                  <p>궁금한 점이 있으시다면 클릭하여 문의해주세요.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-6">
+            <div class="card shadow-lg p-4 mb-5 bg-white rounded"> <!-- 그림자와 둥근 모서리 추가 -->
+              <h4 class="text-center mb-4">동아리 정보 입력</h4>
+              <form id="createClubForm">
+                <div class="row gy-4">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-label"><strong>
+                          <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="해당 이름이 동아리 대표로 등록되어집니다.">
+                            <i class="bi bi-question-circle"></i>
+                          </span>
+                          이름: <%= userData.user_name %></strong></label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-label"><strong>
+                          <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="해당 이메일이 동아리 대표로 등록되어집니다.">
+                            <i class="bi bi-question-circle"></i>
+                          </span>
+                          이메일: <%= userData.user_id %></strong></label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="club_name" class="form-label">동아리명:</label>
+                      <input type="text" id="club_name" name="club_name" class="form-control" placeholder="동아리명"
+                        required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="club_members" class="form-label">
+                        <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                          title="정확하지 않아도 괜찮습니다. 대략 인원수를 적어주시면 됩니다!">
+                          <i class="bi bi-question-circle"></i>
+                        </span>
+                        동아리 인원수:</label>
+                      <input type="number" id="club_members" name="club_members" class="form-control"
+                        placeholder="동아리 인원수" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="affiliation" class="form-label">
+                        <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true"
+                          title="ex) 중앙동아리, 소모임,<br>특정 학과(부) 등등">
+                          <i class="bi bi-question-circle"></i>
+                        </span>
+                        동아리 소속:</label>
+                      <input type="text" id="affiliation" name="affiliation" class="form-control" placeholder="소속"
+                        required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="ph_number" class="form-label">
+                            <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true"
+                                title="심사 과정에서 연락받을<br>연락처를 적어주세요!">
+                                <i class="bi bi-question-circle"></i>
+                            </span>
+                            연락처:
+                        </label>
+                        <input type="text" id="ph_number" name="ph_number" class="form-control"
+                            placeholder="심사 결과 안내받을 연락처" required>
+                    </div>
+                </div>                
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="club_description" class="form-label">동아리 설명:</label>
+                      <textarea id="club_description" name="club_description" class="form-control" rows="6"
+                        placeholder="관리자는 이 내용을 보고 정상적인 동아리인지 판단합니다!  '우리 동아리(모임)은 정상적인 모임입니다!'라는 내용과 동아리에 대해서 설명 해주시면 됩니다!"
+                        required></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="form-check mb-3"> <!-- mb-3 클래스로 마진 추가 -->
+                      <input class="form-check-input" type="checkbox" id="agreement1" required>
+                      <label class="form-check-label" for="agreement1">
+                        본 동아리는 어떠한 악의적 목적을 가지지 않으며, 선량한 목적으로 운영됩니다.
+                      </label>
+                    </div>
+                    <div class="form-check mb-3"> <!-- mb-3 클래스로 마진 추가 -->
+                      <input class="form-check-input" type="checkbox" id="agreement2" required>
+                      <label class="form-check-label" for="agreement2">
+                        본 동아리 활동 중 발생하는 모든 불미스러운 사건이나 사고에 대한 책임은 동아리 측에 있음을 인지합니다.
+                      </label>
+                    </div>
+                  </div>
+                
+                  <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">동아리 등록 신청</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <%- include ('partials/footer.ejs') %>
+      <!-- End Footer -->
+
+      <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+          class="bi bi-arrow-up-short"></i></a>
+
+      <!-- Vendor JS Files -->
+      <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+      <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="assets/vendor/chart.js/chart.umd.js"></script>
+      <script src="assets/vendor/echarts/echarts.min.js"></script>
+      <script src="assets/vendor/quill/quill.min.js"></script>
+      <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+      <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+      <script src="assets/vendor/php-email-form/validate.js"></script>
+
+      <!-- Template Main JS File -->
+      <script src="assets/js/main.js"></script>
+
+      </body>
+
+      </html>

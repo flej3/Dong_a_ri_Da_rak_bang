@@ -144,7 +144,8 @@
                                                         <h5>제3조 (약관의 효력과 변경)</h5>
                                                         <p>
                                                             1. 본 약관은 회원이 동의함으로써 효력을 발생합니다.
-                                                            <br> 2. 한신 대학교 동아리 관리 시스템 운영팀은 관련 법령에 따라 본 약관을 개정할 수 있습니다. 약관이 변경되는 경우, 변경 사항을
+                                                            <br> 2. 한신 대학교 동아리 관리 시스템 운영팀은 관련 법령에 따라 본 약관을 개정할 수 있습니다.
+                                                            약관이 변경되는 경우, 변경 사항을
                                                             회원에게
                                                             통지합니다. 통지 후 일정 기간 이내에 이의를 제기하지 않으면 변경 사항에 동의한 것으로 간주됩니다.
                                                         </p>
@@ -159,69 +160,64 @@
                                                         <!-- 회원가입, 탈퇴에 관한 내용 추가 -->
                                                         <h5>제5조 (회원가입 및 탈퇴)</h5>
                                                         <p>
-                                                            1. 회원가입은 본 서비스의 이용을 희망하는 자가 본 약관에 동의하고, 한신 대학교 동아리 관리 시스템 운영팀이 요청하는 필수 정보를
+                                                            1. 회원가입은 본 서비스의 이용을 희망하는 자가 본 약관에 동의하고, 한신 대학교 동아리 관리 시스템
+                                                            운영팀이 요청하는 필수 정보를
                                                             제공하여야
                                                             합니다.
-                                                            <br> 2. 탈퇴를 원하는 회원은 한신 대학교 동아리 관리 시스템 운영팀이 제공하는 탈퇴 절차를 따라야 합니다. 탈퇴 후에도 한신 대학교 동아리 관리 시스템 운영팀이 관련
+                                                            <br> 2. 탈퇴를 원하는 회원은 한신 대학교 동아리 관리 시스템 운영팀이 제공하는 탈퇴 절차를 따라야
+                                                            합니다. 탈퇴 후에도 한신 대학교 동아리 관리 시스템 운영팀이 관련
                                                             법령 및
                                                             정부기관의 요청에 따라 일정 기간 동안 회원의 개인정보를 보관할 수 있습니다.
                                                         </p>
-                                                        <!-- "동의합니다" 체크박스 추가 -->
-                                                        <div class="form-check mt-3">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="agreementCheckbox">
-                                                            <label class="form-check-label" for="agreementCheckbox">
-                                                                동의합니다
-                                                            </label>
-                                                        </div>
                                                     </div>
-                                                    <!-- 확인 버튼 -->
+                                                    <!-- 동의, 닫기 버튼 -->
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-primary"
-                                                            onclick="confirmAgreement()">확인</button>
+                                                            onclick="confirmAgreement()">동의</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            onclick="closeModal()">닫기</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- 회원가입 폼 -->
-                                        <div class="col-12" style="margin-bottom: 20px;">
-                                            <div class="form-check" style="position: relative;">
-                                                <input class="form-check-input" name="terms" type="checkbox" value=""
-                                                    id="acceptTerms" required>
-                                                <label class="form-check-label" for="acceptTerms"
-                                                    onclick="toggleTermsModal()">
-                                                    약관동의(보기)
-                                                </label>
-                                                <div class="invalid-feedback">제출하기 전에 동의해야 합니다.</div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit" id="createAccountButton"
-                                                onclick="checkAgreement()">Create Account</button>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="small mb-0">이미 계정이 있으신가요? <a href="pages-login">로그인하러 가기.</a></p>
-                                        </div>
-                                    </form>
-
                                 </div>
-                            </div>
+                                <!-- 회원가입 폼 -->
+                                <div class="form-check" style="position: relative; margin-bottom: 20px;">
+                                    <div class="form-check" style="position: relative; margin-bottom: 10px;">
+                                        <input class="form-check-input" name="terms" type="checkbox" value=""
+                                            id="acceptTerms" required>
+                                        <label class="form-check-label" for="acceptTerms" onclick="toggleTermsModal()">
+                                            서비스 이용약관 (보기)
+                                        </label>
+                                        <div class="invalid-feedback">제출하기 전에 동의해야 합니다.</div>
+                                    </div>
+                                </div>
 
-                            <div class="credits">
-                                <!-- All the links in the footer should remain intact. -->
-                                <!-- You can delete the links only if you purchased the pro version. -->
-                                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                            </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100" type="submit" id="createAccountButton"
+                                        onclick="checkAgreement()">Create Account</button>
+                                </div>
+                                <div class="col-12">
+                                    <p class="small mb-0">이미 계정이 있으신가요? <a href="pages-login">로그인하러 가기.</a></p>
+                                </div>
+                                </form>
 
+                            </div>
                         </div>
+
+                        <div class="credits">
+                            <!-- All the links in the footer should remain intact. -->
+                            <!-- You can delete the links only if you purchased the pro version. -->
+                            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+                            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                        </div>
+
                     </div>
                 </div>
+        </div>
 
-            </section>
+        </section>
 
         </div>
         <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">

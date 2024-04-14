@@ -1294,7 +1294,12 @@ h6 {
   margin-bottom: 10px; /* 문단 간격 조정 */
 }
 
-/* 확인 버튼 스타일 조정 */
+/* 버튼 스타일 조정 */
 .modal-footer .btn-primary {
   font-size: 18px;
 }
+
+.modal-header .btn-close {
+  font-size: 3rem; /* 엑스 버튼의 크기 조정 */
+}
+

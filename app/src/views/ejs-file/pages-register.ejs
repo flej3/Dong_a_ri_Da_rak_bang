@@ -121,9 +121,8 @@
                                         </div>
 
                                         <!-- 약관동의 -->
-                                        <div id="termsModal" class="modal"
-                                            style="display: none; position: absolute; z-index: 1050;">
-                                            <div class="modal-dialog" style="position: relative; top: -20px;">
+                                        <div id="termsModal" class="modal" style="display: none;">
+                                            <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title">서비스 이용약관</h5>
@@ -157,7 +156,6 @@
                                                             <br> 3) 기타 불법적이거나 부당한 행위
                                                             <br> 2. 회원은 서비스를 이용함에 있어 관련 법령, 약관, 공지사항 등을 준수하여야 합니다.
                                                         </p>
-                                                        <!-- 회원가입, 탈퇴에 관한 내용 추가 -->
                                                         <h5>제5조 (회원가입 및 탈퇴)</h5>
                                                         <p>
                                                             1. 회원가입은 본 서비스의 이용을 희망하는 자가 본 약관에 동의하고, 한신 대학교 동아리 관리 시스템
@@ -170,54 +168,54 @@
                                                             정부기관의 요청에 따라 일정 기간 동안 회원의 개인정보를 보관할 수 있습니다.
                                                         </p>
                                                     </div>
+
                                                     <!-- 동의, 닫기 버튼 -->
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-primary"
-                                                            onclick="confirmAgreement()">동의</button>
+                                                            id="confirmAgreement">동의</button>
                                                         <button type="button" class="btn btn-secondary"
-                                                            onclick="closeModal()">닫기</button>
+                                                            id="closeModalButton">닫기</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                </div>
-                                <!-- 회원가입 폼 -->
-                                <div class="form-check" style="position: relative; margin-bottom: 20px;">
-                                    <div class="form-check" style="position: relative; margin-bottom: 10px;">
-                                        <input class="form-check-input" name="terms" type="checkbox" value=""
-                                            id="acceptTerms" required>
-                                        <label class="form-check-label" for="acceptTerms" onclick="toggleTermsModal()">
-                                            서비스 이용약관 (보기)
-                                        </label>
-                                        <div class="invalid-feedback">제출하기 전에 동의해야 합니다.</div>
-                                    </div>
-                                </div>
 
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100" type="submit" id="createAccountButton"
-                                        onclick="checkAgreement()">Create Account</button>
-                                </div>
-                                <div class="col-12">
-                                    <p class="small mb-0">이미 계정이 있으신가요? <a href="pages-login">로그인하러 가기.</a></p>
-                                </div>
-                                </form>
+                                        <div class="col-12">
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="terms" type="checkbox" value=""
+                                                    id="acceptTerms" required>
+                                                <label class="form-check-label" for="acceptTerms">서비스 이용약관
+                                                    <a href="#" id="viewTermsLink">(보기)</a>
+                                                </label>
+                                                <div class="invalid-feedback">제출하기 전에 동의해야 합니다.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn btn-primary w-100" type="submit"
+                                                id="createAccountButton">Create
+                                                Account</button>
+                                        </div>
+                                        <div class="col-12">
+                                            <p class="small mb-0">이미 계정이 있으신가요? <a href="pages-login">로그인하러 가기.</a></p>
+                                        </div>
+                                    </form>
 
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="credits">
-                            <!-- All the links in the footer should remain intact. -->
-                            <!-- You can delete the links only if you purchased the pro version. -->
-                            <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                            <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-                        </div>
+                            <div class="credits">
+                                <!-- All the links in the footer should remain intact. -->
+                                <!-- You can delete the links only if you purchased the pro version. -->
+                                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+                                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                            </div>
 
+                        </div>
                     </div>
                 </div>
-        </div>
 
-        </section>
+            </section>
 
         </div>
         <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
@@ -255,8 +253,8 @@
     <script src="assets/js/main.js"></script>
 
     <!--Client JS File-->
-    <script defer src="../assets/js/register.js"></script>
-    <script defer src="../assets/js/toggleTermsAgreement.js"></script>
+    <script defer src="../assets/js/register/register.js"></script>
+    <script defer src="../assets/js/register/toggleTermsAgreement.js"></script>
 
 </body>
 

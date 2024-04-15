@@ -15,7 +15,6 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-12">
-                        <div id="post_deadline_alert"></div>
                         <section id="post-details" class="mb-5">
                             <div class="card">
                                 <div class="card-body">
@@ -80,12 +79,6 @@
                                     <div id="post_club_content" class="card-text mt-4">
                                         <!-- 게시글 내용 -->
                                     </div>
-                                    <hr>
-                                    <!-- 동아리 신청하기 버튼 -->
-                                    <div class="text-center mt-4">
-                                        <button type="button" id="joinClubBtn"
-                                            class="btn btn-lg btn-success shadow-lg">동아리 가입 신청하기</button>
-                                    </div>
                                 </div>
                             </div>
                         </section>
@@ -93,17 +86,15 @@
                         <section id="comments" class="mb-5">
                             <div class="card">
                                 <div class="card-body">
-                                    <h2 class="mb-4 mt-3">Comment</h2>
+                                    <h2 class="mb-4">댓글</h2>
                                     <form id="comment_form">
                                         <div class="mb-3">
                                             <textarea class="form-control" id="comment_input" rows="3"
-                                                placeholder="댓글을 입력하세요..." style="resize: none;" required
-                                                oninput="contentNotNull()"></textarea>
+                                                placeholder="댓글을 입력하세요..." style="resize: none;"></textarea>
                                         </div>
-                                        <button type="button" id="commentSubmitBtn" class="btn btn-primary" disabled>댓글
-                                            달기</button>
+                                        <button class="btn btn-primary">댓글 달기</button>
                                     </form>
-                                    <div class="comments-list mt-3">
+                                    <div class="comments-list">
                                         <!-- 댓글 목록 -->
                                     </div>
                                 </div>
@@ -113,7 +104,7 @@
                 </div>
             </div>
 
-            <!-- 게시글 삭제 확인 모달 -->
+            <!-- 삭제 확인 모달 -->
             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
@@ -128,131 +119,6 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                             <button id="realDeleteBtn" type="button" class="btn btn-danger">삭제</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 댓글 편집 모달 -->
-            <div class="modal fade" id="commentEditModal" tabindex="-1" aria-labelledby="commentEditModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="commentEditModalLabel">댓글 편집</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <textarea id="commentEditTextarea" class="form-control" rows="4"></textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                            <button type="button" class="btn btn-primary" id="commentEditSaveBtn">저장</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 댓글 삭제 확인 모달 -->
-            <div class="modal fade" id="commentDeleteModal" tabindex="-1" aria-labelledby="commentDeleteModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="commentDeleteModalLabel">댓글 삭제 확인</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            정말로 이 댓글을 삭제하시겠습니까?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                            <button id="commentConfirmDeleteBtn" type="button" class="btn btn-danger"
-                                data-bs-dismiss="modal">삭제 확인</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="clubJoinApplicationModal" tabindex="-1"
-                aria-labelledby="clubJoinApplicationModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header bg-primary text-white">
-                            <h5 class="modal-title" id="clubJoinApplicationModalLabel">클럽 가입 신청서
-                                <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
-                                    title="기본적인 정보는 가입시에 기입했던 내용이 들어갑니다.">
-                                    <i class="bi bi-question-circle"></i>
-                                </span>
-                            </h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="clubJoinApplicationForm" class="was-validated">
-                                <div class="mb-3 row">
-                                    <div class="col">
-                                        <label for="nameInput" class="form-label">이름</label>
-                                        <p class="form-control-static" id="nameInput"></p>
-                                    </div>
-                                    <div class="col">
-                                        <label for="emailInput" class="form-label">Email / ID</label>
-                                        <p class="form-control-static" id="emailInput"></p>
-                                    </div>
-                                    <div class="col">
-                                        <label for="phoneInput" class="form-label">전화번호</label>
-                                        <p class="form-control-static" id="phoneInput"></p>
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <div class="col">
-                                        <label for="studentIdInput" class="form-label">학번</label>
-                                        <p class="form-control-static" id="studentIdInput"></p>
-                                    </div>
-                                    <div class="col">
-                                        <label for="departmentInput" class="form-label">학과</label>
-                                        <p class="form-control-static" id="departmentInput"></p>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="genderInput" class="form-label">성별</label>
-                                    <select class="form-select" id="genderInput" required>
-                                        <option selected disabled value="">선택하세요</option>
-                                        <option>남성</option>
-                                        <option>여성</option>
-                                    </select>
-                                    <div class="invalid-feedback">성별을 선택하세요.</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="residenceInput" class="form-label">거주지</label>
-                                    <input type="text" class="form-control" id="residenceInput" required>
-                                    <div class="invalid-feedback">거주지를 입력하세요.</div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="introductionInput" class="form-label">간단한 자기소개</label>
-                                    <textarea class="form-control" id="introductionInput" rows="4" required></textarea>
-                                    <div class="invalid-feedback">자기소개를 입력하세요.</div>
-                                </div>
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="understandCheck" required>
-                                    <label class="form-check-label" for="understandCheck">지원하기 전 충분히 해당 게시글의 내용을
-                                        숙지했습니다.</label>
-                                </div>
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="infoCheck" required>
-                                    <label class="form-check-label" for="infoCheck">ID, 이름, 학번, 학과, 전화번호와 기입한 내용이 해당 동아리
-                                        관리자에게 전달됩니다.</label>
-                                </div>
-                                <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="responsibilityCheck" required>
-                                    <label class="form-check-label" for="responsibilityCheck">사실과 다른 내용을 기입하거나, 사이트 용도와
-                                        맞지 않는 내용의 책임은 본인에게 있습니다.</label>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                                    <button id="clubJoinApplicationBtn" type="submit" class="btn btn-primary">가입신청</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -281,8 +147,5 @@
 
             <!-- Client JS File -->
             <script defer src="../../../assets/js/post/post-recruit/viewPost.js"></script>
-            <script defer src="../../../assets/js/comments/recruit_comments/recruit_comment.js"></script>
-            <script defer src="../../../assets/js/post/post-recruit/join_club/join_club.js"></script>
-
             </body>
             </ejs>

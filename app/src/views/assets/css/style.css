@@ -1222,7 +1222,7 @@ h6 {
   }
 }
 
-/*-------------------------HEAD-------------------------------------
+/*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
 .footer {
@@ -1301,66 +1301,3 @@ h6 {
 .modal-header .btn-close {
   font-size: 3rem;
 }
-
-/* 메인 화면(대시보드)에서 뿌려주는 동아리 신청현황 테이블 css */
-.dataTables_wrapper {
-  width: 100%;
-  margin: auto;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  padding: 20px;
-  border-radius: 10px;
-  background-color: #ffffff;
-}
-
-.dataTables_filter input {
-  height: 38px;
-  border: 1px solid #DDD;
-  padding: 0 15px;
-  border-radius: 20px;
-  margin-left: 5px;
-}
-
-.dataTables_paginate .paginate_button {
-  padding: 5px 10px;
-  margin: 0 2px;
-  border: 1px solid #DDD;
-  border-radius: 5px;
-  cursor: pointer;
-  color: #666;
-}
-
-.dataTables_paginate .paginate_button:hover {
-  background-color: #EEE;
-  border-color: #BBB;
-}
-
-.dataTables_paginate .paginate_button.current, .dataTables_paginate .paginate_button.current:hover {
-  color: #FFF;
-  background-color: #007bff;
-  border-color: #007bff;
-}
-.dataTables_wrapper .dataTables_processing {
-  background: #f4f4f4;
-  border: 1px solid #ddd;
-  padding: 5px;
-  border-radius: 3px;
-  box-shadow: 0 2px 3px rgba(0,0,0,0.1);
-}
-
-table.dataTable thead th {
-  border-bottom: 2px solid #ddd;
-}
-
-table.dataTable tbody td {
-  border-bottom: 1px solid #ddd;
-}
-
-table.dataTable thead .sorting_asc:after {
-  content: "\2191"; /* 위쪽 화살표 */
-}
-
-table.dataTable thead .sorting_desc:after {
-  content: "\2193"; /* 아래쪽 화살표 */
-}
-/* 메인 화면(대시보드) 동아리 신청 현황 테이블 css 끝 */
->>>>>>> 8fd7db11c3779f0d11c8ca6ed8798da422865028

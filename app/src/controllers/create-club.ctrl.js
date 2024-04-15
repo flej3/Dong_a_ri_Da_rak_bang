@@ -25,6 +25,34 @@ const setCreateClub = async (req, res) => {
     }
 }
 
+const getCreateClubList = async (req, res) => {
+    const resData = {};
+    try {
+        const decodedToken = await getTokenDecode(req, res);
+
+        const query = `SELECT * FROM club_create_applications WHERE user_id = ?;`;
+        const result = await executeQueryPromise(query, [decodedToken.id]);
+
+        if(result.length === 0){
+            resData.success = true;
+            resData.hasClubList = false;
+            res.status(200).json(resData);
+            return;
+        }
+
+        resData.success = true;
+        resData.hasClubList = true;
+        resData.CreateClubList = result;
+        res.status(200).json(resData);
+    } catch (error) {
+        console.error(`동아리 등록 신청 리스트를 가져오던중 에러발생: ${error}`);
+        resData.success = false;
+        resData.hasClubList = false;
+        res.status(500).json(resData);
+    }
+}
+
 module.exports = {
     setCreateClub,
+    getCreateClubList,
 }

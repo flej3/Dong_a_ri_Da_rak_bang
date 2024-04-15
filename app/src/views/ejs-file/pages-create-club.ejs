@@ -57,7 +57,7 @@
                 </div>
               </div>
               <!-- 이미 동아리 생성 | 등록 신청을 하셨나요? -->
-              <div class="col-lg-12">
+              <div class="col-lg-12" id="viewCreateClubList">
                 <div class="info-box card team-card shadow-lg mb-5 bg-body rounded"
                   style="height: 220px; cursor: pointer; transition: transform .2s;" data-bs-toggle="modal"
                   data-bs-target="#applicationListModal">
@@ -186,13 +186,10 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="applicationListModalLabel">등록 신청 목록</h5>
+              <h5 class="modal-title" id="applicationListModalLabel">동아리 등록 신청 목록</h5>
             </div>
             <div class="modal-body">
               <ul class="list-group">
-                <!-- 항목 클릭 시 상세 정보 모달을 띄움 (여기서는 예시로 정적으로 구현) -->
-                <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#applicationDetailsModal">힙합갱스터 동아리
-                  신청</li>
               </ul>
             </div>
             <div class="modal-footer">
@@ -205,20 +202,63 @@
       <!-- 선택한 등록 신청의 상세 정보 모달 -->
       <div class="modal fade" id="applicationDetailsModal" tabindex="-1" aria-labelledby="applicationDetailsModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="applicationDetailsModalLabel">등록 신청 상세 정보</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <!-- 상세 정보 내용 -->
-              <p>동아리 이름: 힙합갱스터</p>
-              <p>신청자: 어드민</p>
-              <p>연락처: 010-1234-5678</p>
-              <p>신청 날짜: 2024-04-01</p>
-              <p>신청 목적: 대학 내 문화 활성화 및 힙합 문화 공유</p>
+                <div class="mb-3">
+                  <h6>신청 상태:</h6>
+                  <span class="badge"></span>
+                </div>
+
+              <div class="row g-3">
+                <div class="col">
+                  <p></p>
+                </div>
+                <div class="col">
+                  <p></p>
+                </div>
+              </div>
+              <div class="row g-3">
+                <div class="col">
+                  <p></p>
+                </div>
+                <div class="col">
+                  <p></p>
+                </div>
+              </div>
+                <p class="application-date"></p>
+                <p class="application-purpose"></p>
             </div>
             <div class="modal-footer">
+              <!-- 신청 취소 버튼 추가 -->
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                data-bs-target="#cancelConfirmationModal">신청 취소</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 신청 취소 확인 모달 -->
+      <div class="modal fade" id="cancelConfirmationModal" tabindex="-1" aria-labelledby="cancelConfirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="cancelConfirmationModalLabel">신청 취소</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              정말로 해당 신청서를 취소하시겠습니까?<br>
+              관리자가 신청을 검토 중일 수 있습니다.
+            </div>
+            <div class="modal-footer">
+              <button id="deleteCreateClubBtn" type="button" class="btn btn-danger" data-bs-dismiss="modal">동아리 신청을 취소합니다.</button>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
             </div>
           </div>
@@ -248,6 +288,7 @@
 
       <!--Client JS File-->
       <script defer src="../assets/js/createClub/createClub.js"></script>
+      <script defer src="../assets/js/createClub/modalCreateClubView.js"></script>
 
       </body>
 

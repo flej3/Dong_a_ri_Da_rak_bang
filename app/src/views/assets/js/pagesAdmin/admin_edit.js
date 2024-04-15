@@ -37,6 +37,8 @@ editBtn.addEventListener("click", function() {
 let clickCount = 0; //add button count
 const addButton = document.getElementById('add-button');
     addButton.addEventListener('click', function () {
+        const saveBtn = document.getElementById('save-button');
+        saveBtn.disabled = true;
         document.getElementById('delete-button').style.display = "inline-block";
         clickCount++;
         let memberTable = document.getElementById('member-table');
@@ -54,10 +56,28 @@ const addButton = document.getElementById('add-button');
         // 테이블에 위의 형식대로 새로운 행 추가
         let table = document.getElementById('member-table');
         table.appendChild(newRow);
+
+        newRow.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', updateSaveButtonState);
+        });
     });
+
+function updateSaveButtonState() {
+    const saveBtn = document.getElementById('save-button');
+    saveBtn.disabled = false;
+    const inputs = document.querySelectorAll('.member_name, .member_student_id, .member_department, .member_ph_number, .position, .admin_ac');
+    let allInputsFilled = true;
+    inputs.forEach(function(input) {
+        if (input.value.trim() === '') {
+            allInputsFilled = false;
+        }
+    });
+    saveBtn.disabled = !allInputsFilled;
+}
 
 const saveButton = document.getElementById('save-button');
 saveButton.addEventListener('click', async function() {
+    checkStId();
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('query');
 
@@ -351,5 +371,36 @@ function pageSplit() {
         .catch(error => {
             console.error('There was a problem with the fetch operation:', error);
         });
+}
+
+function checkStId() {
+    let count =0;
+    let check = [];
+    const rows = document.querySelectorAll('#student-id-list');
+    const studentIds = [];
+    rows.forEach(row => {
+        const studentId = row.textContent.trim();
+        studentIds.push(studentId);
+    });
+
+    let checkData = [];
+    let rCount = document.getElementById('member-table').getElementsByTagName('tr').length;
+    for(let i = rCount - clickCount + 1 ; i<=rCount; i++) {
+        let rowData = {
+            member_student_id: document.getElementById(`new_member_student_id_${i}`).value,
+        };
+        checkData.push(rowData);
+    }
+
+    for(let i=0; i<checkData.length; i++) {
+        for(let j = 0; j<studentIds.length; j++) {
+            if(checkData[i].member_student_id === studentIds[j]) {
+                count++;
+                check.push(j+2);
+            }
+        }
+    }
+
+    console.log(count, check);
 }
 

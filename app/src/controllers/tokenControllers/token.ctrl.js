@@ -103,7 +103,7 @@ const isLogin = (req, res, next) => {
         // JWT를 검증하여 페이로드(사용자 정보)를 추출
         const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
         req.user = decoded; // 추출한 사용자 정보를 요청 객체에 저장
-        res.json({ isLogin: true });
+        res.json({ isLogin: true, decoded });
         next(); // 다음 미들웨어로 이동
     } catch (err) {
         res.json({ isLogin: false });

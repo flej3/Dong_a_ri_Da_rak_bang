@@ -96,6 +96,10 @@ async function getPostCategory(post_number) {
                     handleDBError(err);
                     return reject(err);
                 }
+                if (result.length === 0) {
+                    const error = new Error('No category found for the specified post number.');
+                    return reject(error);
+                }
                 resolve(result[0].category);
             }
         )
@@ -130,7 +134,7 @@ async function isPostAdminAc(category, userId) {
                     handleDBError(err);
                     return reject(err);
                 }
-                if (result.length === 0) {
+                if (result.length === 0 || result[0].admin_ac === 0) {
                     resolve(false);
                 } else {
                     resolve(true);

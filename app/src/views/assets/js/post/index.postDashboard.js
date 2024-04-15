@@ -1,5 +1,13 @@
 function extractTextFromDelta(delta) {
-    return delta.ops.map(op => op.insert.trim()).join('');
+    return delta.ops.map(op => {
+        if (typeof op.insert === 'string') {
+            return op.insert.trim();
+        } else if (typeof op.insert === 'object' && op.insert.image) {
+            return "(사진)";
+        } else {
+            return ""; // 다른 데이터 형식에 대한 처리
+        }
+    }).join('');
 }
 
 function createCard(data) {

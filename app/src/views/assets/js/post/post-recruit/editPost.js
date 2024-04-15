@@ -137,7 +137,6 @@ function setPostUpdate(event) {
             return response.json();
         })
         .then(data => {
-            console.log(data);
             if (!data.isClubAdminAc) {
                 // 해당 동아리에 권한자가 아닌 경우
                 const dongariNameInput = document.getElementById('dongariName');

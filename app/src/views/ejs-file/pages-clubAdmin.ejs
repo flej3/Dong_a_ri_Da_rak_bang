@@ -51,7 +51,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">가입 신청 현황</button>
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings" id="recruit-list">가입 신청 현황</button>
                             </li>
 
                             <li class="nav-item">
@@ -68,9 +68,9 @@
                                         <tr>
                                             <th scope="col"></th>
                                             <th scope="col">이름</th>
-                                            <th scope="col">학번</th>
+                                            <th scope="col" id="student-id">학번</th>
                                             <th scope="col">학과</th>
-                                            <th scope="col">전화번호</th>
+                                            <th scope="col" id="ph-number">전화번호</th>
                                             <th scope="col">직위</th>
                                             <th scope="col">관리 권한</th>
                                         </tr>
@@ -80,16 +80,16 @@
                                         <% members.forEach(member => { %>
                                             <tr>
                                                 <th scope="row"><%= count %></th>
-                                                <td><% if (member.user_id) { %>
+                                                <td id="student-name"><% if (member.user_id) { %>
                                                         <i class="bi bi-circle" id="judgment-user" style="font-size: 6px;
                                                 border-radius: 50%; margin-right: 8px; background-color: aquamarine;"></i>
                                                     <% } else { %>
                                                         <i class="bi bi-circle" id="judgment-user" style="font-size: 6px;
                                                 border-radius: 50%; margin-right: 8px; background-color:slategrey;"></i>
                                                     <% } %><%= member.member_name %></td>
-                                                <td><%= member.member_student_id %></td>
-                                                <td><%= member.member_department %></td>
-                                                <td><%= member.member_ph_number%></td>
+                                                <td id="student-id-list"><%= member.member_student_id %></td>
+                                                <td id="student-department"><%= member.member_department %></td>
+                                                <td id="ph-number-list"><%= member.member_ph_number%></td>
                                                 <td>
                                                     <span id="position_text_<%= count %>"><%= member.position %></span>
                                                     <input type="text" id="position_input_<%= count %>" style="display: none; width: 60px;" placeholder="<%= member.position %>">
@@ -107,10 +107,10 @@
 
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <div id="button-container" style="display: flex;">
-                                    <!-- 추가 버튼 -->
-                                    <button id="add-button" class="btn btn-primary" style="margin-bottom: 15px; display: none;">+</button>
-                                    <!-- 삭제 버튼 -->
-                                    <button id="delete-button" class="btn btn-primary" style="margin-bottom: 15px; margin-left: 5px; display: none;">-</button>
+                                        <!-- 추가 버튼 -->
+                                        <button id="add-button" class="btn btn-primary" style="margin-bottom: 15px; display: none;">+</button>
+                                        <!-- 삭제 버튼 -->
+                                        <button id="delete-button" class="btn btn-primary" style="margin-bottom: 15px; margin-left: 5px; display: none;">-</button>
                                     </div>
                                     <!-- 편집 버튼 -->
                                     <button id="edit-button" class="btn btn-primary" style="margin-bottom: 15px;">편집</button>
@@ -209,7 +209,7 @@
                             <div class="tab-pane fade pt-3" id="profile-change-password">
                                 <!-- Change Password Form -->
                                 <div style="text-align: right;">
-                                    <button type="submit" id="notice-write" class="btn btn-primary" style="margin-bottom: 15px;">작성하기</button>
+                                    <button type="submit" id="write-post" class="btn btn-primary" style="margin-bottom: 15px;">작성하기</button>
                                 </div>
 
                                 <div class="card mb-3" >

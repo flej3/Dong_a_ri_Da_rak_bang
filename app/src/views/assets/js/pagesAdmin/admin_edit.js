@@ -37,6 +37,8 @@ editBtn.addEventListener("click", function() {
 let clickCount = 0; //add button count
 const addButton = document.getElementById('add-button');
     addButton.addEventListener('click', function () {
+        const saveBtn = document.getElementById('save-button');
+        saveBtn.disabled = true;
         document.getElementById('delete-button').style.display = "inline-block";
         clickCount++;
         let memberTable = document.getElementById('member-table');
@@ -54,133 +56,165 @@ const addButton = document.getElementById('add-button');
         // 테이블에 위의 형식대로 새로운 행 추가
         let table = document.getElementById('member-table');
         table.appendChild(newRow);
+
+        newRow.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', updateSaveButtonState);
+        });
     });
+
+function updateSaveButtonState() {
+    const saveBtn = document.getElementById('save-button');
+    saveBtn.disabled = false;
+    const inputs = document.querySelectorAll('.member_name, .member_student_id, .member_department, .member_ph_number, .position, .admin_ac');
+    let allInputsFilled = true;
+    inputs.forEach(function(input) {
+        if (input.value.trim() === '') {
+            allInputsFilled = false;
+        }
+    });
+    saveBtn.disabled = !allInputsFilled;
+}
 
 const saveButton = document.getElementById('save-button');
 saveButton.addEventListener('click', async function() {
-
-    if(clickCount === 0 && updateDetect()) {  //기존 회원에 대한 변경만 있는 경우
-        fetch('/update-member', {
-            method: 'POST',
-            body: JSON.stringify(updateTarget),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => {
-            if (response.ok) {
-                alert('정보 변경에 성공하였습니다.');
-                window.location.reload();
-                saveButton.style.display = 'none'; // save 버튼 숨기기
-                addButton.style.display = 'none'; // add 버튼 숨기기
-                document.getElementById('edit-button').style.display = 'inline-block'; // 편집 버튼 보이기
-            } else {
-                throw new Error('변경 중 오류 발생');
-            }
-        }).catch(error => {
-            console.error('변경 중 오류 발생:', error);
-        });
-    }
-    else if(clickCount > 0) {
-        let newMemData = [];
-        let rCount = document.getElementById('member-table').getElementsByTagName('tr').length;
-        for(let i = rCount - clickCount + 1 ; i<=rCount; i++) {
-            let rData = {
-                member_name: document.getElementById(`new_member_name_${i}`).value,
-                member_student_id: document.getElementById(`new_member_student_id_${i}`).value,
-                member_department: document.getElementById(`new_member_department_${i}`).value,
-                member_ph_number: document.getElementById(`new_member_ph_number_${i}`).value,
-                position: document.getElementById(`new_member_position_${i}`).value,
-                admin_ac: document.getElementById(`new_member_admin_ac_${i}`).checked,
-            };
-            newMemData.push(rData);
-        }
-        try {
-            const addRequest = fetch('/new-member', {
-                method: 'POST',
-                body: JSON.stringify(newMemData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            addRequest.then(response => {
-                if (response.ok) {
-                    alert('회원 추가에 성공하였습니다.');
-                    window.location.reload();
-                    saveButton.style.display = 'none'; // save 버튼 숨기기
-                    addButton.style.display = 'none'; // add 버튼 숨기기
-                    document.getElementById('edit-button').style.display = 'inline-block'; // 편집 버튼 보이기
-                } else {
-                    console.error('회원 추가 요청 실패:', response.status);
-                }
-            });
-        } catch (error) {
-            console.error('회원 추가 중 오류 발생:', error);
+    const resultArr = checkStId();
+    if(resultArr.length>0) {
+        alert('동일한 학번은 추가할 수 없습니다.');
+        for(let i=0;i<resultArr.length;i++) {
+            const dup = document.querySelector(`#member-table tr:nth-child(${resultArr[i]}) td#student-id-list`);
+            dup.style.backgroundColor = 'yellow';
         }
     }
-    else if(clickCount > 0 && updateDetect()) { //회원 추가와 변경이 모두 있는 경우
-        let newMemData = [];
-        let rCount = document.getElementById('member-table').getElementsByTagName('tr').length;
-        for(let i = rCount - clickCount + 1 ; i<=rCount; i++) {
-            let rData = {
-                member_name: document.getElementById(`new_member_name_${i}`).value,
-                member_student_id: document.getElementById(`new_member_student_id_${i}`).value,
-                member_department: document.getElementById(`new_member_department_${i}`).value,
-                member_ph_number: document.getElementById(`new_member_ph_number_${i}`).value,
-                position: document.getElementById(`new_member_position_${i}`).value,
-                admin_ac: document.getElementById(`new_member_admin_ac_${i}`).checked,
-            };
-            newMemData.push(rData);
-        }
-        try {
-            const addRequest = fetch('/new-member', {
-                method: 'POST',
-                body: JSON.stringify(newMemData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
 
-            const updateRequest = fetch('/update-member', {
+    else {
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('query');
+
+        if (clickCount === 0 && updateDetect()) {  //기존 회원에 대한 변경만 있는 경우
+            fetch(`/update-member?query=${category}`, {
                 method: 'POST',
                 body: JSON.stringify(updateTarget),
                 headers: {
                     'Content-Type': 'application/json'
                 }
+            }).then(response => {
+                if (response.ok) {
+                    alert('정보 변경에 성공하였습니다.');
+                    window.location.reload();
+                    saveButton.style.display = 'none'; // save 버튼 숨기기
+                    addButton.style.display = 'none'; // add 버튼 숨기기
+                    document.getElementById('edit-button').style.display = 'inline-block'; // 편집 버튼 보이기
+                } else {
+                    throw new Error('변경 중 오류 발생');
+                }
+            }).catch(error => {
+                console.error('변경 중 오류 발생:', error);
+            });
+        }
+        else if (clickCount > 0) {
+            let newMemData = [];
+            let rCount = document.getElementById('member-table').getElementsByTagName('tr').length;
+            for (let i = rCount - clickCount + 1; i <= rCount; i++) {
+                let rData = {
+                    member_name: document.getElementById(`new_member_name_${i}`).value,
+                    member_student_id: document.getElementById(`new_member_student_id_${i}`).value,
+                    member_department: document.getElementById(`new_member_department_${i}`).value,
+                    member_ph_number: document.getElementById(`new_member_ph_number_${i}`).value,
+                    position: document.getElementById(`new_member_position_${i}`).value,
+                    admin_ac: document.getElementById(`new_member_admin_ac_${i}`).checked,
+                };
+                newMemData.push(rData);
+            }
+            try {
+                const addRequest = fetch('/new-member', {
+                    method: 'POST',
+                    body: JSON.stringify(newMemData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                addRequest.then(response => {
+                    if (response.ok) {
+                        alert('회원 추가에 성공하였습니다.');
+                        window.location.reload();
+                        saveButton.style.display = 'none'; // save 버튼 숨기기
+                        addButton.style.display = 'none'; // add 버튼 숨기기
+                        document.getElementById('edit-button').style.display = 'inline-block'; // 편집 버튼 보이기
+                    } else {
+                        alert('동일한 학번은 추가할 수 없습니다.');
+                        window.location.reload();
+                        console.error('회원 추가 요청 실패:', response.status);
+                    }
+                });
+            } catch (error) {
+                console.error('회원 추가 중 오류 발생:', error);
+            }
+        }
+        else if (clickCount > 0 && updateDetect()) { //회원 추가와 변경이 모두 있는 경우
+            let newMemData = [];
+            let rCount = document.getElementById('member-table').getElementsByTagName('tr').length;
+            for (let i = rCount - clickCount + 1; i <= rCount; i++) {
+                let rData = {
+                    member_name: document.getElementById(`new_member_name_${i}`).value,
+                    member_student_id: document.getElementById(`new_member_student_id_${i}`).value,
+                    member_department: document.getElementById(`new_member_department_${i}`).value,
+                    member_ph_number: document.getElementById(`new_member_ph_number_${i}`).value,
+                    position: document.getElementById(`new_member_position_${i}`).value,
+                    admin_ac: document.getElementById(`new_member_admin_ac_${i}`).checked,
+                };
+                newMemData.push(rData);
+            }
+            try {
+                const addRequest = fetch('/new-member', {
+                    method: 'POST',
+                    body: JSON.stringify(newMemData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const updateRequest = fetch('/update-member', {
+                    method: 'POST',
+                    body: JSON.stringify(updateTarget),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const [addResponse, updateResponse] = await Promise.all([addRequest, updateRequest]);
+
+                if (addResponse.ok && updateResponse.ok) {
+                    alert('회원 추가와 정보 변경에 성공하였습니다.');
+                    window.location.reload();
+                } else {
+                    alert('동일한 학번은 추가할 수 없습니다.');
+                    window.location.reload();
+                    throw new Error('회원 추가 또는 정보 변경 중 오류 발생');
+                }
+            } catch (error) {
+                console.error('회원 추가 또는 정보 변경 중 오류 발생:', error);
+            }
+        } else {
+            addButton.style.display = 'none';
+            saveButton.style.display = 'none';
+            editBtn.style.display = 'inline-block';
+            let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(function (checkbox) {
+                // checkbox 비활성화
+                checkbox.setAttribute("disabled", true);
             });
 
-            const [addResponse, updateResponse] = await Promise.all([addRequest, updateRequest]);
+            let allPositionTexts = document.querySelectorAll('[id^="position_text_"]');
+            allPositionTexts.forEach(function (text) {
+                text.style.display = 'inline-block'; // 이전 상태로 변경
+            });
 
-            if (addResponse.ok && updateResponse.ok) {
-                alert('회원 추가와 정보 변경에 성공하였습니다.');
-                window.location.reload();
-            } else {
-                throw new Error('회원 추가 또는 정보 변경 중 오류 발생');
-            }
-        } catch (error) {
-            console.error('회원 추가 또는 정보 변경 중 오류 발생:', error);
+            let allPositionInputs = document.querySelectorAll('[id^="position_input_"]');
+            allPositionInputs.forEach(function (input) {
+                input.style.display = 'none'; // 숨기기
+            });
         }
-    }
-    else {
-        addButton.style.display='none';
-        saveButton.style.display='none';
-        editBtn.style.display='inline-block';
-        let checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(function(checkbox) {
-            // checkbox 비활성화
-            checkbox.setAttribute("disabled", true);
-        });
-
-        let allPositionTexts = document.querySelectorAll('[id^="position_text_"]');
-        allPositionTexts.forEach(function(text) {
-            text.style.display = 'inline-block'; // 이전 상태로 변경
-        });
-
-        let allPositionInputs = document.querySelectorAll('[id^="position_input_"]');
-        allPositionInputs.forEach(function(input) {
-            input.style.display = 'none'; // 숨기기
-        });
-    }
-});
+    }});
 
 const deleteButton = document.getElementById('delete-button');
 deleteButton.addEventListener('click', function() {
@@ -246,15 +280,20 @@ function showButtonOnHover() {
     });
 }
 
-window.addEventListener('load', showButtonOnHover);
+document.addEventListener('DOMContentLoaded', () => {
+    showButtonOnHover();
+    pageSplit();
+})
 
 document.querySelectorAll('#hidden-btn').forEach(btn => {
     btn.addEventListener('click', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('query');
         if (confirm('정말로 이 회원을 삭제하시겠습니까?')) {
             const row = this.closest('tr');
             const getStudentId = row.querySelectorAll('td')[1];
             const deleteId = getStudentId.textContent;
-            fetch('/delete-member', {
+            fetch(`/delete-member?query=${category}`, {
                 method: 'POST',
                 body: JSON.stringify({id: deleteId}),
                 headers: {
@@ -273,3 +312,100 @@ document.querySelectorAll('#hidden-btn').forEach(btn => {
         }
     });
 });
+
+function pageSplit() {
+    let checkValue;
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('query');
+    fetch(`/check-member?query=${category}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(res => {
+            if (!res.ok) {
+                alert('에러가 발생했습니다.');
+                window.location.href = "/";
+                throw new Error('네트워크 응답이 올바르지 않습니다.');
+            }
+            return res.json();
+        })
+        .then(data => {
+            if (!data.success) {
+                console.log('error');
+            } else {
+                checkValue = data.result[0].admin_ac;
+                if (checkValue === 0) {
+                    const recruitList = document.getElementById('recruit-list');
+                    recruitList.style.display = 'none';
+
+                    const writePosts = document.querySelectorAll('#write-post');
+                    writePosts.forEach(element => {
+                        element.style.display = 'none';
+                    });
+
+                    const stId = document.getElementById('student-id');
+                    stId.style.display = 'none';
+
+                    const phNumber = document.getElementById('ph-number');
+                    phNumber.style.display = 'none';
+
+                    const stList = document.querySelectorAll('#student-id-list');
+                    stList.forEach(element => {
+                        element.style.display = 'none';
+                    });
+
+                    const phList = document.querySelectorAll('#ph-number-list');
+                    phList.forEach(element => {
+                        element.style.display = 'none';
+                    });
+
+                    const stName = document.querySelectorAll('#student-name');
+                    stName.forEach(element => {
+                        element.style.width = '180px';
+                    });
+
+                    const stDepartment = document.querySelectorAll('#student-department');
+                    stDepartment.forEach(element => {
+                        element.style.width = '220px';
+                    });
+
+                    const editBtn = document.getElementById('edit-button');
+                    editBtn.style.display = 'none';
+                }
+            }
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+}
+
+function checkStId() {
+    let check = [];
+    const rows = document.querySelectorAll('#student-id-list');
+    const studentIds = [];
+    rows.forEach(row => {
+        const studentId = row.textContent.trim();
+        studentIds.push(studentId);
+    });
+
+    let checkData = [];
+    let rCount = document.getElementById('member-table').getElementsByTagName('tr').length;
+    for(let i = rCount - clickCount + 1 ; i<=rCount; i++) {
+        let rowData = {
+            member_student_id: document.getElementById(`new_member_student_id_${i}`).value,
+        };
+        checkData.push(rowData);
+    }
+
+    for(let i=0; i<checkData.length; i++) {
+        for(let j = 0; j<studentIds.length; j++) {
+            if(checkData[i].member_student_id === studentIds[j]) {
+                check.push(j+1);
+            }
+        }
+    }
+    return check;
+}
+

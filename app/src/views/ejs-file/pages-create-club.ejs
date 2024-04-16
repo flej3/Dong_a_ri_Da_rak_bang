@@ -1,0 +1,295 @@
+<!-- 헤더 include -->
+<%- include ('partials/header.ejs') %>
+
+  <!-- ======= Sidebar ======= -->
+  <%- include ('partials/sidebar.ejs') %>
+
+    <main id="main" class="main">
+
+      <div class="pagetitle">
+        <h1>동아리 생성 | 등록</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">동아리 생성 | 등록</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+
+      <div id="createClubApplicationsTable" class="collapse show"></div>
+
+      <section class="section contact">
+
+        <div class="row gy-4">
+          <div class="col-xl-6">
+            <div class="row">
+              <!-- 안내 카드 -->
+              <div class="col-lg-6">
+                <div class="info-box card" style="height: 220px;">
+                  <i class="bi bi-exclamation-triangle-fill" style="color: #ffcc00;"></i>
+                  <h3>안내</h3>
+                  <p>악의적 목적으로 생성된 동아리는 사전 통보 없이 삭제될 예정입니다.</p>
+                </div>
+              </div>
+              <!-- 심사 과정 카드 -->
+              <div class="col-lg-6">
+                <div class="info-box card" style="height: 220px;">
+                  <i class="bi bi-check-circle-fill" style="color: #4CAF50;"></i>
+                  <h3>심사 과정</h3>
+                  <p>동아리 심사 후, 제공하신 연락처로 결과를 알려드립니다.</p>
+                </div>
+              </div>
+              <!-- 정보 입력 카드 -->
+              <div class="col-lg-6">
+                <div class="info-box card" style="height: 220px;">
+                  <i class="bi bi-info-circle-fill" style="color: #2196F3;"></i>
+                  <h3>정보 입력</h3>
+                  <p>정확한 동아리 정보를 입력해 주세요. 부정확한 정보는 승인 거절로 이어질 수 있습니다.</p>
+                </div>
+              </div>
+              <!-- 문의하기 카드 -->
+              <div class="col-lg-6">
+                <div class="info-box card team-card" style="height: 220px; cursor: pointer;"
+                  onclick="window.open('https://open.kakao.com/o/shAShUlg', '_blank')">
+                  <i class="bi bi-envelope-fill" style="color: #f44336;"></i>
+                  <h3>문의하기</h3>
+                  <p>궁금한 점이 있으시다면 클릭하여 문의해주세요.</p>
+                </div>
+              </div>
+              <!-- 이미 동아리 생성 | 등록 신청을 하셨나요? -->
+              <div class="col-lg-12" id="viewCreateClubList">
+                <div class="info-box card team-card shadow-lg mb-5 bg-body rounded"
+                  style="height: 220px; cursor: pointer; transition: transform .2s;" data-bs-toggle="modal"
+                  data-bs-target="#applicationListModal">
+                  <div class="card-body text-center">
+                    <i class="bi bi-search" style="color: #4CAF50; font-size: 2rem;"></i>
+                    <h3 class="card-title" style="color: #5a5a5a;">이미 동아리 생성 | 등록 신청을 하셨나요?</h3>
+                    <p class="card-text">클릭하여 결과를 확인하세요! 동아리 등록 신청 내역을 확인할 수 있습니다!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-6">
+            <div class="card shadow-lg p-4 mb-5 bg-white rounded">
+              <h4 class="text-center mb-4">동아리 정보 입력</h4>
+              <form id="createClubForm">
+                <div class="row gy-4">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-label"><strong>
+                          <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="해당 이름이 동아리 대표로 등록되어집니다.">
+                            <i class="bi bi-question-circle"></i>
+                          </span>
+                          이름: <%= userData.user_name %></strong></label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-label"><strong>
+                          <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="해당 이메일이 동아리 대표로 등록되어집니다.">
+                            <i class="bi bi-question-circle"></i>
+                          </span>
+                          이메일: <%= userData.user_id %></strong></label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="club_name" class="form-label">동아리명:</label>
+                      <input type="text" id="club_name" name="club_name" class="form-control" placeholder="동아리명"
+                        required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="club_members" class="form-label">
+                        <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                          title="정확하지 않아도 괜찮습니다. 대략 인원수를 적어주시면 됩니다!">
+                          <i class="bi bi-question-circle"></i>
+                        </span>
+                        동아리 인원수:</label>
+                      <input type="number" id="club_members" name="club_members" class="form-control"
+                        placeholder="동아리 인원수" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="affiliation" class="form-label">
+                        <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true"
+                          title="ex) 중앙동아리, 소모임,<br>특정 학과(부) 등등">
+                          <i class="bi bi-question-circle"></i>
+                        </span>
+                        동아리 소속:</label>
+                      <input type="text" id="affiliation" name="affiliation" class="form-control" placeholder="소속"
+                        required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="ph_number" class="form-label">
+                        <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true"
+                          title="심사 과정에서 연락받을<br>연락처를 적어주세요!">
+                          <i class="bi bi-question-circle"></i>
+                        </span>
+                        연락처:
+                      </label>
+                      <input type="text" id="ph_number" name="ph_number" class="form-control"
+                        placeholder="심사 결과 안내받을 연락처" required>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="club_description" class="form-label">동아리 설명:</label>
+                      <textarea id="club_description" name="club_description" class="form-control" rows="6"
+                        placeholder="관리자는 이 내용을 보고 정상적인 동아리인지 판단합니다!  '우리 동아리(모임)은 정상적인 모임입니다!'라는 내용과 동아리에 대해서 설명 해주시면 됩니다!"
+                        required></textarea>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="form-check mb-3">
+                      <input class="form-check-input" type="checkbox" id="agreement1" required>
+                      <label class="form-check-label" for="agreement1">
+                        본 동아리는 어떠한 악의적 목적을 가지지 않으며, 선량한 목적으로 운영됩니다.
+                      </label>
+                    </div>
+                    <div class="form-check mb-3">
+                      <input class="form-check-input" type="checkbox" id="agreement2" required>
+                      <label class="form-check-label" for="agreement2">
+                        본 동아리 활동 중 발생하는 모든 불미스러운 사건이나 사고에 대한 책임은 동아리 측에 있음을 인지합니다.
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg">동아리 등록 신청</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 동아리 등록 신청 목록 모달 -->
+      <div class="modal fade" id="applicationListModal" tabindex="-1" aria-labelledby="applicationListModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="applicationListModalLabel">동아리 등록 신청 목록</h5>
+            </div>
+            <div class="modal-body">
+              <ul class="list-group">
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 선택한 등록 신청의 상세 정보 모달 -->
+      <div class="modal fade" id="applicationDetailsModal" tabindex="-1" aria-labelledby="applicationDetailsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="applicationDetailsModalLabel">등록 신청 상세 정보</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- 상세 정보 내용 -->
+                <div class="mb-3">
+                  <h6>신청 상태:</h6>
+                  <span class="badge"></span>
+                </div>
+
+              <div class="row g-3">
+                <div class="col">
+                  <p></p>
+                </div>
+                <div class="col">
+                  <p></p>
+                </div>
+              </div>
+              <div class="row g-3">
+                <div class="col">
+                  <p></p>
+                </div>
+                <div class="col">
+                  <p></p>
+                </div>
+              </div>
+                <p class="application-date"></p>
+                <p class="application-purpose"></p>
+            </div>
+            <div class="modal-footer">
+              <!-- 신청 취소 버튼 추가 -->
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                data-bs-target="#cancelConfirmationModal">신청 취소</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 신청 취소 확인 모달 -->
+      <div class="modal fade" id="cancelConfirmationModal" tabindex="-1" aria-labelledby="cancelConfirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="cancelConfirmationModalLabel">신청 취소</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              정말로 해당 신청서를 취소하시겠습니까?<br>
+              관리자가 신청을 검토 중일 수 있습니다.
+            </div>
+            <div class="modal-footer">
+              <button id="deleteCreateClubBtn" type="button" class="btn btn-danger" data-bs-dismiss="modal">동아리 신청을 취소합니다.</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main><!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <%- include ('partials/footer.ejs') %>
+      <!-- End Footer -->
+
+      <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+          class="bi bi-arrow-up-short"></i></a>
+
+      <!-- Vendor JS Files -->
+      <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+      <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="assets/vendor/chart.js/chart.umd.js"></script>
+      <script src="assets/vendor/echarts/echarts.min.js"></script>
+      <script src="assets/vendor/quill/quill.min.js"></script>
+      <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+      <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+      <script src="assets/vendor/php-email-form/validate.js"></script>
+
+      <!-- Template Main JS File -->
+      <script src="assets/js/main.js"></script>
+
+      <!--Client JS File-->
+      <script defer src="../assets/js/createClub/createClub.js"></script>
+      <script defer src="../assets/js/createClub/modalCreateClubView.js"></script>
+
+      </body>
+
+      </html>

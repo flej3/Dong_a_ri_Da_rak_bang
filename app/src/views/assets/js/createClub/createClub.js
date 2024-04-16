@@ -24,7 +24,6 @@ async function createClub(createClubData) {
             throw new Error('네트워크 응답이 올바르지 않습니다.');
         }
         const data = await response.json();
-        console.log(data);
         if(!data.success){
             throw new Error('동아리(모임) 신청서를 제출하는데 실패 하였습니다.');
         }

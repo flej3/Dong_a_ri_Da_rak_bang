@@ -36,7 +36,7 @@
   <!--Quill Editer-->
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-  
+
   <!-- =======================================================
   * Template Name: NiceAdmin
   * Updated: Mar 12 2024 with Bootstrap v5.3.3
@@ -295,15 +295,29 @@
                   <span>마이페이지</span>
                 </a>
               </li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li>
-                    <a class="dropdown-item d-flex align-items-center" href="/api/users/logout">
-                      <i class="bi bi-pencil-square"></i>
-                      <span>로그아웃</span>
-                    </a>
-                  </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="/api/users/logout">
+                  <i class="bi bi-pencil-square"></i>
+                  <span>로그아웃</span>
+                </a>
+              </li>
+              <% if (userData.user_id==='kimboseok@naver.com' ) { %>
+
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li>
+                  <a class="dropdown-item d-flex align-items-center" href="/create-club-admin-access">
+                    <i class="bi bi-shield-lock"></i>
+                    <span>동아리 등록 신청 처리</span>
+                  </a>
+                </li>
+                <% } else { %>
+                  <% } %>
+
             </ul>
           </li>
           <% } else { %>

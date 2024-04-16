@@ -110,9 +110,34 @@ const isLogin = (req, res, next) => {
     }
 };
 
+//지금 로그인한 사용자가 환경변수로 지정한 admin계정인지 확인함.
+//동아리 등록신청한 페이지 (오로지 어드민으로 지정한 계정만 접근 가능.)
+const verifyTokenAdmin = (req, res, next) => {
+    // 클라이언트로부터 JWT를 받음
+    const token = req.cookies.accessToken;
+    // JWT가 없는 경우
+    if (!token) {
+        // return res.status(401).json({ message: '인증 토큰이 없습니다.' });
+        return res.redirect('/error-page');
+    }
+    try {
+        // JWT를 검증하여 페이로드(사용자 정보)를 추출
+        const decoded = jwt.verify(token, process.env.ACCESS_SECRET);
+        if(decoded.id !== process.env.ADMIN_ID){
+            return res.redirect('/error-page');
+        }
+        req.user = decoded; // 추출한 사용자 정보를 요청 객체에 저장
+        next(); // 다음 미들웨어로 이동
+    } catch (err) {
+        // return res.status(401).json({ message: '유효하지 않은 토큰입니다.' });
+        return res.redirect('/error-page');
+    }
+};
+
 module.exports = {
     refreshTokenMiddleware,
     getTokenDecode,
     verifyToken,
     isLogin,
+    verifyTokenAdmin,
 };

@@ -1,8 +1,8 @@
 <!-- 헤더 include -->
-<%- include ('partials/header.ejs') %>
+<%- include ('../partials/header.ejs') %>
 
   <!-- ======= Sidebar ======= -->
-  <%- include ('partials/sidebar.ejs') %>
+  <%- include ('../partials/sidebar.ejs') %>
 
     <main id="main" class="main">
 
@@ -232,7 +232,9 @@
                 </div>
               </div>
                 <p class="application-date"></p>
-                <p class="application-purpose"></p>
+                <hr>
+                <p>신청 목적:</p>
+                <div class="application-purpose"></div>
             </div>
             <div class="modal-footer">
               <!-- 신청 취소 버튼 추가 -->
@@ -267,7 +269,7 @@
     </main><!-- End #main -->
 
     <!-- ======= Footer ======= -->
-    <%- include ('partials/footer.ejs') %>
+    <%- include ('../partials/footer.ejs') %>
       <!-- End Footer -->
 
       <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
@@ -287,8 +289,8 @@
       <script src="assets/js/main.js"></script>
 
       <!--Client JS File-->
-      <script defer src="../assets/js/createClub/createClub.js"></script>
-      <script defer src="../assets/js/createClub/modalCreateClubView.js"></script>
+      <script defer src="../../assets/js/createClub/createClub.js"></script>
+      <script defer src="../../assets/js/createClub/modalCreateClubView.js"></script>
 
       </body>
 

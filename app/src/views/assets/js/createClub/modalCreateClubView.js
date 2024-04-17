@@ -24,7 +24,6 @@ async function getCreateClubList() {
             throw new Error(`네트워크 응답이 올바르지 않습니다.`);
         }
         const data = await response.json();
-        console.log(data);
 
         const listGroup = document.querySelector('#applicationListModal .list-group');
         listGroup.innerHTML = ''; 
@@ -54,23 +53,23 @@ async function getCreateClubList() {
 }
 
 function updateModalDetails(club) {
-    console.log(club);
     const modalTitle = document.querySelector('#applicationDetailsModalLabel');
     modalTitle.textContent = `#${club.club_application_id} ${club.club_name} 등록 신청 상세 정보`;
 
     const statusBadge = document.querySelector('#applicationDetailsModal .modal-body .badge');
-    statusBadge.className = 'badge'; // 기존 클래스 초기화
-    // getBadgeClass 함수를 사용하여 클래스 추가
+    statusBadge.className = 'badge';
     statusBadge.classList.add(getBadgeClass(club.application_status));
     statusBadge.textContent = club.application_status;
 
-    // 나머지 동아리 정보 업데이트
     document.querySelectorAll('#applicationDetailsModal .modal-body .row .col p')[0].textContent = `신청자: ${club.user_name}`;
     document.querySelectorAll('#applicationDetailsModal .modal-body .row .col p')[1].textContent = `연락처: ${club.user_ph_number}`;
     document.querySelectorAll('#applicationDetailsModal .modal-body .row .col p')[2].textContent = `동아리 이름: ${club.club_name}`;
     document.querySelectorAll('#applicationDetailsModal .modal-body .row .col p')[3].textContent = `동아리 소속: ${club.affilition}`;
     document.querySelector('#applicationDetailsModal .application-date').textContent = `신청 날짜: ${new Date(club.application_date).toLocaleDateString('ko-KR')}`;
-    document.querySelector('#applicationDetailsModal .application-purpose').textContent = `신청 목적: ${club.club_content}`;
+    const clubContentFromDB = club.club_content;
+    const clubContentHTML = clubContentFromDB.replace(/\n/g, '<br>');
+    document.querySelector('.application-purpose').innerHTML = clubContentHTML;
+
 
     // "신청 취소" 버튼의 표시 여부 결정
     const cancelButton = document.querySelector('#applicationDetailsModal .btn-danger');
@@ -82,20 +81,38 @@ function updateModalDetails(club) {
 
     // "신청 취소" 버튼에 클릭 이벤트 리스너 추가
     document.querySelector('#applicationDetailsModal .btn-danger').addEventListener('click', function() {
-        // "신청 취소 확인" 모달의 "신청 취소" 버튼에 data-application-id 속성 설정
         document.getElementById('deleteCreateClubBtn').setAttribute('data-application-id', club.club_application_id);
     });
 }
 
 document.getElementById('deleteCreateClubBtn').addEventListener('click', function() {
-    // "신청 취소" 버튼에서 data-application-id 속성을 통해 application_id 가져오기
-    const applicationId = this.getAttribute('data-application-id');
-    console.log('취소할 동아리의 application_id:', applicationId);
-
-    // 취소 로직을 여기에 구현...
+    const applicationId = this.getAttribute('data-application-id');    
+    deleteClubApplication(applicationId);
 });
 
+async function deleteClubApplication(applicationId){
+    try {
+        const response = await fetch('/api/create/club/delete', {
+            method:'DELETE',
+            body: JSON.stringify({applicationId}),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        if(!response.ok){
+            throw new Error(`네트워크 응답이 올바르지 않습니다.`);
+        }
+        const data = await response.json();
+        if(!data.success){
+            throw new Error(`동아리 등록 신청을 취소하던중 에러가 발생했습니다.`);
+        }
+        alert(`${applicationId}번 신청에 대해서 취소하였습니다!`);
+    } catch (error) {
+        alert(`신청서를 취소하는중 오류가 발생했습니다. ${error}`);
+        console.error(`신청서를 취소하는중 오류가 발생했습니다. ${error}`);
+    }
+}
+
 document.getElementById('viewCreateClubList').addEventListener('click', async () => {
-    console.log('연결');
     await getCreateClubList();
 });

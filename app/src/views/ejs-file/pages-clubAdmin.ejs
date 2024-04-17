@@ -51,10 +51,6 @@
                             </li>
 
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings" id="recruit-list">가입 신청 현황</button>
-                            </li>
-
-                            <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">공지 사항</button>
                             </li>
 
@@ -104,26 +100,9 @@
                                         </tbody>
                                     </table>
                                 </div>
-
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <div id="button-container" style="display: flex;">
-                                        <!-- 추가 버튼 -->
-                                        <button id="add-button" class="btn btn-primary" style="margin-bottom: 15px; display: none;">+</button>
-                                        <!-- 삭제 버튼 -->
-                                        <button id="delete-button" class="btn btn-primary" style="margin-bottom: 15px; margin-left: 5px; display: none;">-</button>
-                                    </div>
-                                    <!-- 편집 버튼 -->
-                                    <button id="edit-button" class="btn btn-primary" style="margin-bottom: 15px;">편집</button>
-                                    <!-- 저장 버튼 -->
-                                    <button id="save-button" type="submit" class="btn btn-primary" style="margin-bottom: 15px; display: none;">저장</button>
-                                </div>
                             </div>
 
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-                                <div style="text-align: right;">
-                                    <button id="write-post" class="btn btn-primary" style="margin-bottom: 15px;">작성하기</button>
-                                </div>
 
                                 <% recruits.forEach(recruits => { %>
                                 <div class="card mb-3" >
@@ -143,11 +122,6 @@
                             </div>
 
                             <div class="tab-pane fade pt-3" id="profile-settings">
-
-                                <!-- Settings Form -->
-                                <div style="text-align: right;">
-                                    <button type="submit" class="btn btn-primary" style="margin-bottom: 15px;">작성하기</button>
-                                </div>
 
                                 <div class="card mb-3" >
                                     <div class="row g-0">
@@ -207,10 +181,6 @@
                             </div>
 
                             <div class="tab-pane fade pt-3" id="profile-change-password">
-                                <!-- Change Password Form -->
-                                <div style="text-align: right;">
-                                    <button type="submit" id="write-post" class="btn btn-primary" style="margin-bottom: 15px;">작성하기</button>
-                                </div>
 
                                 <div class="card mb-3" >
                                     <div class="row g-0">

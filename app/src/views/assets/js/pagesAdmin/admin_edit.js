@@ -1,6 +1,10 @@
+document.addEventListener('DOMContentLoaded', () => {
+    pageSplit();
+})
+
 const firstCheck = [];
-const editBtn = document.getElementById('edit-button');
-editBtn.addEventListener("click", function() {
+function editListener() {
+    showButtonOnHover();
     document.getElementById('hidden-btn').style.display = 'inline-block';
     let memberTable = document.getElementById('member-table');
     for (let i = 1; i <= memberTable.getElementsByTagName('tr').length-1; i++) {
@@ -10,11 +14,11 @@ editBtn.addEventListener("click", function() {
         firstCheck.push(checkValue);
     }
     // "편집" 버튼 숨기기
-    this.style.display = "none";
+    editButton.style.display = "none";
     // "저장" 버튼 보이기
-    document.getElementById('save-button').style.display = "inline-block";
+    saveButton.style.display = "inline-block";
     // "추가" 버튼 보이기
-    document.getElementById('add-button').style.display = "inline-block";
+    addButton.style.display = "inline-block";
 
     let checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach(function(checkbox) {
@@ -32,13 +36,13 @@ editBtn.addEventListener("click", function() {
         input.style.display = 'inline-block';
         input.focus();
     });
-});
+}
 
 let clickCount = 0; //add button count
-const addButton = document.getElementById('add-button');
-    addButton.addEventListener('click', function () {
-        const saveBtn = document.getElementById('save-button');
-        saveBtn.disabled = true;
+
+    function addListener() {
+        saveButton = document.getElementById('save-button');
+        saveButton.disabled = true;
         document.getElementById('delete-button').style.display = "inline-block";
         clickCount++;
         let memberTable = document.getElementById('member-table');
@@ -47,7 +51,7 @@ const addButton = document.getElementById('add-button');
         newRow.innerHTML = `
             <th scope="row">${rowCount}</th>
             <td><input type="text" class="member_name" style="width: 150px; height: 35px;" id="new_member_name_${rowCount + 1}"></td>
-            <td><input type="text" class="member_student_id" style="width: 150px; height: 35px;" id="new_member_student_id_${rowCount + 1}"></td>
+            <td><input type="text" class="member_student_id" style="width: 150px; height: 35px;" id="new_member_student_id_${rowCount + 1}" maxlength="9"></td>
             <td><input type="text" class="member_department" style="width: 150px; height: 35px;" id="new_member_department_${rowCount + 1}"></td>
             <td><input type="text" class="member_ph_number" style="width: 150px; height: 35px;" id="new_member_ph_number_${rowCount + 1}"></td>
             <td><input type="text" class="position" style="width: 60px; height: 30px;" id="new_member_position_${rowCount + 1}"></td>
@@ -60,11 +64,11 @@ const addButton = document.getElementById('add-button');
         newRow.querySelectorAll('input').forEach(input => {
             input.addEventListener('input', updateSaveButtonState);
         });
-    });
+    }
 
 function updateSaveButtonState() {
-    const saveBtn = document.getElementById('save-button');
-    saveBtn.disabled = false;
+    saveButton = document.getElementById('save-button');
+    saveButton.disabled = false;
     const inputs = document.querySelectorAll('.member_name, .member_student_id, .member_department, .member_ph_number, .position, .admin_ac');
     let allInputsFilled = true;
     inputs.forEach(function(input) {
@@ -72,21 +76,24 @@ function updateSaveButtonState() {
             allInputsFilled = false;
         }
     });
-    saveBtn.disabled = !allInputsFilled;
+    saveButton.disabled = !allInputsFilled;
 }
 
-const saveButton = document.getElementById('save-button');
-saveButton.addEventListener('click', async function() {
+async function saveListener() {
+    const studentIdList = document.querySelectorAll('#member-table #student-id-list');
+
+    studentIdList.forEach(function (element) {
+        element.style.backgroundColor = 'white';
+    });
+
     const resultArr = checkStId();
-    if(resultArr.length>0) {
+    if (resultArr.length > 0) {
         alert('동일한 학번은 추가할 수 없습니다.');
-        for(let i=0;i<resultArr.length;i++) {
+        for (let i = 0; i < resultArr.length; i++) {
             const dup = document.querySelector(`#member-table tr:nth-child(${resultArr[i]}) td#student-id-list`);
             dup.style.backgroundColor = 'yellow';
         }
-    }
-
-    else {
+    } else {
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('query');
 
@@ -110,8 +117,7 @@ saveButton.addEventListener('click', async function() {
             }).catch(error => {
                 console.error('변경 중 오류 발생:', error);
             });
-        }
-        else if (clickCount > 0) {
+        } else if (clickCount > 0) {
             let newMemData = [];
             let rCount = document.getElementById('member-table').getElementsByTagName('tr').length;
             for (let i = rCount - clickCount + 1; i <= rCount; i++) {
@@ -149,8 +155,7 @@ saveButton.addEventListener('click', async function() {
             } catch (error) {
                 console.error('회원 추가 중 오류 발생:', error);
             }
-        }
-        else if (clickCount > 0 && updateDetect()) { //회원 추가와 변경이 모두 있는 경우
+        } else if (clickCount > 0 && updateDetect()) { //회원 추가와 변경이 모두 있는 경우
             let newMemData = [];
             let rCount = document.getElementById('member-table').getElementsByTagName('tr').length;
             for (let i = rCount - clickCount + 1; i <= rCount; i++) {
@@ -197,7 +202,7 @@ saveButton.addEventListener('click', async function() {
         } else {
             addButton.style.display = 'none';
             saveButton.style.display = 'none';
-            editBtn.style.display = 'inline-block';
+            editButton.style.display = 'inline-block';
             let checkboxes = document.querySelectorAll('input[type="checkbox"]');
             checkboxes.forEach(function (checkbox) {
                 // checkbox 비활성화
@@ -214,10 +219,11 @@ saveButton.addEventListener('click', async function() {
                 input.style.display = 'none'; // 숨기기
             });
         }
-    }});
+    }
+}
 
-const deleteButton = document.getElementById('delete-button');
-deleteButton.addEventListener('click', function() {
+
+function deleteListener() {
         let table = document.getElementById('member-table');
         let rows = table.getElementsByTagName('tr');
         let lastRowIndex = rows.length - 1;
@@ -228,8 +234,11 @@ deleteButton.addEventListener('click', function() {
         }
             clickCount--;
         }
-        if(clickCount === 0) this.style.display = 'none';
-});
+        if(clickCount === 0) {
+            saveButton.disabled = false;
+            this.style.display = 'none';
+        }
+}
 
 let updateTarget = [];
 let updateChecked = [];
@@ -279,11 +288,6 @@ function showButtonOnHover() {
         });
     });
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    showButtonOnHover();
-    pageSplit();
-})
 
 document.querySelectorAll('#hidden-btn').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -336,43 +340,104 @@ function pageSplit() {
                 console.log('error');
             } else {
                 checkValue = data.result[0].admin_ac;
-                if (checkValue === 0) {
-                    const recruitList = document.getElementById('recruit-list');
-                    recruitList.style.display = 'none';
+                if(checkValue !== 0) {
+                    // 새로운 div 요소 생성
+                    const newDiv = document.createElement("div");
+                    newDiv.setAttribute("style", "display: flex; justify-content: space-between; align-items: center;");
 
-                    const writePosts = document.querySelectorAll('#write-post');
-                    writePosts.forEach(element => {
-                        element.style.display = 'none';
-                    });
+                    const buttonContainerDiv = document.createElement("div");
+                    buttonContainerDiv.setAttribute("id", "button-container");
+                    buttonContainerDiv.setAttribute("style", "display: flex;");
 
-                    const stId = document.getElementById('student-id');
-                    stId.style.display = 'none';
+// 추가 버튼 생성
+                    addButton = document.createElement("button");
+                    addButton.setAttribute("id", "add-button");
+                    addButton.setAttribute("class", "btn btn-primary");
+                    addButton.setAttribute("style", "margin-bottom: 15px; display: none;");
+                    addButton.textContent = "+";
+                    buttonContainerDiv.appendChild(addButton);
 
-                    const phNumber = document.getElementById('ph-number');
-                    phNumber.style.display = 'none';
+// 삭제 버튼 생성
+                    deleteButton = document.createElement("button");
+                    deleteButton.setAttribute("id", "delete-button");
+                    deleteButton.setAttribute("class", "btn btn-primary");
+                    deleteButton.setAttribute("style", "margin-bottom: 15px; margin-left: 5px; display: none;");
+                    deleteButton.textContent = "-";
+                    buttonContainerDiv.appendChild(deleteButton);
+// 편집 버튼 생성
+                    editButton = document.createElement("button");
+                    editButton.setAttribute("id", "edit-button");
+                    editButton.setAttribute("class", "btn btn-primary");
+                    editButton.setAttribute("style", "margin-bottom: 15px;");
+                    editButton.textContent = "편집";
+                    buttonContainerDiv.appendChild(editButton);
 
-                    const stList = document.querySelectorAll('#student-id-list');
-                    stList.forEach(element => {
-                        element.style.display = 'none';
-                    });
+                    // 저장 버튼 생성
+                    saveButton = document.createElement("button");
+                    saveButton.setAttribute("id", "save-button");
+                    saveButton.setAttribute("type", "submit");
+                    saveButton.setAttribute("class", "btn btn-primary");
+                    saveButton.setAttribute("style", "margin-bottom: 15px; display: none;");
+                    saveButton.textContent = "저장";
+                    buttonContainerDiv.appendChild(saveButton);
 
-                    const phList = document.querySelectorAll('#ph-number-list');
-                    phList.forEach(element => {
-                        element.style.display = 'none';
-                    });
+                    newDiv.appendChild(buttonContainerDiv);
 
-                    const stName = document.querySelectorAll('#student-name');
-                    stName.forEach(element => {
-                        element.style.width = '180px';
-                    });
+                    const profileOverviewDiv = document.getElementById("profile-overview");
+                    profileOverviewDiv.appendChild(newDiv);
 
-                    const stDepartment = document.querySelectorAll('#student-department');
-                    stDepartment.forEach(element => {
-                        element.style.width = '220px';
-                    });
+                    editButton.style.display = "inline-block";
 
-                    const editBtn = document.getElementById('edit-button');
-                    editBtn.style.display = 'none';
+                    editButton.addEventListener('click', editListener);
+                    saveButton.addEventListener('click', saveListener);
+                    addButton.addEventListener('click', addListener);
+                    deleteButton.addEventListener('click', deleteListener);
+
+                    const parentDiv = document.getElementById('profile-change-password');
+
+                    const notice = document.createElement('div');
+                    notice.style.textAlign = 'right';
+
+                    const newButton = document.createElement('button');
+                    newButton.type = 'submit';
+                    newButton.id = 'write-post';
+                    newButton.className = 'btn btn-primary';
+                    newButton.style.marginBottom = '15px';
+                    newButton.innerText = '작성하기';
+
+                    notice.appendChild(newButton);
+                    parentDiv.insertBefore(notice, parentDiv.firstChild);
+
+                    const parentDiv2 = document.getElementById('profile-edit');
+
+                    const recruit = document.createElement('div');
+                    recruit.style.textAlign = 'right';
+
+                    const newButton2 = document.createElement('button');
+                    newButton2.type = 'submit';
+                    newButton2.id = 'write-post';
+                    newButton2.className = 'btn btn-primary';
+                    newButton2.style.marginBottom = '15px';
+                    newButton2.innerText = '작성하기';
+
+                    recruit.appendChild(newButton2);
+                    parentDiv2.insertBefore(recruit, parentDiv2.firstChild);
+
+                    const newLi = document.createElement('li');
+                    newLi.className = 'nav-item';
+
+
+                    const joinList = document.createElement('button');
+                    joinList.className = 'nav-link';
+                    joinList.setAttribute('data-bs-toggle', 'tab');
+                    joinList.setAttribute('data-bs-target', '#profile-settings');
+                    joinList.innerText = '가입 신청 현황';
+
+
+                    newLi.appendChild(joinList);
+
+                    const parentUl = document.querySelector('.nav-tabs');
+                    parentUl.appendChild(newLi);
                 }
             }
         })
@@ -408,4 +473,3 @@ function checkStId() {
     }
     return check;
 }
-

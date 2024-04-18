@@ -122,59 +122,78 @@
                             </div>
 
                             <div class="tab-pane fade pt-3" id="profile-settings">
+                                <div class="container">
+                                    <!-- 탭 버튼들 -->
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-bs-toggle="tab"
+                                                href="#pending">대기중</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#approved">승인됨</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#rejected">거절됨</a>
+                                        </li>
+                                    </ul>
 
-                                <div class="card mb-3" >
-                                    <div class="row g-0">
-                                        <div class="col-md-3">
-                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                                    <!-- 탭 내용 -->
+                                    <div class="tab-content">
+                                        <div id="pending" class="container tab-pane active"><br>
+                                            <!-- 대기중 테이블 -->
+                                            <table class="table table-hover club-application-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">신청자</th>
+                                                        <th scope="col">성별</th>
+                                                        <th scope="col">신청 상태</th>
+                                                        <th scope="col">신청일</th>
+                                                        <th scope="col">처리일</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 서버에서 대기중인 신청 데이터 가져와서 표시 -->
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <div class="col-md-9">
-                                            <div class="card-body">
-                                                <h5 class="card-title">게시글 제목</h5>
-                                                <p class="card-text">동아리 설명</p>
-                                            </div>
+                                        <div id="approved" class="container tab-pane fade"><br>
+                                            <!-- 승인됨 테이블 -->
+                                            <table class="table table-hover club-application-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">신청자</th>
+                                                        <th scope="col">성별</th>
+                                                        <th scope="col">신청 상태</th>
+                                                        <th scope="col">신청일</th>
+                                                        <th scope="col">처리일</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 서버에서 대기중인 신청 데이터 가져와서 표시 -->
+                                                </tbody>
+                                            </table>
+                                            <!-- 테이블 내용 동일하게 구성하여 서버에서 승인된 신청 데이터 가져와서 표시 -->
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div class="card mb-3" >
-                                    <div class="row g-0">
-                                        <div class="col-md-3">
-                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="card-body">
-                                                <h5 class="card-title">게시글 제목</h5>
-                                                <p class="card-text">동아리 설명</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card mb-3" >
-                                    <div class="row g-0">
-                                        <div class="col-md-3">
-                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="card-body">
-                                                <h5 class="card-title">게시글 제목</h5>
-                                                <p class="card-text">동아리 설명</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card mb-3" >
-                                    <div class="row g-0">
-                                        <div class="col-md-3">
-                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="card-body">
-                                                <h5 class="card-title">게시글 제목</h5>
-                                                <p class="card-text">동아리 설명</p>
-                                            </div>
+                                        <div id="rejected" class="container tab-pane fade"><br>
+                                            <!-- 거절됨 테이블 -->
+                                            <table class="table table-hover club-application-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">신청자</th>
+                                                        <th scope="col">성별</th>
+                                                        <th scope="col">신청 상태</th>
+                                                        <th scope="col">신청일</th>
+                                                        <th scope="col">처리일</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- 서버에서 대기중인 신청 데이터 가져와서 표시 -->
+                                                </tbody>
+                                            </table>
+                                            <!-- 테이블 내용 동일하게 구성하여 서버에서 거절된 신청 데이터 가져와서 표시 -->
                                         </div>
                                     </div>
                                 </div>
@@ -246,6 +265,52 @@
 
     </section>
 
+    <!-- 동아리 가입 신청 디테일 모달 -->
+    <div class="modal fade" id="clubModal" tabindex="-1" aria-labelledby="clubModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clubModalLabel">동아리 가입 신청 정보</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-2">
+                            <strong>신청 고유 번호:</strong> <span id="modalApplicationID">-</span>
+                        </div>
+                        <div class="col-md-6 mb-2">
+                            <strong>신청 상태:</strong> <span id="modalApplicationStatus" class="badge bg-primary">-</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-2"><strong>유저 ID:</strong> <span id="modalUserID">-</span></div>
+                            <div class="mb-2"><strong>이름:</strong> <span id="modalUserName">-</span></div>
+                            <div class="mb-2"><strong>학번:</strong> <span id="modalStudentID">-</span></div>
+                            <div class="mb-2"><strong>학과:</strong> <span id="modalDepartment">-</span></div>
+                            <div class="mb-2"><strong>핸드폰번호:</strong> <span id="modalPhone">-</span></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-2"><strong>성별:</strong> <span id="modalGender">-</span></div>
+                            <div class="mb-2"><strong>지역:</strong> <span id="modalRegion">-</span></div>
+                            <div class="mb-2"><strong>신청일:</strong> <span id="modalApplicationDate">-</span></div>
+                            <div class="mb-2"><strong>처리일:</strong> <span id="modalApplicationProcessedDate">-</span></div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>
+                        <strong>자기소개:</strong>
+                        <div class="card-text mt-3" id="modalSelfIntroduction">-</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="approveButton" type="button" class="btn btn-success" data-bs-dismiss="modal">승인</button>
+                    <button id="rejectButton" type="button" class="btn btn-danger" data-bs-dismiss="modal">거절</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main><!-- End #main -->
 
 <!-- ======= Footer ======= -->
@@ -255,6 +320,8 @@
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 <!-- Vendor JS Files -->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/vendor/chart.js/chart.umd.js"></script>
@@ -273,7 +340,9 @@
     });
 </script>
 
+<!--Client JS File-->
 <script defer src="../assets/js/pagesAdmin/admin_edit.js"></script>
+<script defer src="../assets/js/pagesAdmin/admin_club_applications.js"></script>
 
 </body>
 

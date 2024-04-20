@@ -103,22 +103,8 @@
                             </div>
 
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-                                <% recruits.forEach(recruits => { %>
-                                <div class="card mb-3" >
-                                    <div class="row g-0">
-                                        <div class="col-md-3">
-                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="card-body">
-                                                <h5 class="card-title"><%=recruits.club_name%></h5>
-                                                <p class="card-text"><%=recruits.content%></p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="container" id="recruitPostsContainer">
                                 </div>
-                                <% }); %>
                             </div>
 
                             <div class="tab-pane fade pt-3" id="profile-settings">
@@ -193,7 +179,6 @@
                                                     <!-- 서버에서 대기중인 신청 데이터 가져와서 표시 -->
                                                 </tbody>
                                             </table>
-                                            <!-- 테이블 내용 동일하게 구성하여 서버에서 거절된 신청 데이터 가져와서 표시 -->
                                         </div>
                                     </div>
                                 </div>
@@ -334,15 +319,16 @@
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
 
-<script>
+<!-- <script>
     document.getElementById('write-post').addEventListener('click', function() {
         window.location.href = '/write-post';
     });
-</script>
+</script> -->
 
 <!--Client JS File-->
 <script defer src="../assets/js/pagesAdmin/admin_edit.js"></script>
 <script defer src="../assets/js/pagesAdmin/admin_club_applications.js"></script>
+<script defer src="../assets/js/pagesAdmin/club_recruit_tab.js"></script>
 
 </body>
 

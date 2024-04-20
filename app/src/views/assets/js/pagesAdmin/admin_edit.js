@@ -415,7 +415,7 @@ function pageSplit() {
 
                     const newButton2 = document.createElement('button');
                     newButton2.type = 'submit';
-                    newButton2.id = 'write-post';
+                    newButton2.id = 'ClubRecruitPostBtn';
                     newButton2.className = 'btn btn-primary';
                     newButton2.style.marginBottom = '15px';
                     newButton2.innerText = '작성하기';

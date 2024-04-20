@@ -64,7 +64,9 @@ function displayRecruitPosts(posts) {
 
     const currentDate = new Date();
 
-    posts.forEach(post => {
+    // 배열의 뒤쪽부터 반복하기 위해 posts.length - 1부터 시작하여 0까지 감소하며 반복합니다.
+    for (let i = posts.length - 1; i >= 0; i--) {
+        const post = posts[i];
         const deadDate = new Date(post.dead_day);
         const isClosed = deadDate < currentDate;
 
@@ -81,7 +83,7 @@ function displayRecruitPosts(posts) {
                         <div class="card-body py-2">
                             <div class="row">
                                 <div class="col-12">
-                                    <span class="badge bg-secondary me-2">번호 #${post.post_number}</span>
+                                    <span class="badge bg-secondary me-2"># ${post.post_number}</span>
                                     ${closedText}
                                     <h5 class="card-title d-inline mb-2">${post.club_name} - ${post.title}</h5>
                                 </div>
@@ -108,7 +110,7 @@ function displayRecruitPosts(posts) {
             </div>
         `;
         container.innerHTML += cardHtml;
-    });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', async () => {

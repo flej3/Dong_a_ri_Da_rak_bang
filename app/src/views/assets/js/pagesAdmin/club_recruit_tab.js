@@ -115,4 +115,57 @@ function displayRecruitPosts(posts) {
 
 document.addEventListener('DOMContentLoaded', async () => {
     await getClubRecruitPost();
+
+    const cardsContainer = document.getElementById('cards-container');
+    const pagination = document.getElementById('pagination');
+    const cardsPerPage = 5;
+    let currentPage = 1;
+
+    function setupPagination() {
+        const cards = cardsContainer.getElementsByClassName('card');
+        const pageCount = Math.ceil(cards.length / cardsPerPage);
+
+        for (let i = 1; i <= pageCount; i++) {
+            const li = document.createElement('li');
+            li.className = 'page-item';
+            const a = document.createElement('a');
+            a.href = '#';
+            a.innerText = i;
+            a.className = 'page-link';
+            a.addEventListener('click', function (e) {
+                e.preventDefault();
+                currentPage = i;
+                showPage(currentPage);
+            });
+            li.appendChild(a);
+            pagination.appendChild(li);
+        }
+
+        showPage(currentPage);
+    }
+
+    function showPage(page) {
+        const cards = cardsContainer.getElementsByClassName('card');
+        const startIndex = (page - 1) * cardsPerPage;
+        const endIndex = startIndex + cardsPerPage;
+
+        for (let i = 0; i < cards.length; i++) {
+            if (i >= startIndex && i < endIndex) {
+                cards[i].style.display = '';
+            } else {
+                cards[i].style.display = 'none';
+            }
+        }
+
+        const paginationLinks = pagination.getElementsByClassName('page-link');
+        Array.from(paginationLinks).forEach(link => {
+            if (parseInt(link.textContent) === page) {
+                link.parentElement.classList.add('active');
+            } else {
+                link.parentElement.classList.remove('active');
+            }
+        });
+    }
+
+    setupPagination();
 })

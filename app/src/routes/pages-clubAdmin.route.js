@@ -17,6 +17,8 @@ router.post("/delete-member", clubAdminController.deleteMember);
 
 router.post("/update-member", clubAdminController.updateMember);
 
+router.post("/change-owner", clubAdminController.changeOwner);
+
 //가입 신청 현황 라우터
 router.get("/api/club/application/list/get", clubApplication);
 

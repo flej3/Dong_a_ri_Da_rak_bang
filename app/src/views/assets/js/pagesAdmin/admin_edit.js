@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     pageSplit();
+    paginate();
 })
 
 const firstCheck = [];
@@ -341,6 +342,7 @@ function pageSplit() {
             } else {
                 checkValue = data.result[0].admin_ac;
                 if(checkValue !== 0) {
+                    createOwnerButton();
                     // 새로운 div 요소 생성
                     const newDiv = document.createElement("div");
                     newDiv.setAttribute("style", "display: flex; justify-content: space-between; align-items: center;");
@@ -377,7 +379,7 @@ function pageSplit() {
                     saveButton.setAttribute("id", "save-button");
                     saveButton.setAttribute("type", "submit");
                     saveButton.setAttribute("class", "btn btn-primary");
-                    saveButton.setAttribute("style", "margin-bottom: 15px; display: none;");
+                    saveButton.setAttribute("style", "margin-bottom: 15px; margin-left: 10px; display: none;");
                     saveButton.textContent = "저장";
                     buttonContainerDiv.appendChild(saveButton);
 
@@ -399,11 +401,11 @@ function pageSplit() {
                     notice.style.textAlign = 'right';
 
                     const newButton = document.createElement('button');
-                    // newButton.type = 'submit';
                     newButton.id = 'clubNoticePostBtn';
                     newButton.className = 'btn btn-primary';
                     newButton.style.marginBottom = '15px';
                     newButton.innerText = '작성하기';
+                    newButton.style.display = 'block';
 
                     notice.appendChild(newButton);
                     parentDiv.insertBefore(notice, parentDiv.firstChild);
@@ -414,14 +416,20 @@ function pageSplit() {
                     recruit.style.textAlign = 'right';
 
                     const newButton2 = document.createElement('button');
-                    // newButton2.type = 'submit';
                     newButton2.id = 'ClubRecruitPostBtn';
                     newButton2.className = 'btn btn-primary';
                     newButton2.style.marginBottom = '15px';
                     newButton2.innerText = '작성하기';
+                    newButton2.style.display = 'block';
 
                     recruit.appendChild(newButton2);
                     parentDiv2.insertBefore(recruit, parentDiv2.firstChild);
+
+                    notice.style.display = 'flex';
+                    notice.style.justifyContent = 'flex-end';
+
+                    recruit.style.display = 'flex';
+                    recruit.style.justifyContent = 'flex-end';
 
                     const newLi = document.createElement('li');
                     newLi.className = 'nav-item';
@@ -447,6 +455,23 @@ function pageSplit() {
                     const parentUl = document.querySelector('.nav-tabs');
                     parentUl.appendChild(newLi);
                     parentUl.appendChild(clubIntroLi);
+                }
+                else {
+                    const studentIdColumnIndex = document.getElementById("student-id").cellIndex;
+                    const phoneNumberColumnIndex = document.getElementById("ph-number").cellIndex;
+
+                    // 테이블의 각 행을 반복하며 학번과 전화번호 열을 숨깁니다.
+                    const tableRows = document.getElementById("member-table").rows;
+                    for (let i = 0; i < tableRows.length; i++) {
+                        tableRows[i].cells[studentIdColumnIndex].style.display = "none"; // 학번 열 숨기기
+                        tableRows[i].cells[phoneNumberColumnIndex].style.display = "none"; // 전화번호 열 숨기기
+                    }
+
+                    const nameWidth = document.getElementById('student-name');
+                    nameWidth.style.width = "220px";
+
+                    const departmentWidth = document.getElementById('student-department');
+                    departmentWidth.style.width = "300px";
                 }
             }
         })
@@ -481,4 +506,166 @@ function checkStId() {
         }
     }
     return check;
+}
+
+async function createOwnerButton() {
+    try {
+        const response = await fetch('/get-clubs', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'Application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('네트워크 응답이 올바르지 않습니다.');
+        }
+        const data = await response.json();
+
+        data.clubs.forEach(club => {
+            if (club.category === parseInt(getCategory())) {
+                const ownerPrintDiv = document.getElementById('owner-print');
+
+                const newButton = document.createElement('button');
+                newButton.className = 'btn btn-primary';
+                newButton.innerText = '변경';
+                newButton.style.display = 'block';
+                newButton.style.marginLeft = '10px';
+                newButton.style.width = '70px';
+
+                const buttonContainer = document.createElement('div');
+                buttonContainer.style.display = 'inline-block';
+
+                buttonContainer.appendChild(newButton);
+                ownerPrintDiv.appendChild(buttonContainer);
+
+                newButton.addEventListener('click', function() {
+                    changeOwner();
+                });
+            }
+        });
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+    }
+}
+
+const itemsPerPage = 10;
+
+let currentPage = 1;
+
+const memberTable = document.getElementById('member-table');
+
+function updatePaginationUI(totalPages) {
+    const paginationContainer = document.getElementById('member-pagination');
+    paginationContainer.innerHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+        const li = document.createElement('li');
+        li.classList.add('page-item');
+
+        const a = document.createElement('a');
+        a.classList.add('page-link');
+        a.href = '#';
+        a.textContent = i;
+        if (i === currentPage) {
+            li.classList.add('active');
+        }
+        a.addEventListener('click', () => {
+            currentPage = i;
+            paginate();
+        });
+
+        li.appendChild(a);
+        paginationContainer.appendChild(li);
+    }
+}
+
+function paginate() {
+    const rows = memberTable.getElementsByTagName('tr');
+
+    const totalItems = rows.length - 1;
+
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    const startIndex = (currentPage - 1) * itemsPerPage + 1;
+    const endIndex = Math.min(startIndex + itemsPerPage - 1, totalItems);
+
+    for (let i = 1; i < rows.length; i++) {
+        rows[i].style.display = 'none';
+    }
+
+    for (let i = startIndex; i <= endIndex; i++) {
+        rows[i].style.display = '';
+    }
+    updatePaginationUI(totalPages);
+}
+function getCategory() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get('query');
+
+    return category;
+}
+
+async function changeOwner() {
+    let userInput = prompt("위임 할 대상의 학번을 입력하세요.", "");
+
+    if (userInput !== null) {
+        if (userInput.trim() !== "") {
+            let table = document.getElementById("member-table");
+
+            for (let i = 0, row; row = table.rows[i]; i++) {
+                for (let j = 0, cell; cell = row.cells[j]; j++) {
+                    // 현재 셀의 텍스트와 사용자 입력 값 비교
+                    if (cell.textContent.trim() === userInput.trim()) {
+                        if (j > 0) {
+                            let previousCellValue = row.cells[j - 1].textContent.trim();
+                            let previousPosition = row.cells[j + 3].textContent.trim();
+                            let result = confirm("이름:" + previousCellValue + "\n" + "학번:" + userInput + "\n" + "위의 대상에게 권한을 위임하시겠습니까?" + "\n" + "(권함 위임 후 회원님의 직위는 최하위로 변경되며 관리 권한 또한 해제됩니다.)");
+                            let updateTarget = {
+                                name: previousCellValue,
+                                stId: userInput,
+                                category: parseInt(getCategory()),
+                            }
+                            if (result) {
+
+                                try {
+                                    const updateRequest = fetch('/change-owner', {
+                                        method: 'POST',
+                                        body: JSON.stringify(updateTarget),
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        }
+                                    });
+
+                                    const [updateResponse] = await Promise.all([updateRequest]);
+
+                                    if (updateResponse.ok) {
+                                        alert('권한 변경에 성공하였습니다.');
+                                        window.location.reload();
+                                    } else {
+                                        alert('위임 중 오류가 발생하였습니다.'+'\n'+'해당 사용자는 서비스 사용자가 아닐 수 있습니다.');
+                                        window.location.reload();
+                                        throw new Error('회원 추가 또는 정보 변경 중 오류 발생');
+                                    }
+
+                                } catch(error) {
+                                    console.error('정보 변경 중 오류 발생:', error);
+                                }
+
+                            } else {
+                                console.log('사용자가 "아니오"를 선택했습니다.');
+                            }
+                        }
+                        return;
+                    }
+                }
+            }
+            alert("입력 값과 일치하는 회원이 존재하지 않습니다.");
+
+        } else {
+            alert("잘못된 입력입니다.");
+            changeOwner();
+        }
+    } else {
+        console.log('사용자가 입력을 취소했습니다.');
+    }
 }

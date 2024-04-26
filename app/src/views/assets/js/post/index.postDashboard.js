@@ -26,6 +26,19 @@ function createCard(data) {
     const createDay = new Date(data.create_day).toLocaleDateString();
     const deadDay = new Date(data.dead_day).toLocaleDateString();
 
+    //마감일 계산
+    const today = new Date();
+    const deadline = new Date(data.dead_day);
+    const timeDiff = deadline - today;
+    const daysDiff = Math.ceil(timeDiff / (1000*3600*24));
+
+    let deadlineBadge;
+    if(daysDiff <= 0){
+        deadlineBadge = `<span class="badge bg-danger position-absolute custom-badge-position m-2">마감됨</span>`;
+    }else{
+        deadlineBadge = `<span class="badge bg-success position-absolute custom-badge-position m-2">D - ${daysDiff}</span>`;
+    }
+
     const writer = `<span class="badge bg-secondary">작성자: ${data.writer}</span>`;
 
     const cardContent = `
@@ -44,6 +57,7 @@ function createCard(data) {
                         <p class="card-text mb-1"><strong>모집 종료일:</strong> ${deadDay}</p>
                         <p class="card-text mb-3 text-truncate">${textContent}</p>
                         <span class="badge bg-info position-absolute top-0 end-0 m-2">번호: ${data.post_number}</span>
+                        ${deadlineBadge}
                     </div>
                 </div>
             </a>

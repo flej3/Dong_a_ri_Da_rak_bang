@@ -1363,4 +1363,8 @@ table.dataTable thead .sorting_desc:after {
   content: "\2193"; /* 아래쪽 화살표 */
 }
 /* 메인 화면(대시보드) 동아리 신청 현황 테이블 css 끝 */
->>>>>>> 8fd7db11c3779f0d11c8ca6ed8798da422865028
+
+.custom-badge-position {
+  top: 22px;
+  right: 0px;
+}

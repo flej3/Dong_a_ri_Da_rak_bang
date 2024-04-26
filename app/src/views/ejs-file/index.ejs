@@ -34,10 +34,49 @@
                   </button>
                 </a>
               </div>
-              <div id="card-container" class="row row-cols-1 row-cols-md-3 g-4">
+
+              <!-- 탭 버튼 -->
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button"
+                    role="tab" aria-controls="all" aria-selected="true">전체</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="recruiting-tab" data-bs-toggle="tab" data-bs-target="#recruiting"
+                    type="button" role="tab" aria-controls="recruiting" aria-selected="false">모집중</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="closed-tab" data-bs-toggle="tab" data-bs-target="#closed" type="button"
+                    role="tab" aria-controls="closed" aria-selected="false">마감됨</button>
+                </li>
+              </ul>
+
+              <!-- 탭 컨텐츠 -->
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+                  <div id="cards-container" class="row">
+                    <div id="card-container" class="row row-cols-1 row-cols-md-3 g-4"></div>
+                  </div>
+                </div>
+
+                <div class="tab-pane fade" id="recruiting" role="tabpanel" aria-labelledby="recruiting-tab">
+                  <div id="cards-container-recruiting" class="row">
+                    <div id="card-container-recruiting" class="row row-cols-1 row-cols-md-3 g-4"></div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="closed" role="tabpanel" aria-labelledby="closed-tab">
+                  <div id="cards-container-closed" class="row">
+                    <div id="card-container-closed" class="row row-cols-1 row-cols-md-3 g-4"></div>
+                  </div>
+                </div>
               </div>
+              <nav aria-label="Page navigation">
+                <ul id="pagination" class="pagination">
+                </ul>
+              </nav>
             </div>
           </div>
+        </div>
         </div>
       </section>
 

@@ -193,61 +193,15 @@
                             </div>
 
                             <div class="tab-pane fade pt-3" id="profile-change-password">
-
-                                <div class="card mb-3" >
-                                    <div class="row g-0">
-                                        <div class="col-md-3">
-                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="card-body">
-                                                <h5 class="card-title">게시글 제목</h5>
-                                                <p class="card-text">동아리 설명</p>
-                                            </div>
-                                        </div>
+                                <div class="container">
+                                    <div id="notice-cards-container" class="row">
+                                        <!-- 카드가 동적으로 추가될 위치 -->
                                     </div>
-                                </div>
-
-                                <div class="card mb-3" >
-                                    <div class="row g-0">
-                                        <div class="col-md-3">
-                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="card-body">
-                                                <h5 class="card-title">게시글 제목</h5>
-                                                <p class="card-text">동아리 설명</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card mb-3" >
-                                    <div class="row g-0">
-                                        <div class="col-md-3">
-                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="card-body">
-                                                <h5 class="card-title">게시글 제목</h5>
-                                                <p class="card-text">동아리 설명</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="card mb-3" >
-                                    <div class="row g-0">
-                                        <div class="col-md-3">
-                                            <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
-                                        </div>
-                                        <div class="col-md-9">
-                                            <div class="card-body">
-                                                <h5 class="card-title">게시글 제목</h5>
-                                                <p class="card-text">동아리 설명</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <nav aria-label="Page navigation">
+                                        <ul id="notice-pagination" class="pagination">
+                                            <!-- 페이지네이션 버튼이 동적으로 추가될 위치 -->
+                                        </ul>
+                                    </nav>
                                 </div>
                             </div>
                         </div><!-- End Bordered Tabs -->
@@ -304,6 +258,126 @@
             </div>
         </div>
     </div>
+
+    <!-- 공지사항 작성 모달 -->
+    <div class="modal fade" id="writeNoticeModal" tabindex="-1" aria-labelledby="writeNoticeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="writeNoticeModalLabel">공지사항 작성
+                        <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="해당 공지사항은 동아리 대표만 작성 가능하며, 권한자는 수정을 할 수 있습니다!">
+                        <i class="bi bi-question-circle"></i>
+                        </span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="noticeForm">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="noticeTitle" class="form-label">제목</label>
+                            <input type="text" class="form-control" id="noticeTitle" name="title" required
+                                aria-describedby="titleHelp" placeholder="공지사항의 제목을 입력하세요">
+                        </div>
+                        <div class="mb-3">
+                            <label for="noticeContent" class="form-label">내용</label>
+                            <textarea class="form-control" id="noticeContent" name="content" rows="8" required
+                                placeholder="공지사항의 상세 내용을 입력하세요"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                        <button type="submit" class="btn btn-primary" id="noticeSaveBtn">저장하기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 공지사항 디테일 모달 -->
+    <div class="modal fade" id="noticeDetailModal" tabindex="-1" aria-labelledby="noticeDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="noticeDetailModalLabel">공지사항 상세 정보</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <strong>제목:</strong> <span id="detailNoticeTitle"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>작성자:</strong> <span id="detailNoticeAuthor"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>작성 날짜:</strong> <span id="detailNoticeDate"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>내용:</strong>
+                        <div id="detailNoticeContent"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 공지사항 수정 모달 -->
+    <div class="modal fade" id="editNoticeModal" tabindex="-1" aria-labelledby="editNoticeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editNoticeModalLabel">공지 사항 수정
+                        <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                        title="수정된 공지사항은 모든 사용자에게 반영됩니다. 주의해서 수정하세요!">
+                        <i class="bi bi-question-circle"></i>
+                        </span>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="editNoticeForm">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="editNoticeTitle" class="form-label">제목</label>
+                            <input type="text" class="form-control" id="editNoticeTitle" name="title" required
+                                aria-describedby="titleHelp" placeholder="공지사항의 제목을 입력하세요">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editNoticeContent" class="form-label">내용</label>
+                            <textarea class="form-control" id="editNoticeContent" name="content" rows="8" required
+                                placeholder="공지사항의 상세 내용을 입력하세요"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                        <button type="submit" class="btn btn-primary" id="editNoticeSaveBtn">저장하기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 공지사항 삭제 확인 모달 -->
+    <div class="modal fade" id="deleteNoticeModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">공지사항 삭제 확인</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                정말로 이 공지사항을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button id = "realDeleteBtn" type="button" class="btn btn-danger">삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
 </main><!-- End #main -->
 
 <!-- ======= Footer ======= -->
@@ -337,6 +411,7 @@
 <script defer src="../assets/js/pagesAdmin/admin_edit.js"></script>
 <script defer src="../assets/js/pagesAdmin/admin_club_applications.js"></script>
 <script defer src="../assets/js/pagesAdmin/club_recruit_tab.js"></script>
+<script defer src="../assets/js/pagesAdmin/club_notice_tab.js"></script>
 
 </body>
 

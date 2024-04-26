@@ -399,8 +399,8 @@ function pageSplit() {
                     notice.style.textAlign = 'right';
 
                     const newButton = document.createElement('button');
-                    newButton.type = 'submit';
-                    newButton.id = 'write-post';
+                    // newButton.type = 'submit';
+                    newButton.id = 'clubNoticePostBtn';
                     newButton.className = 'btn btn-primary';
                     newButton.style.marginBottom = '15px';
                     newButton.innerText = '작성하기';
@@ -414,7 +414,7 @@ function pageSplit() {
                     recruit.style.textAlign = 'right';
 
                     const newButton2 = document.createElement('button');
-                    newButton2.type = 'submit';
+                    // newButton2.type = 'submit';
                     newButton2.id = 'ClubRecruitPostBtn';
                     newButton2.className = 'btn btn-primary';
                     newButton2.style.marginBottom = '15px';

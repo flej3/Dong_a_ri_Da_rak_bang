@@ -235,7 +235,7 @@ document.getElementById('realDeleteBtn').addEventListener('click', async () => {
     } catch (error) {
         alert(`공지 사항 삭제중에 에러발생. ${error}`);
         console.error(`공지 사항 삭제중에 에러발생. ${error}`);
-        // window.location.reload();
+        window.location.reload();
     }
 })
 

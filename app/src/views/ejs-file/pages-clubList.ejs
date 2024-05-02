@@ -1,85 +1,62 @@
 <!-- 헤더 include -->
 <%- include ('partials/header.ejs') %>
 
-    <!-- ======= Sidebar ======= -->
-    <%- include ('partials/sidebar.ejs') %>
+<!-- ======= Sidebar ======= -->
+<%- include ('partials/sidebar.ejs') %>
 
-        <main id="main" class="main">
-            <!-- Club Categories -->
-            <div class="pagetitle">
-                <h1>동아리 목록</h1>
-                <nav>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item active">동아리 목록</li>
-                    </ol>
-                </nav>
-            </div><!-- End Page Title -->
+<main id="main" class="main">
+    <!-- Club Categories -->
+    <div class="pagetitle">
+        <h1>동아리 목록</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active">동아리 목록</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
 
-            <div class="club-categories">
-                <div class="category-container" data-category="central">중앙동아리</div>
-                <div class="category-container" data-category="club">동아리</div>
-                <div class="category-container" data-category="community">소모임</div>
-                <div class="category-container" data-category="lab">랩실</div>
-            </div>
+    <div class="club-categories">
+        <div class="category-container" data-category="all">전체</div>
+        <div class="category-container" data-category="central">중앙동아리</div>
+        <div class="category-container" data-category="club">동아리</div>
+        <div class="category-container" data-category="community">소모임</div>
+        <div class="category-container" data-category="lab">랩실</div>
+    </div>
 
-            <!-- Club List -->
-            <table class="table">
-                <!-- Table Header -->
-                <thead>
-                    <tr>
-                        <th scope="col">동아리 이름</th>
-                        <th scope="col">부장</th>
-                        <th scope="col">회원 수</th>
-                        <th scope="col">소속</th>
-                    </tr>
-                </thead>
-                <!-- Table Body -->
-                <tbody id="club-table-body">
-                    <% if (clubs && clubs.length) { %>
-                        <% clubs.forEach(club=> { %>
-                            <tr>
-                                <td>
-                                    <%= club.club_name %>
-                                </td>
-                                <td>
-                                    <%= club.club_owner %>
-                                </td>
-                                <td>
-                                    <%= club.member_count %>
-                                </td>
-                                <td>
-                                    <%= club.affilition %>
-                                </td>
-                            </tr>
-                            <% }); %>
-                                <% } else { %>
-                                    <tr>
-                                        <td colspan="5">클럽 목록이 없습니다.</td>
-                                    </tr>
-                                    <% } %>
-                </tbody>
-            </table>
+    <!-- Club List -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">동아리 이름</th>
+                <th scope="col">부장</th>
+                <th scope="col">회원 수</th>
+                <th scope="col">소속</th>
+            </tr>
+        </thead>
+        <tbody id="club-table-body">
+        </tbody>
+    </table>
 
-            <!-- ======= Footer ======= -->
-            <%- include ('partials/footer.ejs') %>
-                <!-- End Footer -->
+    <!-- ======= Footer ======= -->
+    <%- include ('partials/footer.ejs') %>
+    <!-- End Footer -->
 
-                <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-                        class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
-                <!-- Vendor JS Files -->
-                <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-                <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-                <script src="assets/vendor/chart.js/chart.umd.js"></script>
-                <script src="assets/vendor/echarts/echarts.min.js"></script>
-                <script src="assets/vendor/quill/quill.min.js"></script>
-                <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-                <script src="assets/vendor/tinymce/tinymce.min.js"></script>
-                <script src="assets/vendor/php-email-form/validate.js"></script>
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="assets/vendor/echarts/echarts.min.js"></script>
+    <script src="assets/vendor/quill/quill.min.js"></script>
+    <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
 
-                <!-- Client JS File -->
-                <script src="../assets/js/club_list.js"></script>
-        </main>
-        </body>
-        </ejs>
+    <!-- Client JS File -->
+    <script src="../assets/js/club_list.js"></script>
+</main>
+</body>
+</ejs>

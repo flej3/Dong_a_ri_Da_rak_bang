@@ -5,7 +5,7 @@ function fetchClubList() {
             if (!response.ok) {
                 throw new Error('서버 응답이 올바르지 않습니다.');
             }
-            return response.json();ㅇ
+            return response.json();
         })
         .then(clubs => {
             displayClubList(clubs);
@@ -17,12 +17,17 @@ function fetchClubList() {
 
 // 클럽 목록을 화면에 표시
 function displayClubList(clubs) {
-    const clubListElement = document.getElementById('clubList');
+    const clubTableBody = document.getElementById('club-table-body');
 
     clubs.forEach(club => {
-        const clubItem = document.createElement('li');
-        clubItem.textContent = club.name;
-        clubListElement.appendChild(clubItem);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${club.club_name}</td>
+            <td>${club.club_owner}</td>
+            <td>${club.member_count}</td>
+            <td>${club.affiliation}</td>
+        `;
+        clubTableBody.appendChild(row);
     });
 }
 

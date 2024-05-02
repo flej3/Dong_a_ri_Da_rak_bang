@@ -426,6 +426,8 @@ function pageSplit() {
                     const newLi = document.createElement('li');
                     newLi.className = 'nav-item';
 
+                    const clubIntroLi = document.createElement('li');
+                    clubIntroLi.className = 'nav-item';
 
                     const joinList = document.createElement('button');
                     joinList.className = 'nav-link';
@@ -433,11 +435,18 @@ function pageSplit() {
                     joinList.setAttribute('data-bs-target', '#profile-settings');
                     joinList.innerText = '가입 신청 현황';
 
+                    const clubIntroductionEdit = document.createElement('button');
+                    clubIntroductionEdit.className = 'nav-link';
+                    clubIntroductionEdit.setAttribute('data-bs-toggle', 'tab');
+                    clubIntroductionEdit.setAttribute('data-bs-target', '#clubIntroductionEdit');
+                    clubIntroductionEdit.innerText = '동아리 소개 편집';
 
                     newLi.appendChild(joinList);
+                    clubIntroLi.appendChild(clubIntroductionEdit);
 
                     const parentUl = document.querySelector('.nav-tabs');
                     parentUl.appendChild(newLi);
+                    parentUl.appendChild(clubIntroLi);
                 }
             }
         })

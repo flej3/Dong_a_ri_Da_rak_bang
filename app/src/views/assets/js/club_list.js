@@ -34,6 +34,7 @@ function displayClubList(clubs) {
         // row.classList.add('category-container');
         row.addEventListener('click', () => {
             console.log(`${club.category} 클릭됨`);
+            window.location.href = `/club-introduction?category=${club.category}`;
         })
         row.innerHTML = `
             <td>${club.club_name}</td>

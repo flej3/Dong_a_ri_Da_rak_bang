@@ -13,18 +13,12 @@
     <li class="nav-heading">Pages</li>
 
     <li class="nav-item">
-      <a id="profile-link" class="nav-link collapsed" href="<%= userData.isAvailable ? 'users-profile' : 'pages-login' %>">
+      <a id="profile-link" class="nav-link collapsed"
+        href="<%= userData.isAvailable ? 'users-profile' : 'pages-login' %>">
         <i class="bi bi-person"></i>
         <span>Profile</span>
       </a>
     </li><!-- End Profile Page Nav -->
-
-    <li class="nav-item">
-      <a id="club-link" class="nav-link collapsed" href="<%= userData.isAvailable ? 'club-profile' : 'pages-login' %>">
-        <i class="bi bi-people"></i> <!-- 동아리 아이콘을 사용하거나 필요에 따라 변경하세요 -->
-        <span>Club</span> <!-- 탭 이름을 "Club"으로 변경했습니다. -->
-      </a>
-    </li><!-- End Club Page Nav -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="pages-faq">
@@ -33,15 +27,22 @@
       </a>
     </li><!-- End F.A.Q Page Nav -->
 
-      
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="create-club">
-          <i class="bi bi-people"></i>
-          <span>동아리 생성 | 등록</span>
+    <% if (userData.clubData && userData.clubData.isOwner===true) { %>
+      <li>
+        <a class="nav-link collapsed" href="/Page-clubAdmin">
+          <i class="bi bi-house-door"></i>
+          <span>동아리 관리</span>
         </a>
       </li>
+      <% } %>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="pages-clubList">
+            <i class="bi bi-card-list"></i>
+            <span>동아리 목록</span>
+          </a>
+        </li><!-- End clubList Page Nav -->
 
-      <% if (userData.isAvailable) { %>
+        <% if (userData.isAvailable) { %>
           <li class="nav-item">
             <a class="nav-link collapsed" href="/api/users/logout">
               <i class="bi bi-box-arrow-in-right"></i>

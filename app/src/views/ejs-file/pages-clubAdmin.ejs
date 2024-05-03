@@ -22,19 +22,25 @@
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                         <img src="assets/img/hs-logo.png" alt="Profile" class="rounded-circle">
-                        <h2>동아리명 : <%= club.club_name%> </h2>
-                        <!--소속은 고정이 아님. 동아리장이 컴공이라고해서 
-                        해당 동아리가 컴공 소속이지 않다는 뜻!-->
-                        <h3>소속 : <%= club.affilition%></h3>
+                        <h2>동아리명: <%= club.club_name%> </h2>
+                        <h3>소속: <%= club.affilition%></h3>
+                        <!-- 소개 메시지 추가 -->
+                        <p class="text-center mt-3" id="clubIntroMsg">
+                            -
+                        </p>
                         <div class="social-links mt-2">
-                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                            <a href="#" id="twitterLink" class="twitter" target="_blank" style="display: none"><i class="bi bi-twitter"></i></a>
+                            <a href="#" id="facebookLink" class="facebook" target="_blank" style="display: none"><i class="bi bi-facebook"></i></a>
+                            <a href="#" id="instagramLink" class="instagram" target="_blank" style="display: none"><i class="bi bi-instagram"></i></a>
+                            <span class="info-icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="동아리에서 등록한 SNS 링크가 있다면 아이콘이 추가됩니다.">
+                                <i class="bi bi-question-circle"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
+            
 
             <div class="col-xl-8">
                 <div class="card">
@@ -203,6 +209,52 @@
                                         </ul>
                                     </nav>
                                 </div>
+                            </div>
+
+                            <div class="tab-pane fade clubIntroductionEdit pt-3" id="clubIntroductionEdit">
+                                <form id="clubProfileEditForm">
+                                    <div class="row mb-3">
+                                        <label for="clubImageInput" class="col-md-4 col-lg-3 col-form-label">클럽 사진</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <img src="./../assets/img/hs-logo.png" alt="Profile" style="width: 100px; height: auto;">
+                                            <div class="pt-2">
+                                                <a href="#" class="btn btn-primary btn-sm" title="새로운 클럽 사진 업로드"><i class="bi bi-upload"></i></a>
+                                                <a href="#" class="btn btn-danger btn-sm" title="클럽 사진 삭제"><i class="bi bi-trash"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="clubMessage" class="col-md-4 col-lg-3 col-form-label">클럽 소개 메시지</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <textarea name="about" class="form-control" id="clubMessage" style="height: 300px" placeholder="클럽 메시지"></textarea>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="row mb-3">
+                                        <label for="clubTwitterProfile" class="col-md-4 col-lg-3 col-form-label">트위터 링크</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="twitter" type="text" class="form-control" id="clubTwitterProfile" placeholder="트위터 링크">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="row mb-3">
+                                        <label for="clubFacebookProfile" class="col-md-4 col-lg-3 col-form-label">페이스북 링크</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="facebook" type="text" class="form-control" id="clubFacebookProfile" placeholder="페이스북 링크">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="row mb-3">
+                                        <label for="clubInstagramProfile" class="col-md-4 col-lg-3 col-form-label">인스타그램 링크</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="instagram" type="text" class="form-control" id="clubInstagramProfile" placeholder="인스타그램 링크">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="text-center">
+                                        <button id="saveClubProfileBtn" type="submit" class="btn btn-primary">클럽 소개 저장</button>
+                                    </div>
+                                </form>
                             </div>
                         </div><!-- End Bordered Tabs -->
                     </div>
@@ -412,6 +464,7 @@
 <script defer src="../assets/js/pagesAdmin/admin_club_applications.js"></script>
 <script defer src="../assets/js/pagesAdmin/club_recruit_tab.js"></script>
 <script defer src="../assets/js/pagesAdmin/club_notice_tab.js"></script>
+<script defer src="../assets/js/pagesAdmin/club_introduction.js"></script>
 
 </body>
 

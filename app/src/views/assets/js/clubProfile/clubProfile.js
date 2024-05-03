@@ -2,6 +2,26 @@
 
 // 카드를 생성하는 함수
 function createClubCard(club) {
+    const { twitter_link, facebook_link, instagram_link } = club;
+    const twitterLink = twitter_link || '';
+    const facebookLink = facebook_link || '';
+    const instagramLink = instagram_link || '';
+
+    // const setDisplayTwitter = twitterLink
+    let setDisplayTwitter = "none";
+    let setDisplayFacebook = "none";
+    let setDisplayInstagram = "none";
+
+    if(twitterLink !== ''){
+        setDisplayTwitter = "inline-block"
+    }
+    if(facebookLink !== ''){
+        setDisplayFacebook = "inline-block"
+    }
+    if(instagramLink !== ''){
+        setDisplayInstagram = "inline-block"
+    }
+
     return `
     <div class="col-md-4 mb-4 team-card">
         <a href="/Page-clubAdmin?query=${club.category}" style="margin: auto;">
@@ -11,10 +31,9 @@ function createClubCard(club) {
                 <h2 class="card-title text-center">동아리명: ${club.club_name}</h2>
                 <h3 class="card-subtitle mb-3 text-center">직위: ${club.position}</h3>
                 <div class="text-center">
-                <a href="#" class="btn btn-outline-primary me-2"><i class="bi bi-twitter"></i></a>
-                <a href="#" class="btn btn-outline-primary me-2"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="btn btn-outline-primary me-2"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="btn btn-outline-primary"><i class="bi bi-linkedin"></i></a>
+                <a href=${twitterLink} id = twitterBtn-${club.category} class="btn btn-outline-primary me-2 twitter-link-${club.category}" target="_blank" style="display: ${setDisplayTwitter}"><i class="bi bi-twitter"></i></a>
+                <a href=${facebookLink} id = facebookBtn-${club.category} class="btn btn-outline-primary me-2 facebook-link-${club.category}" target="_blank" style="display: ${setDisplayFacebook}"><i class="bi bi-facebook"></i></a>
+                <a href=${instagramLink} id = instagramBtn-${club.category} class="btn btn-outline-primary me-2 instagram-link-${club.category}" target="_blank" style="display: ${setDisplayInstagram}"><i class="bi bi-instagram"></i></a>
                 </div>
                 <div class="text-center mt-3">
                     <button class="clubResignationBtn btn btn-danger club-resignation-${club.category}" data-bs-toggle="modal" data-bs-target="#clubResignationModal">탈퇴하기</button>

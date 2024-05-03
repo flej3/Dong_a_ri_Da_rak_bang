@@ -33,7 +33,6 @@ function displayClubList(clubs) {
         const row = document.createElement('tr');
         // row.classList.add('category-container');
         row.addEventListener('click', () => {
-            console.log(`${club.category} 클릭됨`);
             window.location.href = `/club-introduction?category=${club.category}`;
         })
         row.innerHTML = `

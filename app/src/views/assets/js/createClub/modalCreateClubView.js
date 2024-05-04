@@ -34,7 +34,7 @@ async function getCreateClubList() {
             noApplicationItem.textContent = '등록 신청한 동아리가 없습니다.';
             listGroup.appendChild(noApplicationItem);
         } else {
-            data.CreateClubList.forEach((club, index) => {
+            data.CreateClubList.reverse().forEach((club, index) => {
                 const listItem = document.createElement('li');
                 listItem.classList.add('list-group-item');
                 listItem.setAttribute('data-bs-toggle', 'modal');

@@ -73,9 +73,9 @@
                                         <tr>
                                             <th scope="col"></th>
                                             <th scope="col">이름</th>
-                                            <th scope="col" id="student-id">학번</th>
+                                            <th scope="col" id="student-id" style="display: none">학번</th>
                                             <th scope="col">학과</th>
-                                            <th scope="col" id="ph-number">전화번호</th>
+                                            <th scope="col" id="ph-number" style="display: none">전화번호</th>
                                             <th scope="col">직위</th>
                                             <th scope="col">관리 권한</th>
                                         </tr>
@@ -85,7 +85,7 @@
                                         <% members.forEach(member => { %>
                                             <tr>
                                                 <th scope="row"><%= count %></th>
-                                                <td id="student-name"><% if (member.user_id) { %>
+                                                <td id="student-name" style="width: 200px;"><% if (member.user_id) { %>
                                                     <%if (member.user_id === club.club_owner) {%>
                                                         <img src="/assets/img/club-owner-icon.png" style="width: 15px;">
                                                         <%} else {%>
@@ -96,9 +96,9 @@
                                                         <i class="bi bi-circle" id="judgment-user" style="font-size: 6px;
                                                 border-radius: 50%; margin-right: 8px; background-color:slategrey;"></i>
                                                     <% } %><%= member.member_name %></td>
-                                                <td id="student-id-list"><%= member.member_student_id %></td>
+                                                <td id="student-id-list" style="display: none"><%= member.member_student_id %></td>
                                                 <td id="student-department"><%= member.member_department %></td>
-                                                <td id="ph-number-list"><%= member.member_ph_number%></td>
+                                                <td id="ph-number-list" style="display: none"><%= member.member_ph_number%></td>
                                                 <td>
                                                     <span id="position_text_<%= count %>"><%= member.position %></span>
                                                     <input type="text" id="position_input_<%= count %>" style="display: none; width: 60px;" placeholder="<%= member.position %>">
@@ -494,9 +494,6 @@
         display: none;
     }
 
-    .btn-primary {
-        display: none;
-    }
 
     /* hidden 버튼이 표시될 때 테이블의 너비를 조절하는 CSS */
     .table-container:hover .btn-primary {

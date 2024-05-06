@@ -119,11 +119,29 @@ const deleteMember = async (req, res) => {
     }
 };
 
+async function hasClubAdminAc(category, userId) {
+    try {
+        const query = `SELECT * FROM club_member WHERE user_id = ? AND category = ? AND admin_ac = ?;`;
+        const result = await executeQueryPromise(query, [userId, category, '1']);
+
+        if(result.length === 0){
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error(`동아리 권한자 확인중 에러 발생 ${error}`);
+        return false;
+    }
+}
+
 const getClubMember = async (req, res, next) => {
     try {
         const category = req.query.query;
+        const tokenDecoded = await getTokenDecode(req, res);
+        const userId = tokenDecoded.id;
         const clubData = await getClubDataNew(req,res,category);
-
+        const hasAdminAc = await hasClubAdminAc(category, userId);
+        clubData.hasAdminAc = hasAdminAc;
         res.render("pages-clubAdmin", clubData);
     } catch (error) {
         console.error(error);

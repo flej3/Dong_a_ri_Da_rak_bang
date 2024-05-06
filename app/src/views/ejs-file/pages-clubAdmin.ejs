@@ -65,51 +65,66 @@
 
                         </ul>
                         <div class="tab-content pt-2">
-
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <div class="col-md-4" style="width: 100%;">
-                                    <table class="table" id="member-table" style="width: 100%; ">
+                                    <table class="table" id="member-table" style="width: 100%;">
                                         <thead>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col">이름</th>
-                                            <th scope="col" id="student-id" style="display: none">학번</th>
-                                            <th scope="col">학과</th>
-                                            <th scope="col" id="ph-number" style="display: none">전화번호</th>
-                                            <th scope="col">직위</th>
-                                            <th scope="col">관리 권한</th>
-                                        </tr>
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col">이름</th>
+                                                <th scope="col" id="student-id" style="<%= hasAdminAc ? '' : 'display: none' %>">학번</th>
+                                                <th scope="col">학과</th>
+                                                <th scope="col" id="ph-number" style="<%= hasAdminAc ? '' : 'display: none' %>">전화번호</th>
+                                                <th scope="col">직위</th>
+                                                <th scope="col">관리 권한</th>
+                                            </tr>
                                         </thead>
                                         <tbody id="member-table">
-                                        <% let count = 1; %>
-                                        <% members.forEach(member => { %>
-                                            <tr>
-                                                <th scope="row"><%= count %></th>
-                                                <td id="student-name" style="width: 200px;"><% if (member.user_id) { %>
-                                                    <%if (member.user_id === club.club_owner) {%>
-                                                        <img src="/assets/img/club-owner-icon.png" style="width: 15px;">
-                                                        <%} else {%>
-                                                        <i class="bi bi-circle" id="judgment-user" style="font-size: 6px;
-                                                border-radius: 50%; margin-right: 8px; background-color: aquamarine;"></i>
-                                                    <%}%>
-                                                    <% } else { %>
-                                                        <i class="bi bi-circle" id="judgment-user" style="font-size: 6px;
-                                                border-radius: 50%; margin-right: 8px; background-color:slategrey;"></i>
-                                                    <% } %><%= member.member_name %></td>
-                                                <td id="student-id-list" style="display: none"><%= member.member_student_id %></td>
-                                                <td id="student-department"><%= member.member_department %></td>
-                                                <td id="ph-number-list" style="display: none"><%= member.member_ph_number%></td>
-                                                <td>
-                                                    <span id="position_text_<%= count %>"><%= member.position %></span>
-                                                    <input type="text" id="position_input_<%= count %>" style="display: none; width: 60px;" placeholder="<%= member.position %>">
-                                                </td>
-                                                <td contenteditable="false">
-                                                    <input type="checkbox" id="adminCheckbox_<%= count %>" <% if (member.admin_ac) { %>checked="checked"<% } %> disabled="disabled">
-                                                    <button class="btn btn-primary" id="hidden-btn" style="display: none; margin-left: 30px;">x</button>
-                                                </td>
-                                            </tr>
-                                            <% count++; %>
-                                        <% }); %>
+                                            <% let count=1; %>
+                                                <% members.forEach(member=> { %>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <%= count %>
+                                                        </th>
+                                                        <td id="student-name" style="width: 200px;">
+                                                            <% if (member.user_id) { %>
+                                                                <% if (member.user_id===club.club_owner) { %>
+                                                                    <img src="/assets/img/club-owner-icon.png" style="width: 15px;">
+                                                                    <% } else { %>
+                                                                        <i class="bi bi-circle" id="judgment-user"
+                                                                            style="font-size: 6px; border-radius: 50%; margin-right: 8px; background-color: aquamarine;"></i>
+                                                                        <% } %>
+                                                                            <% } else { %>
+                                                                                <i class="bi bi-circle" id="judgment-user"
+                                                                                    style="font-size: 6px; border-radius: 50%; margin-right: 8px; background-color:slategrey;"></i>
+                                                                                <% } %>
+                                                                                    <%= member.member_name %>
+                                                        </td>
+                                                        <td id="student-id-list" style="<%= hasAdminAc ? '' : 'display: none' %>">
+                                                            <%= member.member_student_id %>
+                                                        </td>
+                                                        <td id="student-department">
+                                                            <%= member.member_department %>
+                                                        </td>
+                                                        <td id="ph-number-list" style="<%= hasAdminAc ? '' : 'display: none' %>">
+                                                            <%= member.member_ph_number%>
+                                                        </td>
+                                                        <td>
+                                                            <span id="position_text_<%= count %>">
+                                                                <%= member.position %>
+                                                            </span>
+                                                            <input type="text" id="position_input_<%= count %>" style="display: none; width: 60px;"
+                                                                placeholder="<%= member.position %>">
+                                                        </td>
+                                                        <td contenteditable="false">
+                                                            <input type="checkbox" id="adminCheckbox_<%= count %>" <% if (member.admin_ac) {
+                                                                %>checked="checked"<% } %> disabled="disabled">
+                                                                <button class="btn btn-primary" id="hidden-btn"
+                                                                    style="display: none; margin-left: 30px;">x</button>
+                                                        </td>
+                                                    </tr>
+                                                    <% count++; %>
+                                                        <% }); %>
                                         </tbody>
                                     </table>
                                 </div>

@@ -22,8 +22,11 @@
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                         <img src="assets/img/hs-logo.png" alt="Profile" class="rounded-circle">
-                        <h2>동아리명: <%= club.club_name%> </h2>
-                        <h3>소속: <%= club.affilition%></h3>
+                        <h2>동아리명 : <%= club.club_name%> </h2>
+                        <!--소속은 고정이 아님. 동아리장이 컴공이라고해서
+                        해당 동아리가 컴공 소속이지 않다는 뜻!-->
+                        <h3>소속 : <%= club.affilition%></h3>
+                        <div id="owner-print">담당자 : <%= club.club_owner%></div>
                         <!-- 소개 메시지 추가 -->
                         <p class="text-center mt-3" id="clubIntroMsg">
                             -
@@ -40,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            
+
 
             <div class="col-xl-8">
                 <div class="card">
@@ -62,53 +65,77 @@
 
                         </ul>
                         <div class="tab-content pt-2">
-
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <div class="col-md-4" style="width: 100%;">
-                                    <table class="table" id="member-table" style="width: 100%; ">
+                                    <table class="table" id="member-table" style="width: 100%;">
                                         <thead>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col">이름</th>
-                                            <th scope="col" id="student-id">학번</th>
-                                            <th scope="col">학과</th>
-                                            <th scope="col" id="ph-number">전화번호</th>
-                                            <th scope="col">직위</th>
-                                            <th scope="col">관리 권한</th>
-                                        </tr>
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col">이름</th>
+                                                <th scope="col" id="student-id" style="<%= hasAdminAc ? '' : 'display: none' %>">학번</th>
+                                                <th scope="col">학과</th>
+                                                <th scope="col" id="ph-number" style="<%= hasAdminAc ? '' : 'display: none' %>">전화번호</th>
+                                                <th scope="col">직위</th>
+                                                <th scope="col">관리 권한</th>
+                                            </tr>
                                         </thead>
                                         <tbody id="member-table">
-                                        <% let count = 1; %>
-                                        <% members.forEach(member => { %>
-                                            <tr>
-                                                <th scope="row"><%= count %></th>
-                                                <td id="student-name"><% if (member.user_id) { %>
-                                                        <i class="bi bi-circle" id="judgment-user" style="font-size: 6px;
-                                                border-radius: 50%; margin-right: 8px; background-color: aquamarine;"></i>
-                                                    <% } else { %>
-                                                        <i class="bi bi-circle" id="judgment-user" style="font-size: 6px;
-                                                border-radius: 50%; margin-right: 8px; background-color:slategrey;"></i>
-                                                    <% } %><%= member.member_name %></td>
-                                                <td id="student-id-list"><%= member.member_student_id %></td>
-                                                <td id="student-department"><%= member.member_department %></td>
-                                                <td id="ph-number-list"><%= member.member_ph_number%></td>
-                                                <td>
-                                                    <span id="position_text_<%= count %>"><%= member.position %></span>
-                                                    <input type="text" id="position_input_<%= count %>" style="display: none; width: 60px;" placeholder="<%= member.position %>">
-                                                </td>
-                                                <td contenteditable="false">
-                                                    <input type="checkbox" id="adminCheckbox_<%= count %>" <% if (member.admin_ac) { %>checked="checked"<% } %> disabled="disabled">
-                                                    <button class="btn btn-primary" id="hidden-btn" style="display: none; margin-left: 30px;">x</button>
-                                                </td>
-                                            </tr>
-                                            <% count++; %>
-                                        <% }); %>
+                                            <% let count=1; %>
+                                                <% members.forEach(member=> { %>
+                                                    <tr>
+                                                        <th scope="row">
+                                                            <%= count %>
+                                                        </th>
+                                                        <td id="student-name" style="width: 200px;">
+                                                            <% if (member.user_id) { %>
+                                                                <% if (member.user_id===club.club_owner) { %>
+                                                                    <img src="/assets/img/club-owner-icon.png" style="width: 15px;">
+                                                                    <% } else { %>
+                                                                        <i class="bi bi-circle" id="judgment-user"
+                                                                            style="font-size: 6px; border-radius: 50%; margin-right: 8px; background-color: aquamarine;"></i>
+                                                                        <% } %>
+                                                                            <% } else { %>
+                                                                                <i class="bi bi-circle" id="judgment-user"
+                                                                                    style="font-size: 6px; border-radius: 50%; margin-right: 8px; background-color:slategrey;"></i>
+                                                                                <% } %>
+                                                                                    <%= member.member_name %>
+                                                        </td>
+                                                        <td id="student-id-list" style="<%= hasAdminAc ? '' : 'display: none' %>">
+                                                            <%= member.member_student_id %>
+                                                        </td>
+                                                        <td id="student-department">
+                                                            <%= member.member_department %>
+                                                        </td>
+                                                        <td id="ph-number-list" style="<%= hasAdminAc ? '' : 'display: none' %>">
+                                                            <%= member.member_ph_number%>
+                                                        </td>
+                                                        <td>
+                                                            <span id="position_text_<%= count %>">
+                                                                <%= member.position %>
+                                                            </span>
+                                                            <input type="text" id="position_input_<%= count %>" style="display: none; width: 60px;"
+                                                                placeholder="<%= member.position %>">
+                                                        </td>
+                                                        <td contenteditable="false">
+                                                            <input type="checkbox" id="adminCheckbox_<%= count %>" <% if (member.admin_ac) {
+                                                                %>checked="checked"<% } %> disabled="disabled">
+                                                                <button class="btn btn-primary" id="hidden-btn"
+                                                                    style="display: none; margin-left: 30px;">x</button>
+                                                        </td>
+                                                    </tr>
+                                                    <% count++; %>
+                                                        <% }); %>
                                         </tbody>
                                     </table>
                                 </div>
+                                <nav aria-label="Page navigation">
+                                    <ul id="member-pagination" class="pagination">
+                                    </ul>
+                                </nav>
                             </div>
 
                             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
                                 <div id="cards-container" class="row">
                                     <!-- 카드가 동적으로 추가될 위치 -->
                                     <div class="container" id="recruitPostsContainer">
@@ -199,6 +226,7 @@
                             </div>
 
                             <div class="tab-pane fade pt-3" id="profile-change-password">
+
                                 <div class="container">
                                     <div id="notice-cards-container" class="row">
                                         <!-- 카드가 동적으로 추가될 위치 -->
@@ -229,28 +257,28 @@
                                             <textarea name="about" class="form-control" id="clubMessage" style="height: 300px" placeholder="클럽 메시지"></textarea>
                                         </div>
                                     </div>
-                                
+
                                     <div class="row mb-3">
                                         <label for="clubTwitterProfile" class="col-md-4 col-lg-3 col-form-label">트위터 링크</label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="twitter" type="text" class="form-control" id="clubTwitterProfile" placeholder="트위터 링크">
                                         </div>
                                     </div>
-                                
+
                                     <div class="row mb-3">
                                         <label for="clubFacebookProfile" class="col-md-4 col-lg-3 col-form-label">페이스북 링크</label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="facebook" type="text" class="form-control" id="clubFacebookProfile" placeholder="페이스북 링크">
                                         </div>
                                     </div>
-                                
+
                                     <div class="row mb-3">
                                         <label for="clubInstagramProfile" class="col-md-4 col-lg-3 col-form-label">인스타그램 링크</label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="instagram" type="text" class="form-control" id="clubInstagramProfile" placeholder="인스타그램 링크">
                                         </div>
                                     </div>
-                                
+
                                     <div class="text-center">
                                         <button id="saveClubProfileBtn" type="submit" class="btn btn-primary">클럽 소개 저장</button>
                                     </div>
@@ -480,6 +508,25 @@
     .hidden-btn {
         display: none;
     }
+
+
+    /* hidden 버튼이 표시될 때 테이블의 너비를 조절하는 CSS */
+    .table-container:hover .btn-primary {
+        display: inline-block;
+    }
+
+    input[type="text"] {
+        width: 100%; /* 테이블의 너비에 따라 자동으로 조절되도록 설정 */
+        height: 35px;
+    }
+
+    /* 미디어 쿼리를 사용하여 특정 화면 크기에서 입력 상자의 스타일 변경 */
+    @media screen and (max-width: 768px) {
+        input[type="text"] {
+            width: 80%; /* 특정 화면 크기에서 입력 상자의 너비 조절 */
+        }
+    }
+
 </style>
 
 </ejs>

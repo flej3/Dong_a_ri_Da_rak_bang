@@ -119,11 +119,29 @@ const deleteMember = async (req, res) => {
     }
 };
 
+async function hasClubAdminAc(category, userId) {
+    try {
+        const query = `SELECT * FROM club_member WHERE user_id = ? AND category = ? AND admin_ac = ?;`;
+        const result = await executeQueryPromise(query, [userId, category, '1']);
+
+        if(result.length === 0){
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error(`동아리 권한자 확인중 에러 발생 ${error}`);
+        return false;
+    }
+}
+
 const getClubMember = async (req, res, next) => {
     try {
         const category = req.query.query;
+        const tokenDecoded = await getTokenDecode(req, res);
+        const userId = tokenDecoded.id;
         const clubData = await getClubDataNew(req,res,category);
-
+        const hasAdminAc = await hasClubAdminAc(category, userId);
+        clubData.hasAdminAc = hasAdminAc;
         res.render("pages-clubAdmin", clubData);
     } catch (error) {
         console.error(error);
@@ -203,14 +221,14 @@ const getClubs = async (req, res) => {
     try {
         const decodedData = await getTokenDecode(req, res);
         return new Promise((resolve, reject) => {
-            executeQuery('SELECT * FROM clubdb.club INNER JOIN clubdb.club_member ON club.category = club_member.category WHERE club_member.user_id = ?',
+            executeQuery('SELECT * FROM clubdb.club INNER JOIN clubdb.club_member ON club.category = club_member.category INNER JOIN clubdb.member ON club_owner = member.user_id WHERE club_member.user_id = ?',
             [decodedData.id],
                 (err, clubs) => {
                     if (err) {
                         handleDBError(err, conn);
                         reject(err);
                     } else {
-                        res.json({ clubs: clubs });
+                        res.json({ clubs: clubs, id:decodedData });
                     }
                 });
         });
@@ -265,6 +283,76 @@ const checkMember = async (req, res) => {
     }
 };
 
+const changeOwner = async (req, res) => {
+    const newData = req.body;
+    const resData = {};
+    const results = await executeQueryPromise("SELECT * FROM member WHERE user_student_id = ?", [newData.stId]);
+    const previousData = await executeQueryPromise("SELECT * FROM clubdb.club_member AS cm JOIN clubdb.club AS c ON cm.user_id = c.club_owner WHERE c.category = ? AND cm.category = ?",
+        [newData.category, newData.category]);
+
+    if (results.length > 0) {
+        let successCount = 0;
+        try {
+            // 회장 권한 받는 대상 update
+            const newOwner = await executeQueryPromise(
+                "UPDATE club_member SET position = ?, admin_ac = ? WHERE member_name = ? AND member_student_id = ? AND category = ?",
+                [
+                    previousData[0].position,
+                    1,
+                    newData.name,
+                    newData.stId,
+                    newData.category
+                ]
+            );
+            if (newOwner.affectedRows === 1) {
+                successCount++;
+            }
+
+            // 기존 회장 권한 변경
+            const changeAdminOfOwner = await executeQueryPromise(
+                "UPDATE club_member SET position = ?, admin_ac = ? WHERE member_name = ? AND member_student_id = ? AND category = ?",
+                [
+                    '부원',
+                    0,
+                    previousData[0].member_name,
+                    previousData[0].member_student_id,
+                    newData.category
+                ]
+            );
+            if (changeAdminOfOwner.affectedRows === 1) {
+                successCount++;
+            }
+
+            // club 테이블 owner 변경
+            const changeOwnerTable = await executeQueryPromise(
+                "UPDATE club SET club_owner = ? WHERE category = ?",
+                [
+                    results[0].user_id,
+                    newData.category
+                ]
+            );
+            if (changeOwnerTable.affectedRows === 1) {
+                successCount++;
+            }
+
+            if (successCount === 3) {
+                // 모든 쿼리가 성공했을 때
+                res.status(200).json({ success: true });
+            } else {
+                // 일부 쿼리가 실패했을 때
+                console.error("일부 쿼리 실패");
+                res.status(500).json(resData);
+            }
+
+        } catch (err) {
+            console.error("권한 위임 실패", err);
+            res.status(500).json(resData);
+        }
+    } else{
+        res.status(404).json({ error: "결과가 없습니다." });
+    }
+};
+
 
 
 module.exports = {
@@ -275,4 +363,5 @@ module.exports = {
     getClubs,
     isClubMember,
     checkMember,
+    changeOwner,
 }

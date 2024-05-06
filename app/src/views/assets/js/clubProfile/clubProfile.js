@@ -28,8 +28,8 @@ function createClubCard(club) {
         <div class="card h-100">
             <img src="../../assets/img/hs-logo.png" alt="">
             <div class="card-body profile-card">
-                <h2 class="card-title text-center">동아리명: ${club.club_name}</h2>
-                <h3 class="card-subtitle mb-3 text-center">직위: ${club.position}</h3>
+                <h2 class="card-title text-center">동아리명: ${club.club_name}<br/>담당자: ${club.user_name}</h2>
+                <h3 class="card-subtitle mb-3 text-center">나의 직위: ${club.position}</h3>
                 <div class="text-center">
                 <a href=${twitterLink} id = twitterBtn-${club.category} class="btn btn-outline-primary me-2 twitter-link-${club.category}" target="_blank" style="display: ${setDisplayTwitter}"><i class="bi bi-twitter"></i></a>
                 <a href=${facebookLink} id = facebookBtn-${club.category} class="btn btn-outline-primary me-2 facebook-link-${club.category}" target="_blank" style="display: ${setDisplayFacebook}"><i class="bi bi-facebook"></i></a>
@@ -58,10 +58,14 @@ async function fetchAndDisplayClubs() {
         }
         const data = await response.json();
         const clubsContainer = document.getElementById('container');
-        (data.clubs).forEach(club => {
-            const cardHtml = createClubCard(club);
-            clubsContainer.insertAdjacentHTML('beforeend', cardHtml);
-        });
+        if (data && data.clubs && data.clubs.length > 0) {
+            data.clubs.forEach(club => {
+                const cardHtml = createClubCard(club);
+                clubsContainer.insertAdjacentHTML('beforeend', cardHtml);
+            });
+        } else {
+            displayNoClubMessage();
+        }
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
         alert('가입된 동아리 리스트를 가져오지 못했습니다.')
@@ -151,6 +155,29 @@ document.getElementById('clubResignationModalBtn').addEventListener('click', asy
         window.location.reload();
     }
 })
+
+async function displayNoClubMessage() {
+    const tableContainer = document.getElementById('alertContainer');
+    const noApplicationsMessage = document.createElement('div');
+    noApplicationsMessage.classList.add('alert', 'alert-info');
+    noApplicationsMessage.textContent = '가입된 동아리가 없으시군요! 관심 있는 동아리를 찾아보고 지금 바로 가입하세요.';
+    tableContainer.appendChild(noApplicationsMessage);
+    const button = document.createElement('button');
+    button.textContent = '새로운 동아리 찾기';
+    button.classList.add('btn', 'btn-primary');
+
+    noApplicationsMessage.insertAdjacentElement('afterend', button);
+
+    button.addEventListener('click', function() {
+        window.location.href = '../';
+    });
+    // 로그인 상태에 따라 메시지 표시
+    const isLogin = await checkLogin();
+    if (!isLogin.isLogin) {
+        displayLoginPromptMessage(tableContainer);
+        return;
+    }
+}
 
 // DOMContentLoaded 이벤트 핸들러에서 fetchAndDisplayClubs 함수 호출
 document.addEventListener('DOMContentLoaded', async () => {

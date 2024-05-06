@@ -72,9 +72,13 @@
                                             <tr>
                                                 <th scope="col"></th>
                                                 <th scope="col">이름</th>
-                                                <th scope="col" id="student-id" style="<%= hasAdminAc ? '' : 'display: none' %>">학번</th>
+                                                <% if (hasAdminAc) { %>
+                                                    <th scope="col" id="student-id">학번</th>
+                                                <% } %>
                                                 <th scope="col">학과</th>
-                                                <th scope="col" id="ph-number" style="<%= hasAdminAc ? '' : 'display: none' %>">전화번호</th>
+                                                <% if (hasAdminAc) { %>
+                                                    <th scope="col" id="ph-number">전화번호</th>
+                                                <% } %>
                                                 <th scope="col">직위</th>
                                                 <th scope="col">관리 권한</th>
                                             </tr>
@@ -100,15 +104,16 @@
                                                                                 <% } %>
                                                                                     <%= member.member_name %>
                                                         </td>
-                                                        <td id="student-id-list" style="<%= hasAdminAc ? '' : 'display: none' %>">
-                                                            <%= member.member_student_id %>
-                                                        </td>
+                                                        <% if (hasAdminAc) { %>
+                                                            <td id="student-id-list"><%= member.member_student_id %></td>
+                                                            <td><%= member.member_ph_number %></td>
+                                                        <% } %>
                                                         <td id="student-department">
                                                             <%= member.member_department %>
                                                         </td>
-                                                        <td id="ph-number-list" style="<%= hasAdminAc ? '' : 'display: none' %>">
-                                                            <%= member.member_ph_number%>
-                                                        </td>
+                                                        <% if (hasAdminAc) { %>
+                                                            <td id="ph-number-list"><%= member.member_ph_number %></td>
+                                                        <% } %>
                                                         <td>
                                                             <span id="position_text_<%= count %>">
                                                                 <%= member.position %>

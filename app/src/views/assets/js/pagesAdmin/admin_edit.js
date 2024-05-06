@@ -457,21 +457,26 @@ function pageSplit() {
                     parentUl.appendChild(clubIntroLi);
                 }
                 else {
-                    const studentIdColumnIndex = document.getElementById("student-id").cellIndex;
-                    const phoneNumberColumnIndex = document.getElementById("ph-number").cellIndex;
+                    const studentIdElement = document.getElementById("student-id");
+                    const phoneNumberElement = document.getElementById("ph-number");
 
-                    // 테이블의 각 행을 반복하며 학번과 전화번호 열을 숨깁니다.
-                    const tableRows = document.getElementById("member-table").rows;
-                    for (let i = 0; i < tableRows.length; i++) {
-                        tableRows[i].cells[studentIdColumnIndex].style.display = "none"; // 학번 열 숨기기
-                        tableRows[i].cells[phoneNumberColumnIndex].style.display = "none"; // 전화번호 열 숨기기
+                    if (studentIdElement && phoneNumberElement) {
+                        const studentIdColumnIndex = studentIdElement.cellIndex;
+                        const phoneNumberColumnIndex = phoneNumberElement.cellIndex;
+
+                        // 테이블의 각 행을 반복하며 학번과 전화번호 열을 숨깁니다.
+                        const tableRows = document.getElementById("member-table").rows;
+                        for (let i = 0; i < tableRows.length; i++) {
+                            tableRows[i].cells[studentIdColumnIndex].style.display = "none"; // 학번 열 숨기기
+                            tableRows[i].cells[phoneNumberColumnIndex].style.display = "none"; // 전화번호 열 숨기기
+                        }
+
+                        const nameWidth = document.getElementById('student-name');
+                        nameWidth.style.width = "220px";
+
+                        const departmentWidth = document.getElementById('student-department');
+                        departmentWidth.style.width = "300px";
                     }
-
-                    const nameWidth = document.getElementById('student-name');
-                    nameWidth.style.width = "220px";
-
-                    const departmentWidth = document.getElementById('student-department');
-                    departmentWidth.style.width = "300px";
                 }
             }
         })

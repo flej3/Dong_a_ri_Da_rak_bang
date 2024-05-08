@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     pageSplit();
     paginate();
+    await checkOwner();
 })
 
 const firstCheck = [];
@@ -342,7 +343,6 @@ function pageSplit() {
             } else {
                 checkValue = data.result[0].admin_ac;
                 if(checkValue !== 0) {
-                    createOwnerButton();
                     // 새로운 div 요소 생성
                     const newDiv = document.createElement("div");
                     newDiv.setAttribute("style", "display: flex; justify-content: space-between; align-items: center;");
@@ -672,5 +672,30 @@ async function changeOwner() {
         }
     } else {
         console.log('사용자가 입력을 취소했습니다.');
+    }
+}
+
+async function checkOwner() {
+    try {
+        const category = getCategory();
+        const response = await fetch(`/api/thisClubOwnerCheck/get?category=${category}`, {
+            method:"GET",
+            headers: {
+                'Content-Type':'Application/json',
+                },
+            });
+
+            if(!response.ok){
+                throw new Error('네트워크 응답이 올바르지 않습니다.');
+            }
+            const data = await response.json();
+
+            if(data.haslogClubOwner) {
+                createOwnerButton();
+            }
+        } catch (error) {
+            alert(`에러가 발생했습니다. ${error}`);
+            console.error(`에러가 발생했습니다. ${error}`);
+            window.location.reload();
     }
 }

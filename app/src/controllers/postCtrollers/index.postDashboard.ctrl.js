@@ -1,5 +1,6 @@
-const { executeQuery } = require("../../config/database.func");
+const { executeQuery, executeQueryPromise} = require("../../config/database.func");
 const { handleDBError } = require("../login.ctrl");
+const {getTokenDecode} = require("../../controllers/tokenControllers/token.ctrl");
 
 const getRecruitPostList = (req, res) => {
     try {
@@ -30,6 +31,51 @@ const getRecruitPostList = (req, res) => {
     }
 }
 
+const getLikes = async (req, res) => {
+    let success = true;
+    try {
+        let result = await executeQueryPromise(
+            "SELECT post_number, COUNT(*) AS post_likes FROM user_likes GROUP BY post_number;"
+        );
+        for(let i = 0 ; i < result.length; i++) {
+            let updateResult = await executeQueryPromise(
+                "UPDATE post_recruit SET like_count = ? where post_number = ?;",[result[i].post_likes, result[i].post_number]
+            );
+            if (!updateResult || updateResult.affectedRows === 0) {
+                success = false;
+                break;
+            }
+        }
+    } catch (error) {
+        console.error(error);
+        success = false;
+    }
+    res.json(success);
+}
+
+const getLikeSplit = async (req, res) => {
+    try {
+        const decodedData = await getTokenDecode(req, res);
+        return new Promise((resolve, reject) => {
+            executeQuery('SELECT * FROM user_likes WHERE user_id = ?;',
+                [decodedData.id],
+                (err, like) => {
+                    if (err) {
+                        handleDBError(err, conn);
+                        reject(err);
+                    } else {
+                        res.json({ like:like });
+                    }
+                });
+        });
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 module.exports = {
     getRecruitPostList,
+    getLikes,
+    getLikeSplit,
 }

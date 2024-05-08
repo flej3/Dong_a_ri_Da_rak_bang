@@ -62,6 +62,12 @@ function createCard(data) {
                         ${deadlineBadge}
                     </div>
                 </div>
+       <div style="position: relative;">
+        <div class="d-inline-flex align-items-center" id="heartSection" style="position: absolute; bottom: 0; right: 0;">
+          <i class="fas fa-heart" style="margin-right: 5px;" id="first_${data.post_number}"></i>
+            <span class="badge rounded-pill bg-secondary" style="font-size: 12px;">${data.like_count}</span>
+        </div>
+       </div>
             </a>
         </div>
     `;
@@ -116,6 +122,12 @@ function createCardRecruiting(data) {
                         ${deadlineBadge}
                     </div>
                 </div>
+                <div style="position: relative;">
+                 <div class="d-inline-flex align-items-center" id="heartSection" style="position: absolute; bottom: 0; right: 0;">
+                 <i class="fas fa-heart" style="margin-right: 5px;" id="recruiting_${data.post_number}"></i>
+                 <span class="badge rounded-pill bg-secondary" style="font-size: 12px;">${data.like_count}</span>
+                 </div>
+                 </div>
             </a>
         </div>
     `;
@@ -164,6 +176,12 @@ function createCardClosed(data) {
                         ${deadlineBadge}
                     </div>
                 </div>
+                <div style="position: relative;">
+               <div class="d-inline-flex align-items-center" id="heartSection_${data.post_number}" style="position: absolute; bottom: 0; right: 0;">
+                 <i class="fas fa-heart" style="margin-right: 5px;" id="dead_${data.post_number}"></i>
+                  <span class="badge rounded-pill bg-secondary" style="font-size: 12px;">${data.like_count}</span>
+                </div>
+                </div>
             </a>
         </div>
     `;
@@ -201,6 +219,7 @@ let recruitingList = [];
 let closedList = [];
 document.addEventListener('DOMContentLoaded', async () => {
     await setRecruitPostDashboard();
+    await showLikes();
     recruitingList.forEach(createCardRecruiting);
     closedList.forEach(createCardClosed);
     updatePagination();
@@ -277,3 +296,110 @@ function updatePagination() {
 
     setupPagination();
 }
+
+async function showLikes() {
+    const isLogin = await checkLogin();
+    if (isLogin.isLogin) {
+        try {
+            const response = await fetch(`/api/getLikes`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            if (!response.ok) {
+                throw new Error('네트워크 응답이 올바르지 않습니다.');
+            }
+            const data = await response.json();
+            if (data) {
+                await likeSplit();
+                console.log('좋아요 갱신 성공');
+            } else {
+                console.log('좋아요 갱신 실패');
+            }
+        } catch (error) {
+            console.error('네트워크 오류:', error);
+        }
+    }
+}
+
+async function likeSplit() {
+        try {
+            const response = await fetch(`/api/getLikeSplit`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            if (!response.ok) {
+                throw new Error('네트워크 응답이 올바르지 않습니다.');
+            }
+            const data = await response.json();
+
+                for (let i = 0; i < data.like.length; i++) {
+                    let selectPostNumber = document.getElementById('first_' + data.like[i].post_number);
+                    selectPostNumber.style.color = 'red';
+                }
+
+        } catch (error) {
+            console.error('네트워크 오류:', error);
+        }
+}
+
+async function likeSplitRecruiting() {
+    try {
+        const response = await fetch(`/api/getLikeSplit`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        if (!response.ok) {
+            throw new Error('네트워크 응답이 올바르지 않습니다.');
+        }
+        const data = await response.json();
+
+        for (let i = 0 ; i < data.like.length; i++) {
+            let selectPostNumber = document.getElementById('recruiting_' + data.like[i].post_number);
+            if(selectPostNumber !== null) {
+                selectPostNumber.style.color = 'red';
+            }
+        }
+
+    } catch (error) {
+        console.error('네트워크 오류:', error);
+    }
+}
+
+async function deadLikeSplit() {
+    try {
+        const response = await fetch(`/api/getLikeSplit`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        if (!response.ok) {
+            throw new Error('네트워크 응답이 올바르지 않습니다.');
+        }
+        const data = await response.json();
+
+        for (let i = 0 ; i < data.like.length; i++) {
+            let selectPostNumber = document.getElementById('dead_' + data.like[i].post_number);
+            if(selectPostNumber !== null) {
+                selectPostNumber.style.color = 'red';
+            }
+        }
+
+    } catch (error) {
+        console.error('네트워크 오류:', error);
+    }
+}
+
+document.getElementById('closed-tab').addEventListener('click', async function() {
+        await deadLikeSplit();
+});
+
+document.getElementById('recruiting-tab').addEventListener('click', async function() {
+        await likeSplitRecruiting();
+});

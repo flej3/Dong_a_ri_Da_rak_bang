@@ -164,6 +164,7 @@ function deletePost(postNum) {
 }
 
 document.addEventListener('DOMContentLoaded', async function () {
+    await showHeartSplit();
     const isUserLoggedIn = await checkLogin();
     if (isUserLoggedIn.isLogin) {
         verifyEditAccess();
@@ -182,3 +183,81 @@ document.addEventListener('DOMContentLoaded', async function () {
         deletePost(postNum);
     });
 });
+
+document.getElementById("heartSection").addEventListener("click", async function() {
+    const isLogin = await checkLogin();
+    if (isLogin.isLogin) {
+        let icon = document.getElementById("heartIcon");
+        if (icon.style.color === "red") { // 좋아요 취소
+            const urlParams = new URLSearchParams(window.location.search);
+            const postNum = urlParams.get('query');
+            await fetch(`/api/minusLike?query=${postNum}`, {
+                method: 'POST',
+                body: JSON.stringify({postNum: postNum}),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }).then(response => {
+                if (response.ok) {
+                    console.log("좋아요 취소 성공");
+                    icon.style.color = 'black';
+                } else {
+                    console.error("좋아요 취소 실패");
+                }
+            }).catch(error => {
+                console.error('네트워크 오류:', error);
+            });
+
+        } else { // 좋아요 ++
+            const urlParams = new URLSearchParams(window.location.search);
+            const postNum = urlParams.get('query');
+            await fetch(`/api/addLike?query=${postNum}`, {
+                method: 'POST',
+                body: JSON.stringify({postNum: postNum}),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }).then(response => {
+                if (response.ok) {
+                    console.log("좋아요 추가 성공");
+                    icon.style.color = 'red';
+                } else {
+                    console.error("좋아요 추가 실패");
+                }
+            }).catch(error => {
+                console.error('네트워크 오류:', error);
+            });
+
+        }
+    } else {
+        alert('로그인한 사용자만 가능합니다.');
+    }
+});
+
+async function showHeartSplit() {
+    const isLogin = await checkLogin();
+    if (isLogin.isLogin) {
+        let icon = document.getElementById("heartIcon");
+        const urlParams = new URLSearchParams(window.location.search);
+        const postNum = urlParams.get('query');
+        try {
+            const response = await fetch(`/api/likeSplit?query=${postNum}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            if (!response.ok) {
+                throw new Error('네트워크 응답이 올바르지 않습니다.');
+            }
+            const data = await response.json();
+            if (data) {
+                icon.style.color = 'red';
+            } else {
+                icon.style.color = 'black';
+            }
+        } catch (error) {
+            console.error('네트워크 오류:', error);
+        }
+    }
+}

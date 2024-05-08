@@ -24,7 +24,6 @@ const userIdCheck = (req, res, next) => {
                 conn.release();
                 if (err) return handleDBError(err, conn);
                 
-                console.log(`해당 userId가 ${result[0].count > 0 ? "존재합니다." : "존재하지 않습니다."}`);
                 req.isAvailable = result[0].count > 0;
                 next();
             }

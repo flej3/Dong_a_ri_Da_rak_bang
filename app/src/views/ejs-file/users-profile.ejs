@@ -67,6 +67,10 @@
                       변경</button>
                   </li>
 
+                  <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#delete-account-tab">회원탈퇴</button>
+                  </li>
+
                 </ul>
                 <div class="tab-content pt-2">
 
@@ -284,8 +288,34 @@
                       </div>
                     </form><!-- End Change Password Form -->
                   </div>
+                  
+                  <!-- 회원탈퇴 -->
+                  <div class="tab-pane fade" id="delete-account-tab">
+                    <h5 class="card-title"><회원 탈퇴></h5>
+                    <p>정말로 회원 탈퇴를 하시겠습니까? 탈퇴 후에는 복구할 수 없습니다.</p>
+                    
+                    <!-- 비밀번호 확인 필드 -->
+                    <form id="deleteAccountForm">
+                      <div class="mb-3">
+                        <label for="passwordConfirmation" class="form-label">비밀번호를 입력하세요</label>
+                        <input type="password" class="form-control" id="passwordConfirmation" name="passwordConfirmation" placeholder="비밀번호" required>
+                      </div>
+                      
+                      <!-- 탈퇴 확인 체크박스 -->
+                      <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="confirmDeleteCheckbox" required>
+                        <label class="form-check-label" for="confirmDeleteCheckbox">위 내용을 확인하였으며, 탈퇴를 진행합니다.</label>
+                      </div>
+                      
+                      <!-- 안내 메시지 -->
+                      <p class="text-danger">탈퇴한 후에는 복구할 수 없습니다. 정말로 탈퇴하시겠습니까?</p>
+                      <div class="text-center">
+                        <button type="submit" id="deleteAccountBtn" class="btn btn-danger">회원 탈퇴하기</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-              </div><!-- End Bordered Tabs -->
+              </div>
 
             </div>
           </div>
@@ -294,6 +324,26 @@
         </div>
       </section>
 
+      <!-- 회원탈퇴 확인 모달 -->
+      <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmModalLabel">회원 탈퇴 확인</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>회원 탈퇴를 진행하시려면 아래 입력창에 "회원탈퇴"라는 단어를 입력하세요.</p>
+              <input type="text" class="form-control mb-3" id="confirmInput" placeholder="회원탈퇴" required>
+              <p class="text-danger" id="confirmError" style="display: none;">입력된 단어가 일치하지 않습니다.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+              <button type="button" id="confirmBtn" class="btn btn-danger" disabled>확인</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </main><!-- End #main -->
 
     <!-- ======= Footer ======= -->
@@ -320,6 +370,7 @@
       <script defer src="../assets/js/profile/profile_view.js"></script>
       <script defer src="../assets/js/profile/profile_edit.js"></script>
       <script defer src="../assets/js/profile/profile_change_pw.js"></script>
+      <script defer src="../assets/js/profile/profile_delete_account.js"></script>
 
       </body>
 

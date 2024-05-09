@@ -44,7 +44,6 @@ function authenticateUser(event) {
                 showInvalidFeedback(id.message);
                 return;
             }
-            alert("로그인에 성공하였습니다.");
             window.location.href = id.location;
         })
         .catch(err => {

@@ -1391,3 +1391,8 @@ table.dataTable thead .sorting_desc:after {
   background-color: #e2e6ea;
 }
 
+.card-img-top {
+  object-fit: cover;
+  max-width: 67%;
+  max-height: 100%;
+}

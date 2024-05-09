@@ -71,7 +71,7 @@ function displayRecruitPosts(posts) {
             <div class="card mb-3 shadow team-card" onclick="goToPost(${post.post_number})" style="max-height: 220px;">
                 <div class="row g-0">
                     <div class="col-md-4">
-                        <img src="assets/img/card.jpg" class="img-fluid rounded-start" alt="...">
+                        <img src="assets/img/card.jpg" class="img-fluid rounded-start card-img-top" alt="...">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body py-2">

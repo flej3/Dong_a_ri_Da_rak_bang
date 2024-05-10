@@ -5,6 +5,7 @@ const {verifyToken} = require("../controllers/tokenControllers/token.ctrl");
 const { clubApplication, clubApplicationStatusUpdate } = require("../controllers/clubAdminControllers/clubAdminApplication.ctrl");
 const { getClubRecruitPostList } = require("../controllers/clubAdminControllers/clubRecruitPost.ctrl");
 const { postClubNoticePost, getClubNoticePost, getDetailNotice, hasClubAdminAc, updateClubNotice, deleteClubNotice, clubOwnerCheck } = require("../controllers/clubAdminControllers/clubNoticePost.ctrl");
+const { thisClubOwnerCheck } = require("../controllers/clubAdminControllers/clubDelete.ctrl");
 
 // 회원 목록을 가져오는 라우터
 router.get("/Page-clubAdmin", verifyToken, clubAdminController.isClubMember, clubAdminController.getClubMember);
@@ -41,5 +42,8 @@ router.put('/api/club/notice/data/update', updateClubNotice);
 router.delete('/api/club/notice/delete', deleteClubNotice);
 
 router.get('/api/club/owner/check', clubOwnerCheck);
+
+//현재 로그인한 사람이 해당 동아리의 대표인지 확인하는 API
+router.get('/api/thisClubOwnerCheck/get', thisClubOwnerCheck);
 
 module.exports = router;

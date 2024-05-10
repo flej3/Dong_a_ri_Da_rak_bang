@@ -438,13 +438,13 @@ function pageSplit() {
                     clubIntroLi.className = 'nav-item';
 
                     const joinList = document.createElement('button');
-                    joinList.className = 'nav-link';
+                    joinList.className = 'nav-link join-list-tab';
                     joinList.setAttribute('data-bs-toggle', 'tab');
                     joinList.setAttribute('data-bs-target', '#profile-settings');
                     joinList.innerText = '가입 신청 현황';
 
                     const clubIntroductionEdit = document.createElement('button');
-                    clubIntroductionEdit.className = 'nav-link';
+                    clubIntroductionEdit.className = 'nav-link club-introduction-edit-tab';
                     clubIntroductionEdit.setAttribute('data-bs-toggle', 'tab');
                     clubIntroductionEdit.setAttribute('data-bs-target', '#clubIntroductionEdit');
                     clubIntroductionEdit.innerText = '동아리 소개 편집';

@@ -444,24 +444,45 @@
     </div>
 
     <!-- 공지사항 삭제 확인 모달 -->
-    <div class="modal fade" id="deleteNoticeModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">공지사항 삭제 확인</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                정말로 이 공지사항을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                <button id = "realDeleteBtn" type="button" class="btn btn-danger">삭제</button>
+    <div class="modal fade" id="deleteNoticeModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">공지사항 삭제 확인</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    정말로 이 공지사항을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button id="realDeleteBtn" type="button" class="btn btn-danger">삭제</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- 동아리 삭제 확인 모달 -->
+    <div class="modal fade" id="clubDeleteConfirmModal" tabindex="-1" aria-labelledby="clubDeleteConfirmModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clubDeleteConfirmModalLabel">동아리 삭제 확인</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>동아리 삭제를 진행하시려면 아래 입력창에 "동아리삭제"라는 단어를 입력하세요.</p>
+                    <input type="text" class="form-control mb-3" id="deleteClubConfirmInput" placeholder="동아리삭제" required>
+                    <p class="text-danger" id="deleteClubConfirmError" style="display: none;">입력된 단어가 일치하지 않습니다.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" id="deleteClubConfirmBtn" class="btn btn-danger" disabled>확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main><!-- End #main -->
 
 <!-- ======= Footer ======= -->

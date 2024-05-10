@@ -16,7 +16,7 @@ const thisClubOwnerCheck = async (req, res) => {
             return;
         }
         resData.success = true;
-        resData.hasClubOwner = false;
+        resData.haslogClubOwner = true;
         res.status(200).json(resData);
     } catch (error) {
         console.error(`해당 동아리 대표인지를 체크중 에러발생: ${error}`);

@@ -19,7 +19,6 @@ async function thisClubOwnerCheck(){
             throw new Error('네트워크 응답이 올바르지 않습니다.');
         }
         const data = await response.json();
-        console.log(data);
     } catch (error) {
         alert(`에러가 발생했습니다. ${error}`);
         console.error(`에러가 발생했습니다. ${error}`);

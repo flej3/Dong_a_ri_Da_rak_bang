@@ -199,7 +199,6 @@ document.getElementById("heartSection").addEventListener("click", async function
                 },
             }).then(response => {
                 if (response.ok) {
-                    console.log("좋아요 취소 성공");
                     icon.style.color = 'black';
                 } else {
                     console.error("좋아요 취소 실패");
@@ -219,7 +218,6 @@ document.getElementById("heartSection").addEventListener("click", async function
                 },
             }).then(response => {
                 if (response.ok) {
-                    console.log("좋아요 추가 성공");
                     icon.style.color = 'red';
                 } else {
                     console.error("좋아요 추가 실패");

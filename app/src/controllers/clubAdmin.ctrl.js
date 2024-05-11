@@ -107,7 +107,6 @@ const deleteMember = async (req, res) => {
                     if (err) {
                         handleDBError(`db insert failed: ${err}`);
                     } else {
-                        console.log("회원 삭제 성공");
                         resData.success = true;
                         res.json(resData);
                     }

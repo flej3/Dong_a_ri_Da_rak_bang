@@ -230,7 +230,7 @@ document.getElementById("heartSection").addEventListener("click", async function
 
         }
     } else {
-        alert('로그인한 사용자만 가능합니다.');
+        window.location.href = "/";
     }
 });
 

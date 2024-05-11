@@ -230,7 +230,7 @@ document.getElementById("heartSection").addEventListener("click", async function
 
         }
     } else {
-        window.location.href = "/";
+        window.location.href = "/pages-login";
     }
 });
 

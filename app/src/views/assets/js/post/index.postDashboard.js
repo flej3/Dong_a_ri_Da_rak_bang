@@ -313,9 +313,6 @@ async function showLikes() {
             const data = await response.json();
             if (data) {
                 await likeSplit();
-                console.log('좋아요 갱신 성공');
-            } else {
-                console.log('좋아요 갱신 실패');
             }
         } catch (error) {
             console.error('네트워크 오류:', error);

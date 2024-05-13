@@ -28,19 +28,19 @@ const getClubCategory = async (req, res) => {
 const newMember = async (req, res) => {
     const newData = req.body;
     const resData = {};
+    const category = req.query.query;
     try {
-        const clubCategory = await getClubCategory(req, res);
         let successCount = 0; // 성공한 쿼리의 개수를 추적하기 위한 변수
         for (let i = 0; i < newData.length; i++) {
             await executeQueryPromise("INSERT INTO club_member (category, member_name, member_student_id, member_department, member_ph_number, position, admin_ac) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 [
-                    clubCategory.category,
+                    category,
                     newData[i].member_name,
                     newData[i].member_student_id,
                     newData[i].member_department,
                     newData[i].member_ph_number,
                     newData[i].position,
-                    newData[i].admin_ac
+                    newData[i].admin_ac,
                 ]);
 
             successCount++; // 성공한 쿼리의 개수 증가

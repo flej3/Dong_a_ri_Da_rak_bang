@@ -134,7 +134,7 @@ async function saveListener() {
                 newMemData.push(rData);
             }
             try {
-                const addRequest = fetch('/new-member', {
+                const addRequest = fetch(`/new-member?query=${category}`, {
                     method: 'POST',
                     body: JSON.stringify(newMemData),
                     headers: {
@@ -172,7 +172,7 @@ async function saveListener() {
                 newMemData.push(rData);
             }
             try {
-                const addRequest = fetch('/new-member', {
+                const addRequest = fetch(`/new-member?query=${category}`, {
                     method: 'POST',
                     body: JSON.stringify(newMemData),
                     headers: {

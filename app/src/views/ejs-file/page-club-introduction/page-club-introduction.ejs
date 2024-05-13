@@ -38,10 +38,19 @@
                 </div>
               </div>
             </div>
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">학번으로 보는 우리</h5>
+                  <canvas id="pieChart" style="max-height: 400px; display: block; box-sizing: border-box; height: 400px; width: 627px;" width="627" height="400"></canvas>
+                  <div id="chartText" style="position: absolute; right: 10px; bottom: 10px;"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="col-xl-8">
-            <div class="card">
+            <div class="card" style="height: 100%;">
               <div class="card-body pt-3">
                 <!-- Bordered Tabs -->
                 <ul class="nav nav-tabs nav-tabs-bordered">
@@ -85,6 +94,23 @@
       </section>
     </main><!-- End #main -->
 
+<style>
+  #chartText {
+    width: 23%;
+    position: absolute;
+    background: linear-gradient(135deg, #6d6875, #b5838d); /* 그라데이션 배경 */
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* 그림자 효과 */
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+  }
+
+</style>
+
     <!-- ======= Footer ======= -->
     <%- include ('../partials/footer.ejs') %>
       <!-- End Footer -->
@@ -104,6 +130,9 @@
 
       <!-- Template Main JS File -->
       <script src="assets/js/main.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 
       <!--Client JS File-->
       <script defer src="../../assets/js/clubIntroPage/clubs_introduction.js"></script>

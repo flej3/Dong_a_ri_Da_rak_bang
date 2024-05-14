@@ -134,7 +134,7 @@ async function saveListener() {
                 newMemData.push(rData);
             }
             try {
-                const addRequest = fetch('/new-member', {
+                const addRequest = fetch(`/new-member?query=${category}`, {
                     method: 'POST',
                     body: JSON.stringify(newMemData),
                     headers: {
@@ -172,7 +172,7 @@ async function saveListener() {
                 newMemData.push(rData);
             }
             try {
-                const addRequest = fetch('/new-member', {
+                const addRequest = fetch(`/new-member?query=${category}`, {
                     method: 'POST',
                     body: JSON.stringify(newMemData),
                     headers: {
@@ -690,9 +690,9 @@ async function checkOwner() {
             }
             const data = await response.json();
 
-            if(data.haslogClubOwner) {
-                createOwnerButton();
-            }
+        if(data.hasClubOwner) {
+            createOwnerButton();
+        }
         } catch (error) {
             alert(`에러가 발생했습니다. ${error}`);
             console.error(`에러가 발생했습니다. ${error}`);

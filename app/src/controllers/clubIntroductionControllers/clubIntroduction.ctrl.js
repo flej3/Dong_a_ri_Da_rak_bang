@@ -33,7 +33,23 @@ const saveClubIntroEdit = async (req, res) => {
     }
 }
 
+const getClubDataForGraph = async (req, res) => {
+    const resData = {};
+    try {
+        const category = req.query.category;
+        const query = `SELECT * FROM club_member WHERE category = ?;`;
+        const clubData = await executeQueryPromise(query, [category]);
+        resData.success = true;
+        res.status(200).json(clubData);
+    } catch (error) {
+        console.error(`클럽 회원 정보를 불러오던 중 에러 발생 ${error}`);
+        resData.success = false;
+        res.status(500).json(resData);
+    }
+}
+
 module.exports = {
     getClubIntroduction,
     saveClubIntroEdit,
+    getClubDataForGraph,
 }

@@ -54,6 +54,91 @@ async function getClubData(){
     }
 }
 
+async function getGraphData(){
+    try {
+        const category = getCategory();
+        const response = await fetch(`/api/club-data/get?category=${category}`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'Application/json',
+            },
+        });
+
+        if(!response.ok){
+            throw new Error('네트워크 응답이 올바르지 않습니다.');
+        }
+        const data = await response.json();
+        let temp=[];
+        for(let i = 0; i < data.length; i++) {
+        temp[i] = (data[i].member_student_id).substring(2,4);
+        }
+
+        let countMap = {};
+        temp.forEach(studentId => {
+            if (countMap[studentId]) {
+                countMap[studentId]++;
+            } else {
+                countMap[studentId] = 1;
+            }
+        });
+
+        let labels = Object.keys(countMap);
+        let mCount = Object.values(countMap);
+        let colorPalette = [
+            '#264653', // 깊은 청록색
+            '#2a9d8f', // 밝은 청록색
+            '#e9c46a', // 황금색
+            '#f4a261', // 살구색
+            '#e76f51', // 붉은 주황색
+            '#ff6f61', // 코랄색
+            '#6d6875', // 회보라색
+            '#b5838d', // 장미색
+            '#ffddd2', // 연한 분홍색
+            '#3d405b'  // 어두운 회색
+        ];
+
+        new Chart(document.querySelector('#pieChart'), {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '인원 수',
+                    data: mCount,
+                    backgroundColor: colorPalette.slice(0, labels.length),
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: true
+                    },
+                    tooltip: {
+                        enabled: true
+                    },
+                    datalabels: {
+                        formatter: (value, context) => {
+                            let label = context.chart.data.labels[context.dataIndex];
+                            return value;
+                        },
+                        color: '#fff',
+                        font: {
+                            weight: 'bold'
+                        }
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+        document.getElementById('chartText').innerText = '총원 : '+temp.length;
+    } catch (error) {
+        console.error(`에러가 발생했습니다. ${error}`);
+        alert('해당 동아리 정보를 불러오는데 에러가 발생했습니다.');
+        window.location.reload();
+    }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
     await getClubData();
+    await getGraphData();
 })

@@ -177,10 +177,10 @@ function createCardClosed(data) {
                     </div>
                 </div>
                 <div style="position: relative;">
-               <div class="d-inline-flex align-items-center" id="heartSection_${data.post_number}" style="position: absolute; bottom: 0; right: 0;">
-                 <i class="fas fa-heart" style="margin-right: 5px;" id="dead_${data.post_number}"></i>
-                  <span class="badge rounded-pill bg-secondary" style="font-size: 12px;">${data.like_count}</span>
-                </div>
+                    <div class="d-inline-flex align-items-center" id="heartSection_${data.post_number}" style="position: absolute; bottom: 0; right: 0;">
+                        <i class="fas fa-heart" style="margin-right: 5px;" id="dead_${data.post_number}"></i>
+                        <span class="badge rounded-pill bg-secondary" style="font-size: 12px;">${data.like_count}</span>
+                    </div>
                 </div>
             </a>
         </div>

@@ -16,6 +16,7 @@ dotenv.config();
 const indexRoutes = require('./src/routes/index.route');
 const faqRoutes = require('./src/routes/pages-faq.route');
 const loginRoutes = require('./src/routes/pages-login.route');
+const activeRoutes = require('./src/routes/user-active.route');
 const registerRoutes = require('./src/routes/pages-register.route');
 const usersProfileRoutes = require('./src/routes/users-profile.route');
 const writePostRoutes = require('./src/routes/post/postRecruit/write-post.route');
@@ -73,6 +74,7 @@ app.use(indexClubJoinDashboardRoutes);
 app.use(createClubRoutes);
 app.use(clubListRoutes);
 app.use(clubIntroductionRoutes);
+app.use(activeRoutes);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src/views/ejs-file"));

@@ -9,6 +9,13 @@
         <span>Dashboard</span>
       </a>
     </li><!-- End Dashboard Nav -->
+    <li class="nav-item">
+      <a id="active-link" class="nav-link collapsed"
+         href="<%= userData.isAvailable ? 'users-active' : 'pages-login' %>">
+        <i class="bi bi-person"></i>
+        <span>My activity</span> <!--내 활동을 볼 수 있는 페이지 이동 탭-->
+      </a>
+    </li>
 
     <li class="nav-heading">Pages</li>
 

@@ -79,17 +79,17 @@ function handleClubApplicationsError(error) {
 // 가입신청이 없는 경우 메시지 표시 함수
 async function displayNoClubApplicationsMessage() {
     const tableContainer = document.getElementById('clubApplicationsTable');
-    const noApplicationsMessage = document.createElement('div');
-    noApplicationsMessage.classList.add('alert', 'alert-info');
-    noApplicationsMessage.textContent = '가입할 동아리가 없으시군요! 관심 있는 동아리를 찾아보고 지금 바로 가입하세요.';
-    tableContainer.appendChild(noApplicationsMessage);
 
-    // 로그인 상태에 따라 메시지 표시
     const isLogin = await checkLogin();
     if (!isLogin.isLogin) {
         displayLoginPromptMessage(tableContainer);
         return;
     }
+    
+    const noApplicationsMessage = document.createElement('div');
+    noApplicationsMessage.classList.add('alert', 'alert-info');
+    noApplicationsMessage.textContent = '가입할 동아리가 없으시군요! 관심 있는 동아리를 찾아보고 지금 바로 가입하세요.';
+    tableContainer.appendChild(noApplicationsMessage);
 }
 
 // 로그인 프롬프트 메시지 표시 함수
@@ -104,16 +104,16 @@ function displayLoginPromptMessage(container) {
 
 function displayClubApplicationsTable(clubApplications) {
     const tableContainer = document.getElementById('clubApplicationsTable');
-    tableContainer.innerHTML = ''; // 이전 테이블 내용을 비웁니다.
+    tableContainer.innerHTML = '';
 
     const table = document.createElement('table');
-    table.classList.add('table', 'table-striped', 'datatable'); // 부트스트랩 클래스 추가
+    table.classList.add('table', 'table-striped', 'datatable');
 
     const tableHeader = document.createElement('thead');
     tableHeader.innerHTML = `
         <tr>
             <th scope="col">#</th>
-            <th scope="col">동아리 이름</th> 
+            <th scope="col">동아리 이름</th>
             <th scope="col">동아리 대표</th> 
             <th scope="col">신청 날짜</th>
             <th scope="col">상태</th>
@@ -127,7 +127,7 @@ function displayClubApplicationsTable(clubApplications) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <th scope="row">${application.application_id}</th>
-            <td>${application.club_name}</td>
+            <td style="min-width: 200px;">${application.club_name}</td>
             <td>${application.club_owner}</td>
             <td>${application.create_day}</td>
             <td><span class="badge ${getStatusBadgeClass(application.status)}">${application.status}</span></td>
@@ -138,23 +138,30 @@ function displayClubApplicationsTable(clubApplications) {
         tableBody.appendChild(row);
     });
     table.appendChild(tableBody);
-
     tableContainer.appendChild(table);
 
     // DataTables 적용
-    $(table).DataTable({
-        // DataTables 설정을 여기에 추가합니다.
+    const dataTable = $(table).DataTable({
         language: {
             url: "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Korean.json"
         },
-        pageLength: 5, // 기본 페이지당 표시되는 행의 수를 10으로 설정합니다.
-        lengthMenu: [[5, 10, 15], [5, 10, 15]], // 사용자가 선택할 수 있는 페이지당 행의 수를 [5, 10, 15]로 설정합니다.
-        order: [[0, 'desc']], // 첫 번째 열을 기준으로 내림차순 정렬합니다. 
+        pageLength: 5,
+        lengthMenu: [[5, 10, 15], [5, 10, 15]],
+        order: [[0, 'desc']]
+    });
+
+    // 모달이 표시될 때마다 테이블 크기를 업데이트
+    $('#clubApplicationsTable').on('shown.bs.modal', function () {
+        dataTable.columns.adjust().draw();
     });
 }
 
 // 동아리 신청 취소 모달 띄우기.
 function displayCancelApplicationModal(applicationId) {
+    const salesModal = bootstrap.Modal.getInstance(document.getElementById('clubApplicationsModal'));
+    if (salesModal) {
+        salesModal.hide();
+    }
     const modal = new bootstrap.Modal(document.getElementById('clubApplicationCancelModal'), {
         keyboard: false
     });
@@ -200,23 +207,4 @@ document.addEventListener('DOMContentLoaded', async () => {
         const clubAppData = await getClubJoinApplications();
         fillClubApplicationsTable(clubAppData);
     }
-
-    // 목록 접기/펼치기 버튼 이벤트 리스너 추가
-    const toggleButton = document.getElementById('toggleButton');
-    const tableContainer = document.getElementById('clubApplicationsTable');
-
-    // 버튼 클릭 이벤트 리스너
-    toggleButton.addEventListener('click', function() {
-        if (tableContainer.classList.contains('show')) {
-            // 목록이 펼쳐져 있는 경우
-            tableContainer.classList.remove('show'); // 목록을 접음
-            toggleButton.getElementsByClassName('buttonText')[0].textContent = '신청중인 동아리 목록 펼치기';
-            toggleButton.getElementsByClassName('bi')[0].className = 'bi bi-chevron-down';
-        } else {
-            // 목록이 접혀 있는 경우
-            tableContainer.classList.add('show'); // 목록을 펼침
-            toggleButton.getElementsByClassName('buttonText')[0].textContent = '신청중인 동아리 목록 접기';
-            toggleButton.getElementsByClassName('bi')[0].className = 'bi bi-chevron-up';
-        }
-    });
 });

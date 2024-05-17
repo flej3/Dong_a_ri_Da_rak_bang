@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { getClubIntroduction, saveClubIntroEdit,getClubDataForGraph } = require("../../controllers/clubIntroductionControllers/clubIntroduction.ctrl")
 const { getClubLikes, addClubLike, deleteClubLike, getClubLike, getClubLikesCount } = require("../../controllers/clubIntroductionControllers/clubLikes.ctrl");
+const { getClubRankingList } = require("../../controllers/clubRanking/clubRanking.ctrl");
 
 router.get("/club-introduction", (req, res) => {
     res.render("page-club-introduction/page-club-introduction");
@@ -22,5 +23,8 @@ router.delete("/api/club/like/delete", deleteClubLike);
 router.get("/api/club/like/one/get", getClubLike);
 
 router.get("/api/club/likes/count", getClubLikesCount);
+
+//동아리 랭킹 API
+router.get("/api/club/ranking", getClubRankingList);
 
 module.exports = router;

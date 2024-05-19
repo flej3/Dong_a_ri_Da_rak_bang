@@ -61,7 +61,7 @@ document.querySelectorAll('.category-container').forEach(category => {
 });
 
 // 정렬 아이콘 클릭 이벤트 리스너
-document.getElementById('sortIcon').addEventListener('click', () => {
+document.getElementById('sortClubName').addEventListener('click', () => {
     const selectedAffilition = document.querySelector('.category-container.active')?.dataset.category || 'all';
     currentSortOrder = currentSortOrder === 'asc' ? 'desc' : 'asc';
     document.getElementById('sortIcon').className = currentSortOrder === 'asc' ? 'bi bi-sort-alpha-down' : 'bi bi-sort-alpha-up';

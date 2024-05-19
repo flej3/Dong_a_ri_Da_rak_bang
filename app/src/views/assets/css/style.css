@@ -1396,3 +1396,11 @@ table.dataTable thead .sorting_desc:after {
   max-width: 67%;
   max-height: 100%;
 }
+
+.tr-zoom {
+  transition: transform 0.2s ease;
+}
+
+.tr-zoom:hover {
+  transform: scale(1.01); /* 행이 확대됩니다. */
+}

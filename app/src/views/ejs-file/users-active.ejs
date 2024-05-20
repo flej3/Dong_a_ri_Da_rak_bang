@@ -1,0 +1,140 @@
+<!-- 헤더 include -->
+<%- include ('partials/header.ejs') %>
+
+<!-- Sidebar include -->
+<%- include ('partials/sidebar.ejs') %>
+
+<main id="main" class="main">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- 페이지 타이틀 -->
+    <div class="pagetitle">
+        <h1>내 활동 내역</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">홈</a></li>
+                <li class="breadcrumb-item active">내 활동 내역</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <!-- 활동 목록 섹션 -->
+    <section class="section activity-list">
+        <div class="container mt-5">
+            <ul class="nav nav-tabs nav-tabs-bordered">
+                <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#my-comment">내 댓글</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="like-post-tab" data-bs-toggle="tab" data-bs-target="#my-like-post">좋아하는 게시글</button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" id="like-club-tab" data-bs-toggle="tab" data-bs-target="#my-like-club">좋아하는 동아리</button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="my-comment">
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <h4 class="card-title"><i class="bi bi-chat-dots" style="color: blue;"></i></h4>
+                            <div class="list-group" id="comment-list-group">
+                            </div>
+                            <nav>
+                                <ul class="pagination" id="pagination-comment"></ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="my-like-post">
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <h4 class="card-title"><i class="bi bi-heart-fill" style="color: red; margin-right: 5px;"></i><i class="bi bi-file-text" style="color: blue;"></i></h4>
+                            <div class="list-group" id="post-list-group">
+                            </div>
+                            <nav>
+                                <ul class="pagination" id="pagination-post"></ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="my-like-club">
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <h4 class="card-title"><i class="bi bi-heart-fill" style="color: red; margin-right: 5px;"></i><i class="bi bi-people" style="color: blue;"></i></h4>
+                            <div class="list-group" id="club-list-group">
+                            </div>
+                            <nav>
+                                <ul class="pagination" id="pagination-club"></ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+
+<style>
+    .mb-1 {
+        max-width: 700px;
+        max-height: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .pagination {
+       margin-top:10px;
+    }
+
+    .list-group-item {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .list-group-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .list-group-item h6 {
+        margin: 0;
+        font-size: 1.1rem;
+        color: #333;
+    }
+
+    .list-group-item small {
+        color: #999;
+    }
+
+    .list-group-item p {
+        margin: 5px 0 0;
+        color: #555;
+    }
+</style>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+<!-- Footer include -->
+<%- include ('partials/footer.ejs') %>
+<!-- End Footer -->
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/chart.js/chart.umd.js"></script>
+<script src="assets/vendor/echarts/echarts.min.js"></script>
+<script src="assets/vendor/quill/quill.min.js"></script>
+<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+
+<script defer src="../assets/js/users_active.js"></script>

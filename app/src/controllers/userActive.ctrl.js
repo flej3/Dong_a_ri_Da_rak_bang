@@ -6,7 +6,7 @@ const getUserComment = async (req, res) => {
     const decodedData = await getTokenDecode(req, res);
     const userId = decodedData.id;
     try {
-        const result = await executeQueryPromise("SELECT pr.title, prc.* FROM post_recruit_comments AS prc JOIN post_recruit AS pr ON prc.post_number = pr.post_number WHERE prc.user_id = ? ORDER BY prc.created_at DESC;", [userId]);
+        const result = await executeQueryPromise("SELECT pr.title, prc.* FROM post_recruit_comments AS prc JOIN post_recruit AS pr ON prc.post_number = pr.post_number WHERE prc.user_id = ? AND prc.is_deleted = false ORDER BY prc.created_at DESC;", [userId]);
 
         if (result.length === 0) {
             return res.json({ error: "No results found" });

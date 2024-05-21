@@ -52,4 +52,6 @@ router.post('/api/club/owner/check/pw/post', checkClubOwnerPw);
 //동아리 삭제 API
 router.delete('/api/delete/club', deleteClub);
 
+router.get('/update/memberCount', clubAdminController.memberCount);
+
 module.exports = router;

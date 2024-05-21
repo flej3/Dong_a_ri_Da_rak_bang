@@ -352,6 +352,24 @@ const changeOwner = async (req, res) => {
     }
 };
 
+const memberCount = async (req, res) => {
+    try {
+        const category = req.query.query;
+        const countResult = await executeQueryPromise('SELECT COUNT(*) AS member_count FROM club_member WHERE category = ?;', [category]);
+
+        if (countResult.length === 0) {
+            return res.json({ error: "No results found" });
+        }
+
+        const memberCount = countResult[0].member_count;
+        await executeQueryPromise('UPDATE club SET member_count = ? WHERE category = ?;', [memberCount, category]);
+
+        return res.json({ success: true });
+    } catch (error) {
+        handleDBError(error);
+        return res.status(500).json({ error: "Database error" });
+    }
+};
 
 
 module.exports = {
@@ -363,4 +381,5 @@ module.exports = {
     isClubMember,
     checkMember,
     changeOwner,
+    memberCount,
 }

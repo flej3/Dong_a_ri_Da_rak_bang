@@ -200,6 +200,12 @@ async function updateStatusDB(applicationDetail, status){
         if(data.isUserMember !== undefined && data.isUserMember){
             alert(`해당 유저는 이미 가입이 된 유저입니다. 거절 처리 되었습니다. (학번이 동일한 유저가 있습니다.)`);
         }
+
+        if(data.success && status === '승인됨') {
+        await updateMemberCount();
+        window.location.reload();
+        }
+
         if(data.success){
             window.location.reload();
         }
@@ -213,3 +219,24 @@ async function updateStatusDB(applicationDetail, status){
 document.addEventListener('DOMContentLoaded', async () => {
     await getClubApplicationList();
 })
+
+async function updateMemberCount() {
+    try {
+        const category = getCategory();
+        const response = await fetch(`/update/memberCount?query=${category}`, {
+            method:"GET",
+            headers: {
+                'Content-Type':'Application/json',
+            },
+        });
+
+        if(!response.ok){
+            throw new Error('네트워크 응답이 올바르지 않습니다.');
+        }
+
+    } catch (error) {
+        alert(`에러가 발생했습니다. ${error}`);
+        console.error(`에러가 발생했습니다. ${error}`);
+        window.location.reload();
+    }
+}

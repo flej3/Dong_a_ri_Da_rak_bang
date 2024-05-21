@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     await checkOwner();
 })
 
-const firstCheck = [];
+const firstCheckValue = [];
+const firstSpot = [];
 function editListener() {
     showButtonOnHover();
     document.getElementById('hidden-btn').style.display = 'inline-block';
@@ -13,7 +14,9 @@ function editListener() {
         let row = memberTable.rows[i];
         let inputElementChecked = row.cells[6].querySelector('input');
         let checkValue = inputElementChecked.checked;
-        firstCheck.push(checkValue);
+        firstCheckValue.push(checkValue);
+        let temp = row.cells[5].querySelector('input');
+        firstSpot.push(temp.getAttribute('placeholder'));
     }
     // "편집" 버튼 숨기기
     editButton.style.display = "none";
@@ -142,7 +145,7 @@ async function saveListener() {
                     }
                 });
 
-                const updateRequest = fetch('/update-member', {
+                const updateRequest = fetch(`/update-member?query=${category}`, {
                     method: 'POST',
                     body: JSON.stringify(updateTarget),
                     headers: {
@@ -245,30 +248,36 @@ function deleteListener() {
 }
 
 let updateTarget = [];
-let updateChecked = [];
-let checkedTarget = [];
-function updateDetect() {
+let editDataAdmin = [];
+let editDataSpot = [];
+function updateDetect() { //기존 정보에 대해 어떤 update가 있는지 판단하는 함수
     let memberTable = document.getElementById('member-table');
-    for (let i = 1; i <= memberTable.getElementsByTagName('tr').length-1; i++) {
+    for (let i = 1; i <= memberTable.getElementsByTagName('tr').length-2; i++) {
+
         let row = memberTable.rows[i];
-        let inputElement = row.cells[5].querySelector('input');
-        let inputValue = inputElement.value.trim(); // input 요소의 값 가져오기
         let inputElementChecked = row.cells[6].querySelector('input');
         let checkValue = inputElementChecked.checked;
-        if(inputValue !== '') {
-            let changedData = {key: row.cells[2].textContent, value: inputValue};
-            updateTarget.push(changedData);
-        }
-        updateChecked.push(checkValue);
+        editDataAdmin.push(checkValue);
+        let inputElement = row.cells[5].querySelector('input'); //직위, 변경 있으면 값 들어가고 없으면 빈 값
+        let inputValue = inputElement.value.trim(); // input 요소의 값 가져오기
+        editDataSpot.push(inputValue);
     }
-    for (let i = 0; i < updateChecked.length; i++) {
+    for (let i = 0; i < firstSpot.length-1; i++) {
         let row = memberTable.rows[i+1];
-        if(updateChecked[i] !== firstCheck[i]) {
-            let changedCheck = {key: row.cells[2].textContent, value: updateChecked[i]};
-            updateTarget.push(changedCheck);
-            checkedTarget.push(changedCheck);
+
+        if((editDataSpot[i] !== '') && (editDataSpot[i] !== firstSpot[i])) {
+            //직위 바뀐거
+            let newData = {key: row.cells[2].textContent, value: editDataSpot[i]};
+            updateTarget.push(newData);
+        }
+
+        if(editDataAdmin[i] !== firstCheckValue[i]) {
+            //권한 바뀐거
+            let newData = {key: row.cells[2].textContent, value: editDataAdmin[i]};
+            updateTarget.push(newData);
         }
     }
+
     return updateTarget.length > 0;
 }
 

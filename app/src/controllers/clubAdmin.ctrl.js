@@ -62,29 +62,14 @@ const updateMember = async (req, res) => {
     const resData = {};
     const category = req.query.query;
     try {
-        let successCount = 0; // 성공한 쿼리의 개수를 추적하기 위한 변수
-        for (let i = 0; i < updateData.length; i++) {
-            let query, params;
-            if (typeof updateData[i].value === 'boolean') {
-                query = "UPDATE club_member SET admin_ac = ? WHERE member_student_id = ? AND category = ?";
+        for(let i = 0; i < updateData.length; i++) {
+            if(typeof updateData[i].value === 'boolean') {
+               await executeQueryPromise("UPDATE club_member SET admin_ac = ? WHERE member_student_id = ? AND category = ?;", [updateData[i].value, updateData[i].key, category]);
             } else {
-                query = "UPDATE club_member SET position = ? WHERE member_student_id = ? AND category = ?";
+               await executeQueryPromise("UPDATE club_member SET position = ? WHERE member_student_id = ? AND category = ?;", [updateData[i].value, updateData[i].key, category]);
             }
-            params = [updateData[i].value, updateData[i].key, category];
-
-            await new Promise((resolve, reject) => {
-                executeQuery(query, params, (err, result) => {
-                    if (err) {
-                        handleDBError(`db update failed: ${err}`);
-                        reject(err);
-                    } else {
-                        successCount++; // 성공한 쿼리의 개수 증가
-                        resolve();
-                    }
-                });
-            });
         }
-        // 모든 쿼리가 완료된 후에 한 번만 응답을 보냄
+
         resData.success = true;
         res.json(resData);
     } catch (err) {

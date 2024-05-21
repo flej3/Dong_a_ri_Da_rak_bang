@@ -69,6 +69,15 @@
                                         <div id="editor" class="form-control" style="height: 500px;"></div>
                                     </div>
 
+                                    <!-- Drag and Drop area for image upload -->
+                                    <div class="col-12 mt-3">
+                                        <div id="drop-zone" class="form-control text-center p-5"
+                                            style="border: 2px dashed #ccc;">
+                                            <p>여기로 이미지를 드래그 앤 드롭하세요</p>
+                                            <input type="file" id="file-input" class="d-none" multiple>
+                                        </div>
+                                    </div>
+
                                     <div class="col-12 mt-3">
                                         <div class="d-flex justify-content-end">
                                             <button id="completePostBtn" type="submit"
@@ -82,7 +91,14 @@
                     </div>
                 </div>
             </section>
-
+            <!-- 로딩 스피너 -->
+            <div id="loading-spinner" style="display: none;">
+                <div class="spinner">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                </div>
             </div>
         </main><!-- End #main -->
 

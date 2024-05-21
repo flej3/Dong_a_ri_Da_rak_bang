@@ -122,10 +122,24 @@ const checkClubOwner = async (req, res) => {
     }
 }
 
+const getEnv = async (req, res) => {
+    const resData = {};
+    try {
+        resData.success = true;
+        resData.env = process.env.CLOUD_NAME;
+        res.status(200).json(resData);
+    } catch (error) {
+        console.error("env 변수 가져오던중 에러 발생:", error);
+        resData.success = false;
+        res.status(500).json(resData);
+    }
+}
+
 module.exports = {
     createPost,
     getClubCategory,
     checkClubOwner,
     verifyClubAdmin,
     verifyClubMemberAdminAc,
+    getEnv,
 };

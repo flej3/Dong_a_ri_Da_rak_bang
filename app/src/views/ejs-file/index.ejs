@@ -52,6 +52,20 @@
               </div>
             </div>
 
+            <div class="col-xxl-4 col-md-6" id="createClubBtn" onclick="window.location.href='/create-club'">
+              <div class="card border-0" data-bs-toggle="modal" data-bs-target="#createClubModal">
+                <div class="custom-card-header-green">
+                  <div class="d-flex align-items-center">
+                    <i class="bi bi-plus-circle fs-2 text-white me-3"></i>
+                    <h5 class="mb-0" style="color: #fff;">동아리 생성하기</h5>
+                  </div>
+                </div>
+                <div class="custom-card-body">
+                  <p class="card-text text-muted mb-0">동아리를 생성하려면 클릭하세요.</p>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -204,6 +218,18 @@
 
       .trophy{
         width:100px
+      }
+
+      .custom-card-header-green {
+          background-color: #28a745; /* Bright green color */
+          padding: 20px;
+          border-radius: 5px 5px 0 0;
+      }
+
+      .custom-card-body {
+          padding: 15px;
+          background-color: #f8f9fa; /* Light background for the card body */
+          border-radius: 0 0 5px 5px;
       }
   </style>
 

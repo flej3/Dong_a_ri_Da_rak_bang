@@ -312,7 +312,7 @@ async function showLikes() {
             }
             const data = await response.json();
             if (data) {
-                await likeSplit();
+                await markLikedPosts('first_');
             }
         } catch (error) {
             console.error('네트워크 오류:', error);
@@ -320,83 +320,80 @@ async function showLikes() {
     }
 }
 
-async function likeSplit() {
-        try {
-            const response = await fetch(`/api/getLikeSplit`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            if (!response.ok) {
-                throw new Error('네트워크 응답이 올바르지 않습니다.');
-            }
-            const data = await response.json();
-
-                for (let i = 0; i < data.like.length; i++) {
-                    let selectPostNumber = document.getElementById('first_' + data.like[i].post_number);
-                    selectPostNumber.style.color = 'red';
-                }
-
-        } catch (error) {
-            console.error('네트워크 오류:', error);
+async function checkLogin() {
+    try {
+        const response = await fetch('/isLogin', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('네트워크 응답이 올바르지 않습니다.');
         }
+        const data = await response.json();
+        return data;
+    } catch (err) {
+        alert("에러가 발생했습니다.");
+        console.error(err);
+        window.location.href = "/";
+    }
 }
 
-async function likeSplitRecruiting() {
+async function markLikedPosts(prefix) {
     try {
         const response = await fetch(`/api/getLikeSplit`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
-        })
+        });
         if (!response.ok) {
             throw new Error('네트워크 응답이 올바르지 않습니다.');
         }
         const data = await response.json();
 
-        for (let i = 0 ; i < data.like.length; i++) {
-            let selectPostNumber = document.getElementById('recruiting_' + data.like[i].post_number);
-            if(selectPostNumber !== null) {
+        data.like.forEach(item => {
+            let selectPostNumber = document.getElementById(`${prefix}_${item.post_number}`);
+            if (selectPostNumber !== null) {
                 selectPostNumber.style.color = 'red';
             }
-        }
-
+        });
     } catch (error) {
         console.error('네트워크 오류:', error);
     }
 }
 
-async function deadLikeSplit() {
+async function checkLogin() {
     try {
-        const response = await fetch(`/api/getLikeSplit`, {
+        const response = await fetch('/isLogin', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
-        })
+        });
         if (!response.ok) {
             throw new Error('네트워크 응답이 올바르지 않습니다.');
         }
         const data = await response.json();
-
-        for (let i = 0 ; i < data.like.length; i++) {
-            let selectPostNumber = document.getElementById('dead_' + data.like[i].post_number);
-            if(selectPostNumber !== null) {
-                selectPostNumber.style.color = 'red';
-            }
-        }
-
-    } catch (error) {
-        console.error('네트워크 오류:', error);
+        return data.isLogin;
+    } catch (err) {
+        alert("에러가 발생했습니다.");
+        console.error(err);
+        window.location.href = "/";
     }
 }
 
 document.getElementById('closed-tab').addEventListener('click', async function() {
-        await deadLikeSplit();
+    const isLogin = await checkLogin();
+    if(isLogin){
+        await markLikedPosts('dead');
+    }
 });
 
 document.getElementById('recruiting-tab').addEventListener('click', async function() {
-        await likeSplitRecruiting();
+    const isLogin = await checkLogin();
+    if(isLogin){
+        await markLikedPosts('recruiting');
+    }
 });

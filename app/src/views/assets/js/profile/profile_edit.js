@@ -1,5 +1,6 @@
 // 이벤트 리스너를 등록할 요소 가져오기
 const addClubBtn = document.getElementById('addClubBtn');
+const container = document.getElementById('clubInputContainer');
 
 // + 버튼에 대한 이벤트 리스너 등록
 addClubBtn.addEventListener('click', () => {
@@ -15,8 +16,6 @@ addClubBtn.addEventListener('click', () => {
     container.appendChild(newInputGroup);
 });
 
-
-const container = document.getElementById('clubInputContainer');
 // - 버튼에 대한 이벤트 리스너 등록
 container.addEventListener('click', (event) => {
     if (event.target.classList.contains('remove-club-btn')) {
@@ -87,6 +86,7 @@ function checkProfileExistenceAndFetch() {
         })
         .then(data => {
             if (data.success && data.userProfile) {
+                document.getElementById('profile-edit-img').src = data.userProfile.profile_img_route;
                 createProfileElements(data.userProfile);
             }
         })
@@ -94,7 +94,122 @@ function checkProfileExistenceAndFetch() {
             console.error('프로필을 불러오는 중 에러가 발생했습니다.', err);
         });
 }
+
 document.getElementById('profile_edit').addEventListener('click', checkProfileExistenceAndFetch);
+
+// Cloudinary 이미지 업로드 함수
+async function uploadProfileImageToCloudinary(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+    const cloudName = await getEnvCloudName();
+    formData.append('upload_preset', 'gh4pwyaw');
+    formData.append('cloud_name', cloudName);
+
+    // 로딩 스피너 표시
+    document.getElementById('loading-spinner').style.display = 'block';
+
+    const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        method: 'POST',
+        body: formData
+    });
+
+    // 로딩 스피너 숨기기
+    document.getElementById('loading-spinner').style.display = 'none';
+
+    if (!response.ok) {
+        throw new Error('이미지 업로드에 실패하였습니다.');
+    }
+
+    const data = await response.json();
+    return data.secure_url;
+}
+
+// Cloudinary 이미지 삭제 함수
+// async function deleteProfileImageFromCloudinary() {
+//     const publicId = 'your_public_id'; // 예제용 public_id, 실제 사용 시 추적된 public_id로 대체
+//     const cloudName = await getEnvCloudName();
+
+//     // 로딩 스피너 표시
+//     document.getElementById('loading-spinner').style.display = 'block';
+
+//     const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             public_id: publicId
+//         })
+//     });
+
+//     // 로딩 스피너 숨기기
+//     document.getElementById('loading-spinner').style.display = 'none';
+
+//     if (!response.ok) {
+//         throw new Error('이미지 삭제에 실패하였습니다.');
+//     }
+
+//     const data = await response.json();
+//     if (data.result !== 'ok') {
+//         throw new Error('이미지 삭제 실패');
+//     }
+//     return data;
+// }
+
+// 환경 변수에서 Cloudinary 클라우드 이름을 가져오는 함수
+async function getEnvCloudName() {
+    try {
+        const response = await fetch(`/api/get/env`, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('네트워크 응답이 올바르지 않습니다.');
+        }
+        const data = await response.json();
+        return data.env;
+    } catch (error) {
+        alert(`에러발생: ${error}`);
+        window.location.href = "/";
+    }
+}
+
+// 프로필 이미지 업로드 및 삭제 이벤트 리스너 등록
+const profileImageInput = document.getElementById('profileImageInput');
+const profileEditImg = document.getElementById('profile-edit-img');
+const uploadProfileBtn = document.getElementById('upload-profile-btn');
+const deleteProfileBtn = document.getElementById('delete-profile-btn');
+
+uploadProfileBtn.addEventListener('click', (event) => {
+    event.preventDefault();
+    profileImageInput.click();
+});
+
+profileImageInput.addEventListener('change', async () => {
+    const file = profileImageInput.files[0];
+    if (file) {
+        try {
+            const imageUrl = await uploadProfileImageToCloudinary(file);
+            profileEditImg.src = imageUrl; // 이미지 미리보기 업데이트
+        } catch (error) {
+            console.error('Error uploading profile image:', error);
+            alert('프로필 이미지 업로드에 실패했습니다.');
+        }
+    }
+});
+
+deleteProfileBtn.addEventListener('click', async (event) => {
+    event.preventDefault();
+    try {
+        // await deleteProfileImageFromCloudinary();
+        profileEditImg.src = 'https://res.cloudinary.com/dtn8eum07/image/upload/v1716351281/iz2btsipfkgqkxcckx1f.png'; // 기본 이미지로 변경
+    } catch (error) {
+        console.error('Error deleting profile image:', error);
+        alert('프로필 이미지 삭제에 실패했습니다.');
+    }
+});
 
 //프로필 업데이트
 function updateProfile(event) {
@@ -102,7 +217,7 @@ function updateProfile(event) {
 
     const userProfile = {
         //user_id는 클라이언트 말고 서버측에서 추가할 예정.
-        profile_img_route: `NULL`, //프로필 이미지 아직 미구현
+        profile_img_route: profileEditImg.src, // 이미지 경로를 프로필에 추가
         about: getInputValue('about'),
         joined_clubs: collectClubNames(),
         twitter_link: getInputValue('Twitter'),

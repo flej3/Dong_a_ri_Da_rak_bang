@@ -32,7 +32,7 @@ const updateUserProfile = async (req, res) => {
     try {
         const accessTokenDecoded = await getTokenDecode(req, res);
         const {
-            profile_img_route, //프로필 이미지 아직 미구현
+            profile_img_route,
             about,
             joined_clubs,
             twitter_link,
@@ -54,7 +54,7 @@ const updateUserProfile = async (req, res) => {
             instagram_link = VALUES(instagram_link)`,
             [
                 user_id,
-                profile_img_route, //프로필 이미지 아직 미구현
+                profile_img_route,
                 about,
                 joined_clubs,
                 twitter_link,

@@ -83,10 +83,30 @@ const searchResult = async (req, res) => {
             return res.json({ success: false });
         }
         const searchMemberResult = await searchMember(searchQuery);
-        res.json(searchMemberResult);
+        
+        const fetchProfileImages = searchMemberResult.result.map(async (user) => {
+            const profileImage = await fetchProfileImage(user.user_id);
+            return { ...user, profile_img_route: profileImage };
+        });
+
+        const results = await Promise.all(fetchProfileImages);
+        // res.json({ success: true, result: results });
+        res.json(results);
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
+}
+
+// 사용자의 profile_img_route를 가져오는 함수
+async function fetchProfileImage(userId) {
+    const profileImage = await executeQueryPromise(
+        "SELECT profile_img_route FROM user_profile WHERE user_id = ?",
+        [userId]
+    );
+    if(profileImage.length === 0){
+        return 'https://res.cloudinary.com/dtn8eum07/image/upload/v1716351281/iz2btsipfkgqkxcckx1f.png';
+    }
+    return profileImage[0].profile_img_route;
 }
 
 module.exports = {

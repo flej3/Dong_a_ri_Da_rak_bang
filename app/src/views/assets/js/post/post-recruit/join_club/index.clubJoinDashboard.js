@@ -40,7 +40,6 @@ async function getClubJoinApplications() {
 function fillClubApplicationsTable(clubApplications) {
     const tableContainer = document.getElementById('clubApplicationsTable');
     tableContainer.innerHTML = ''; // 기존 테이블 삭제
-
     if (clubApplications.length === 0) {
         displayNoClubApplicationsMessage();
     } else {
@@ -81,7 +80,7 @@ async function displayNoClubApplicationsMessage() {
     const tableContainer = document.getElementById('clubApplicationsTable');
 
     const isLogin = await checkLogin();
-    if (!isLogin.isLogin) {
+    if (!isLogin) {
         displayLoginPromptMessage(tableContainer);
         return;
     }
@@ -201,7 +200,7 @@ function cancelApplicationFetch(applicationId){
 
 document.addEventListener('DOMContentLoaded', async () => {
     const isLogin = await checkLogin();
-    if (!isLogin.isLogin) {
+    if (!isLogin) {
         fillClubApplicationsTable([]);
     } else {
         const clubAppData = await getClubJoinApplications();

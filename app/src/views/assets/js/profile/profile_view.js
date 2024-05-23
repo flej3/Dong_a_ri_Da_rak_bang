@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(data => {
         if (data.success) {
             const userProfile = data.userProfile;
+            document.getElementById('profile-img').src = userProfile.profile_img_route;
             document.getElementById('viewAbout').innerText = userProfile.about;
             document.getElementById('joinedClubs').innerText = convertToNewLines(userProfile.joined_clubs);
             

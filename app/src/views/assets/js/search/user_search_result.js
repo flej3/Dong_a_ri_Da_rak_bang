@@ -9,7 +9,7 @@ function createCard(user, cardIndex) {
             <a href="search-user-profile?query=${user.user_id}" class="card-link">
                 <div class="row g-0">
                     <div class="col-md-4 d-flex align-items-center justify-content-center">
-                        <img src="./../../assets/img/default-profile-img.png" class="img-fluid rounded-start">
+                        <img src="${user.profile_img_route}" class="img-fluid rounded-start">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body pt-4">
@@ -63,11 +63,7 @@ function searchUserResult() {
             return res.json();
         })
         .then(data => {
-            if (!data.success) {
-                return createNoResultMessage('검색 결과가 없습니다. 확인후 다시 검색해주세요.');
-            }
-            const users = data.result;
-            users.forEach((user, index) => {
+            data.forEach((user, index) => {
                 createCard(user, index);
             });
         })

@@ -65,6 +65,14 @@ function setJoinedClubs(userProfileData){
     document.getElementById('joinedClubs').innerText = convertToNewLines(userProfileData.profile.joined_clubs);
 }
 
+//프로필 사진 설정
+function setUserProfileImg(userProfileData){
+    if(!userProfileData.hasProfile){
+        return;
+    }
+    document.getElementById('search-user-profile-img').src = userProfileData.profile.profile_img_route;
+}
+
 function searchUserProfile(){
     const urlParams = new URLSearchParams(window.location.search);
     const searchQuery = urlParams.get('query');
@@ -89,6 +97,7 @@ function searchUserProfile(){
         }
         const userProfileData = data.userData[0];
         setUserProfile(userProfileData.userData);
+        setUserProfileImg(userProfileData)
         setSNSIcon(userProfileData);
         setProfileMessage(userProfileData);
         setJoinedClubs(userProfileData);

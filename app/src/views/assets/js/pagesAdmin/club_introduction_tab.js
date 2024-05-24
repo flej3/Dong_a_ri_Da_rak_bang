@@ -11,6 +11,7 @@ function fillClubIntro(clubIntroData) {
     const facebookLink = facebook_link || '';
     const instagramLink = instagram_link || '';
 
+    document.getElementById('club-profile-img').src = profile_img_route;
     document.getElementById('profile-edit-img').src = profile_img_route;
     document.getElementById('clubIntroMsg').innerHTML = aboutWithLineBreaks;
     document.getElementById('clubMessage').value = about || '';

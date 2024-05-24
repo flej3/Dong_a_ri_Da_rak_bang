@@ -124,38 +124,6 @@ async function uploadProfileImageToCloudinary(file) {
     return data.secure_url;
 }
 
-// Cloudinary 이미지 삭제 함수
-// async function deleteProfileImageFromCloudinary() {
-//     const publicId = 'your_public_id'; // 예제용 public_id, 실제 사용 시 추적된 public_id로 대체
-//     const cloudName = await getEnvCloudName();
-
-//     // 로딩 스피너 표시
-//     document.getElementById('loading-spinner').style.display = 'block';
-
-//     const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/destroy`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             public_id: publicId
-//         })
-//     });
-
-//     // 로딩 스피너 숨기기
-//     document.getElementById('loading-spinner').style.display = 'none';
-
-//     if (!response.ok) {
-//         throw new Error('이미지 삭제에 실패하였습니다.');
-//     }
-
-//     const data = await response.json();
-//     if (data.result !== 'ok') {
-//         throw new Error('이미지 삭제 실패');
-//     }
-//     return data;
-// }
-
 // 환경 변수에서 Cloudinary 클라우드 이름을 가져오는 함수
 async function getEnvCloudName() {
     try {

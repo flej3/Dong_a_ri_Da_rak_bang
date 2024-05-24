@@ -48,7 +48,7 @@ async function createClubCard(club) {
     <div class="col-md-4 mb-4 team-card">
         <a href="/Page-clubAdmin?query=${club.category}" style="margin: auto;">
         <div class="card h-100">
-            <img src="../../assets/img/hs-logo.png" alt="">
+            <img id="club-introduction-page-profile-img-${club.category}" src="${club.profile_img_route}" alt="Profile" class="rounded-circle" style="width: 300px;">
             <div class="card-body profile-card">
                 <h2 class="card-title text-center">동아리명: ${club.club_name}<br/>담당자: ${club.user_name}</h2>
                 <h3 class="card-subtitle mb-3 text-center">나의 직위: ${club.position}</h3>

@@ -24,7 +24,7 @@
                         <span id="likeCount">0</span>
                     </a>
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                        <img src="assets/img/hs-logo.png" alt="Profile" class="rounded-circle">
+                        <img id="club-profile-img" src="assets/img/hs-logo.png" alt="Profile" class="rounded-circle" style="width: 300px;">
                         <h2>동아리명 : <%= club.club_name%> </h2>
                         <!--소속은 고정이 아님. 동아리장이 컴공이라고해서
                         해당 동아리가 컴공 소속이지 않다는 뜻!-->
@@ -251,10 +251,15 @@
                                     <div class="row mb-3">
                                         <label for="clubImageInput" class="col-md-4 col-lg-3 col-form-label">클럽 사진</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <img src="./../assets/img/hs-logo.png" alt="Profile" style="width: 100px; height: auto;">
+                                            <img id="profile-edit-img" src="./../assets/img/hs-logo.png" alt="Profile" style="width: 300px;">
+                                            <input type="file" id="clubImageInput" style="display:none" accept="image/*">
                                             <div class="pt-2">
-                                                <a href="#" class="btn btn-primary btn-sm" title="새로운 클럽 사진 업로드"><i class="bi bi-upload"></i></a>
-                                                <a href="#" class="btn btn-danger btn-sm" title="클럽 사진 삭제"><i class="bi bi-trash"></i></a>
+                                                <button id="upload-profile-btn" class="btn btn-primary btn-sm" title="Upload new profile image">
+                                                    <i class="bi bi-upload"></i>
+                                                </button>
+                                                <button id="delete-profile-btn" class="btn btn-danger btn-sm" title="Remove my profile image">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -486,6 +491,17 @@
             </div>
         </div>
     </div>
+
+    <!-- 로딩 스피너 -->
+    <div id="loading-spinner" style="display: none;">
+        <div class="spinner">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+    </div>
+
 </main><!-- End #main -->
 
 <!-- ======= Footer ======= -->

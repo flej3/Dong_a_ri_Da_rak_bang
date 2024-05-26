@@ -19,10 +19,10 @@ const getClubIntroduction = async (req, res) => {
 const saveClubIntroEdit = async (req, res) => {
     const resData = {};
     try {
-        const {about, twitter, facebook, instagram, category} = req.body;
-        const query = `UPDATE club SET about = ?, twitter_link = ?, facebook_link = ?, instagram_link = ? WHERE category = ?; `;
+        const {profile_img_route, about, twitter, facebook, instagram, category} = req.body;
+        const query = `UPDATE club SET profile_img_route = ?, about = ?, twitter_link = ?, facebook_link = ?, instagram_link = ? WHERE category = ?; `;
 
-        await executeQueryPromise(query, [about, twitter, facebook, instagram, category]);
+        await executeQueryPromise(query, [profile_img_route, about, twitter, facebook, instagram, category]);
 
         resData.success = true;
         res.status(200).json(resData);

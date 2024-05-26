@@ -6,8 +6,10 @@ function getCategory() {
 }
 
 function fillClubData(clubData){
-    const { club_name, club_owner, affilition, about, twitter_link, facebook_link, instagram_link } = clubData;
-
+    // const {profile_img_route, club_name, club_owner, affilition, about, twitter_link, facebook_link, instagram_link } = clubData;
+    const { club_name, club_owner, affilition, about, twitter_link, facebook_link, instagram_link, profile_img_route } = clubData;
+    console.log(profile_img_route)
+    document.getElementById('club-introduction-profile-img').src = profile_img_route;
     document.getElementById('clubName').innerText = `동아리명 : ${club_name}`;
     document.getElementById('clubAffilition').innerText = `소속 : ${affilition}`;
     document.getElementById('clubAbout').innerText = about;

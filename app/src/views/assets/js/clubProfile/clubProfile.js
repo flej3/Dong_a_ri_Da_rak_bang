@@ -272,6 +272,7 @@ document.getElementById('clubResignationModalBtn').addEventListener('click', asy
             throw new Error(`네트워크 응답이 올바르지 않습니다.`);
         }
         const data = await response.json();
+        updateMemberCount();
         alert('동아리를 탈퇴 하였습니다!');
         window.location.reload();
     } catch (error) {
@@ -312,7 +313,31 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelectorAll('.clubResignationBtn').forEach(button => {
         button.addEventListener('click', async (event) => {
             const category = handleClubResignationBtnClick(event);
+            tempCategory = category;
             await getClubData(category);
         });
     });
 });
+
+let tempCategory;
+async function updateMemberCount() {
+    if(tempCategory !== null) {
+        try {
+            const response = await fetch(`/update/memberCount?query=${tempCategory}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'Application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('네트워크 응답이 올바르지 않습니다.');
+            }
+
+        } catch (error) {
+            alert(`에러가 발생했습니다. ${error}`);
+            console.error(`에러가 발생했습니다. ${error}`);
+            window.location.reload();
+        }
+    }
+}

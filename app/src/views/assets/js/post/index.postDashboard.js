@@ -299,7 +299,7 @@ function updatePagination() {
 
 async function showLikes() {
     const isLogin = await checkLogin();
-    if (isLogin.isLogin) {
+    if (isLogin) {
         try {
             const response = await fetch(`/api/getLikes`, {
                 method: 'GET',
@@ -312,7 +312,7 @@ async function showLikes() {
             }
             const data = await response.json();
             if (data) {
-                await markLikedPosts('first_');
+                await markLikedPosts('first');
             }
         } catch (error) {
             console.error('네트워크 오류:', error);

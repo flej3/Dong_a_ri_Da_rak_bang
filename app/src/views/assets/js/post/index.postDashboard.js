@@ -43,11 +43,12 @@ function createCard(data) {
 
     const writer = `<span class="badge bg-secondary">작성자: ${data.writer}</span>`;
 
+    const checkImg = isPostImg(data.image_route);
     const cardContent = `
         <div class="row g-0">
             <a href="/view-recruit-post?query=${data.post_number}" class="text-decoration-none">
                 <div class="col-md-4">
-                    <img src="assets/img/card.jpg" class="img-fluid rounded-start">
+                    <img src="${checkImg}" class="img-fluid rounded-start">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -103,11 +104,12 @@ function createCardRecruiting(data) {
 
     const writer = `<span class="badge bg-secondary">작성자: ${data.writer}</span>`;
 
+    const checkImg = isPostImg(data.image_route);
     const cardContent = `
         <div class="row g-0">
             <a href="/view-recruit-post?query=${data.post_number}" class="text-decoration-none">
                 <div class="col-md-4">
-                    <img src="assets/img/card.jpg" class="img-fluid rounded-start">
+                    <img src="${checkImg}" class="img-fluid rounded-start">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -137,6 +139,13 @@ function createCardRecruiting(data) {
     cardContainer.appendChild(cardCol);
 }
 
+function isPostImg(url){
+    if(!url){
+        return "assets/img/card.jpg";
+    }
+    return url;
+}
+
 function createCardClosed(data) {
     const textContent = extractTextFromDelta(data.content);
 
@@ -157,11 +166,12 @@ function createCardClosed(data) {
 
     const writer = `<span class="badge bg-secondary">작성자: ${data.writer}</span>`;
 
+    const checkImg = isPostImg(data.image_route);
     const cardContent = `
         <div class="row g-0">
             <a href="/view-recruit-post?query=${data.post_number}" class="text-decoration-none">
                 <div class="col-md-4">
-                    <img src="assets/img/card.jpg" class="img-fluid rounded-start">
+                    <img src="${checkImg}" class="img-fluid rounded-start">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">

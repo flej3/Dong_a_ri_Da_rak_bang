@@ -33,14 +33,14 @@ async function createClubCard(club) {
     let setDisplayFacebook = "none";
     let setDisplayInstagram = "none";
 
-    if(twitterLink !== ''){
-        setDisplayTwitter = "inline-block"
+    if (twitterLink !== '') {
+        setDisplayTwitter = "inline-block";
     }
-    if(facebookLink !== ''){
-        setDisplayFacebook = "inline-block"
+    if (facebookLink !== '') {
+        setDisplayFacebook = "inline-block";
     }
-    if(instagramLink !== ''){
-        setDisplayInstagram = "inline-block"
+    if (instagramLink !== '') {
+        setDisplayInstagram = "inline-block";
     }
 
     const count = await getClubLikesCount(club.category);
@@ -48,19 +48,19 @@ async function createClubCard(club) {
     <div class="col-md-4 mb-4 team-card">
         <a href="/Page-clubAdmin?query=${club.category}" style="margin: auto;">
         <div class="card h-100">
-            <img id="club-introduction-page-profile-img-${club.category}" src="${club.profile_img_route}" alt="Profile" class="rounded-circle" style="width: 300px;">
+            <img id="club-introduction-page-profile-img-${club.category}" src="${club.profile_img_route}" alt="Profile" class="rounded-circle profile-img">
             <div class="card-body profile-card">
-                <h2 class="card-title text-center">동아리명: ${club.club_name}<br/>담당자: ${club.user_name}</h2>
-                <h3 class="card-subtitle mb-3 text-center">나의 직위: ${club.position}</h3>
+                <h2 class="card-title">동아리명: ${club.club_name}<br/>담당자: ${club.user_name}</h2>
+                <h3 class="card-subtitle mb-3">나의 직위: ${club.position}</h3>
                 <div class="text-center">
-                <a href=${twitterLink} id = twitterBtn-${club.category} class="btn btn-outline-primary me-2 twitter-link-${club.category}" target="_blank" style="display: ${setDisplayTwitter}"><i class="bi bi-twitter"></i></a>
-                <a href=${facebookLink} id = facebookBtn-${club.category} class="btn btn-outline-primary me-2 facebook-link-${club.category}" target="_blank" style="display: ${setDisplayFacebook}"><i class="bi bi-facebook"></i></a>
-                <a href=${instagramLink} id = instagramBtn-${club.category} class="btn btn-outline-primary me-2 instagram-link-${club.category}" target="_blank" style="display: ${setDisplayInstagram}"><i class="bi bi-instagram"></i></a>
-                <a href="#" id="heartBtn-${club.category}" class="btn btn-outline-danger me-2" onclick="handleHeartClick(event, '${club.category}')"><i class="bi bi-heart"></i>
-                    <span id="likeCount-${club.category}">${count}</span>
-                </a>
+                    <a href="${twitterLink}" id="twitterBtn-${club.category}" class="btn btn-outline-primary twitter-link-${club.category} twitter-link" target="_blank" style="display: ${setDisplayTwitter}"><i class="bi bi-twitter"></i></a>
+                    <a href="${facebookLink}" id="facebookBtn-${club.category}" class="btn btn-outline-primary facebook-link-${club.category} facebook-link" target="_blank" style="display: ${setDisplayFacebook}"><i class="bi bi-facebook"></i></a>
+                    <a href="${instagramLink}" id="instagramBtn-${club.category}" class="btn btn-outline-primary instagram-link-${club.category} instagram-link" target="_blank" style="display: ${setDisplayInstagram}"><i class="bi bi-instagram"></i></a>
+                    <a href="#" id="heartBtn-${club.category}" class="btn btn-outline-danger" onclick="handleHeartClick(event, '${club.category}')"><i class="bi bi-heart"></i>
+                        <span id="likeCount-${club.category}" class="like-count">${count}</span>
+                    </a>
                 </div>
-                <div class="text-center mt-3">
+                <div class="club-resignation mt-3">
                     <button class="clubResignationBtn btn btn-danger club-resignation-${club.category}" data-bs-toggle="modal" data-bs-target="#clubResignationModal">탈퇴하기</button>
                 </div>
             </div>

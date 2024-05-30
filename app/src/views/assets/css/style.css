@@ -1397,13 +1397,15 @@ table.dataTable thead .sorting_desc:after {
   max-height: 100%;
 }
 
+/* 동아리 목록 행 확대 */
 .tr-zoom {
   transition: transform 0.2s ease;
 }
 
 .tr-zoom:hover {
-  transform: scale(1.01); /* 행이 확대됩니다. */
+  transform: scale(1.01);
 }
+/* 동아리 목록 행 확대 끝*/
 
 /* 사진 업로드 로딩바 */
 #loading-spinner {
@@ -1453,3 +1455,51 @@ table.dataTable thead .sorting_desc:after {
   }
 }
 /* 사진 업로드 로딩바 끝 */
+
+/* 클럽 목록 */
+.pagetitle {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-bar-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-form input {
+  margin-right: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 7px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.search-form .search-icon-btn {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.search-form .search-icon-btn i {
+  font-size: 1rem;
+  color: #000;
+}
+
+.search-form .search-icon-btn:hover i {
+  color: #555;
+}
+
+.category-container.active {
+  background-color: #add8e6;
+  border-bottom: 2px solid #007bff;
+}
+/* 클럽 목록 끝*/

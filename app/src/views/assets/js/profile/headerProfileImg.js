@@ -44,8 +44,9 @@ async function getUserProfile(){
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const isLogin = await checkLogin();
+    const {isLogin} = await checkLogin();
     if(isLogin){
+        console.log('실행되면 안됌.')
         await getUserProfile();
     }
 })

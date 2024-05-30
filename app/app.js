@@ -33,6 +33,7 @@ const indexClubJoinDashboardRoutes = require('./src/routes/post/postRecruit/join
 const createClubRoutes = require('./src/routes/pages-create-club.route');
 const clubListRoutes = require('./src/routes/pages-club-list.route');
 const clubIntroductionRoutes = require('./src/routes/clubIntroduction/pages-clubIntroduction.route');
+const findIdPwRoutes = require('./src/routes/find-ID-PW/page-find-id-pw.route');
 
 //미들웨어
 app.use(express.json());
@@ -75,6 +76,7 @@ app.use(createClubRoutes);
 app.use(clubListRoutes);
 app.use(clubIntroductionRoutes);
 app.use(activeRoutes);
+app.use(findIdPwRoutes);
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src/views/ejs-file"));

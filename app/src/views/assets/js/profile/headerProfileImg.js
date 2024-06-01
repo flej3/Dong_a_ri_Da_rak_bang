@@ -37,16 +37,15 @@ async function getUserProfile(){
             document.getElementById('header-profile-img').src = userProfile.profile_img_route;
         }
     } catch (error) {
-        console.log(`프로필 이미지 가져오던중 에러 발생: ${error}`);
+        console.error(`프로필 이미지 가져오던중 에러 발생: ${error}`);
         alert(`프로필 이미지 가져오던중 에러 발생: ${error}`);
         window.location.href = "/error-page";
     }
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const {isLogin} = await checkLogin();
+    const isLogin = await checkLogin();
     if(isLogin){
-        console.log('실행되면 안됌.')
         await getUserProfile();
     }
 })

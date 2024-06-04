@@ -83,6 +83,9 @@ const searchResult = async (req, res) => {
             return res.json({ success: false });
         }
         const searchMemberResult = await searchMember(searchQuery);
+        if(!searchMemberResult.success){
+            return res.json({ success: false });
+        }
         
         const fetchProfileImages = searchMemberResult.result.map(async (user) => {
             const profileImage = await fetchProfileImage(user.user_id);

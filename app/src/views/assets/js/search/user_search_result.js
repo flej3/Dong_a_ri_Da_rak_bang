@@ -36,7 +36,7 @@ function createNoResultMessage(msg) {
     icon.classList.add('bi', 'bi-exclamation-triangle', 'me-2');
 
     const messageText = document.createElement('span');
-    messageText.innerText = msg;
+    messageText.innerText = `"${msg}" 라는 유저 검색결과가 없습니다.`;
 
     messageContainer.appendChild(icon);
     messageContainer.appendChild(messageText);
@@ -63,6 +63,10 @@ function searchUserResult() {
             return res.json();
         })
         .then(data => {
+            if(!data.success){
+                createNoResultMessage(searchQuery);
+                return;
+            }
             data.forEach((user, index) => {
                 createCard(user, index);
             });

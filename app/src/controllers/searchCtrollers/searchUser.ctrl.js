@@ -94,7 +94,7 @@ const searchResult = async (req, res) => {
 
         const results = await Promise.all(fetchProfileImages);
         // res.json({ success: true, result: results });
-        res.json(results);
+        res.json({results, success: true});
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }

@@ -67,7 +67,7 @@ function searchUserResult() {
                 createNoResultMessage(searchQuery);
                 return;
             }
-            data.forEach((user, index) => {
+            data.results.forEach((user, index) => {
                 createCard(user, index);
             });
         })

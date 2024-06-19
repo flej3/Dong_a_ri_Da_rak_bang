@@ -45,7 +45,7 @@ async function getUserProfile(){
 
 document.addEventListener('DOMContentLoaded', async () => {
     const isLogin = await checkLogin();
-    if(isLogin.isLogin){
+    if(isLogin){
         await getUserProfile();
     }
 })
